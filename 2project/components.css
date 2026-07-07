@@ -1,0 +1,460 @@
+/* ==========================================================================
+   1. 상단 헤더 영역 (header)
+   ========================================================================== */
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.greeting-text {
+  font-size: 28px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.editable-nickname {
+  color: var(--primary);
+  border-bottom: 2px dashed var(--primary);
+  cursor: pointer;
+}
+
+.date-text {
+  font-size: 14px;
+  color: var(--text-sub);
+  margin-top: 4px;
+}
+
+.theme-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ==========================================================================
+   2. 통계 대시보드 영역 (stats)
+   ========================================================================== */
+.stats-container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+}
+
+.stat-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  padding: 20px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.stat-card.highlight {
+  border-color: var(--primary);
+  background-color: rgba(99, 102, 241, 0.05);
+}
+
+.stat-label {
+  font-size: 14px;
+  color: var(--text-sub);
+  font-weight: 500;
+}
+
+.stat-value {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.stat-card.highlight .stat-value {
+  color: var(--primary);
+}
+
+/* ==========================================================================
+   3. 컨트롤 영역 & 서브 바 (controls)
+   ========================================================================== */
+.controls-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.search-wrapper {
+  position: relative;
+  flex: 1;
+}
+
+.search-bar {
+  width: 100%;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  padding: 12px 16px 12px 40px;
+  border-radius: 8px;
+}
+
+.icon-search {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  fill: var(--text-muted);
+}
+
+.select-box {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  padding: 12px 36px 12px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23666666'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C//svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+}
+
+.sort-btn {
+  padding: 12px 16px;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-card);
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: #ffffff;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+}
+
+.sub-controls-line {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: -12px;
+}
+
+.active-filter-badge {
+  font-size: 13px;
+  color: var(--text-sub);
+  background-color: var(--border-color);
+  padding: 6px 12px;
+  border-radius: 20px;
+}
+
+.btn-danger-link {
+  font-size: 14px;
+  color: var(--danger);
+  font-weight: 500;
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   4. 칸반 보드 영역 & 카드 (board & card)
+   ========================================================================== */
+.kanban-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.board-column {
+  background-color: rgba(0, 0, 0, 0.02);
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px dashed var(--border-color);
+}
+
+[data-theme="dark"] .board-column {
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+.board-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.count-badge {
+  font-size: 12px;
+  background-color: var(--border-color);
+  color: var(--text-sub);
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 200px;
+}
+
+.empty-state {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 40px 0;
+  font-size: 14px;
+}
+
+.empty-state.hidden {
+  display: none;
+}
+
+/* 개별 카드 컴포넌트 */
+.todo-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+}
+
+.card-tag {
+  align-self: flex-start;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.priority-high {
+  background-color: var(--tag-high-bg);
+  color: var(--tag-high-text);
+}
+.priority-mid {
+  background-color: var(--tag-mid-bg);
+  color: var(--tag-mid-text);
+}
+.priority-low {
+  background-color: var(--tag-low-bg);
+  color: var(--tag-low-text);
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.card-content {
+  font-size: 14px;
+  color: var(--text-sub);
+  line-height: 1.4;
+}
+
+.card-dates {
+  font-size: 12px;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border-color);
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.todo-card.completed .card-title,
+.todo-card.completed .card-content {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
+/* 푸터 */
+.main-footer {
+  text-align: center;
+  padding: 20px 0;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+/* ==========================================================================
+   5. 새 할 일 생성 / 수정 모달 (modal)
+   ========================================================================== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--overlay);
+  backdrop-filter: blur(4px); /* 뒷배경 블러 처리 기획 수용 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-overlay.hidden {
+  display: none;
+}
+
+.modal-content {
+  background-color: var(--bg-modal);
+  border: 1px solid var(--border-color);
+  width: 100%;
+  max-width: 520px;
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.modal-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.form-row-group {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.form-group.half {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.form-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-sub);
+}
+
+.form-control-input,
+.form-control-textarea {
+  width: 100%;
+  border: 1px solid var(--border-color);
+  background-color: var(--bg-main);
+  padding: 12px;
+  border-radius: 8px;
+  color: var(--text-main);
+}
+
+.form-control-textarea {
+  height: 120px;
+  resize: none;
+}
+
+/* 타원형 커스텀 라디오 배지 버튼 */
+.priority-radio-group {
+  border: none;
+  display: flex;
+  gap: 8px;
+}
+
+.radio-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.priority-badge-btn {
+  flex: 1;
+  text-align: center;
+  padding: 10px 0;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  background-color: var(--bg-card);
+  transition: all 0.2s;
+}
+
+/* 체크(선택) 되었을 때의 색상 스위칭 패턴 */
+.radio-hidden:checked + .priority-badge-btn.high {
+  background-color: var(--tag-high-bg);
+  border-color: var(--tag-high-text);
+  color: var(--tag-high-text);
+}
+.radio-hidden:checked + .priority-badge-btn.mid {
+  background-color: var(--tag-mid-bg);
+  border-color: var(--tag-mid-text);
+  color: var(--tag-mid-text);
+}
+.radio-hidden:checked + .priority-badge-btn.low {
+  background-color: var(--tag-low-bg);
+  border-color: var(--tag-low-text);
+  color: var(--tag-low-text);
+}
+
+.modal-select {
+  width: 100%;
+}
+
+.modal-footer-buttons {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.btn-secondary-link {
+  color: var(--text-sub);
+  font-weight: 500;
+}
+
+.btn-submit-purple {
+  background-color: var(--primary);
+  color: #ffffff;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+/* 6. 컨펌 박스 전용 */
+.confirm-box {
+  max-width: 400px;
+  text-align: center;
+}
+.confirm-title {
+  font-size: 18px;
+  margin-bottom: 12px;
+}
+.confirm-message {
+  font-size: 14px;
+  color: var(--text-sub);
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+.btn-danger {
+  background-color: var(--danger);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+}
