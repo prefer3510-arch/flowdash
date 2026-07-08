@@ -17,8 +17,8 @@
 
 .editable-nickname {
   color: var(--primary);
-  border-bottom: none !important; /* 밑에 생기는 보더 점선 제거 */
-  text-decoration: none !important; /* 브라우저 기본 밑줄 속성 제거 */
+  border-bottom: none !important;
+  text-decoration: none !important; 
   cursor: pointer;
 }
 
@@ -33,38 +33,38 @@
    ================================================================= */
 
 .theme-btn {
-  width: 40px; /* 피그마 시안 기준 동그라미 크기 고정 */
+  width: 40px; 
   height: 40px;
-  border-radius: 50%; /* 완벽한 원형 제어 */
-  background-color: #ffffff; /* 기본 라이트모드 배경 */
-  border: 1px solid #e2e8f0; /* 보더 외곽선 정돈 */
+  border-radius: 50%;
+  background-color: #ffffff; 
+  border: 1px solid #e2e8f0;
   display: flex;
-  align-items: center; /* 세로 정중앙 정렬 */
-  justify-content: center; /* 가로 정중앙 정렬 */
+  align-items: center; 
+  justify-content: center;
   cursor: pointer;
   transition:
     background-color 0.2s,
     border-color 0.2s;
-  padding: 0; /* 내부 기본 여백 리셋 */
+  padding: 0;
 }
 
-/* 추가된 이미지 이모지 전용 맞춤 스타일 */
+
 .icon-mode-img {
-  width: 20px; /* 원형 버튼 내에서 알맞게 출력되는 사이즈 */
+  width: 20px; 
   height: 20px;
-  object-fit: contain; /* 원본 이미지 비율 유지 찌그러짐 방지 */
+  object-fit: contain;
   display: block;
 }
 
-/* 다크모드 변환 시 동그라미 배경색 피드백 분기 처리 (theme.css 연동 시 자동 대응) */
+/* 다크모드*/
 html[data-theme="dark"] .theme-btn {
-  background-color: #222638; /* 변수 주입 대응 가변 처리 가능 */
+  background-color: #222638; 
   border-color: #2e354f;
 }
 
-/* 다크모드일 때 검은색 아이콘의 가시성을 위해 반전 필터를 넣고 싶다면 활성화 하세요 */
+
 html[data-theme="dark"] .icon-mode-img {
-  filter: invert(1); /* 아이콘 색상을 흰색으로 전향 반전 */
+  filter: invert(1); 
 }
 
 /* ==========================================================================
@@ -80,12 +80,12 @@ html[data-theme="dark"] .icon-mode-img {
 .stat-card {
   background-color: var(--bg-card);
   border: 1px solid var(--border-color);
-  padding: 18px 20px; /* 세로 패딩을 살짝 줄여 균형감 확보 */
+  padding: 18px 20px; 
   border-radius: 12px;
   display: flex;
   flex-direction: column;
-  justify-content: center; /* 내부 요소를 수직 중앙 정렬 */
-  gap: 6px; /* 라벨과 숫자 사이 간격을 시안처럼 촘촘하게 */
+  justify-content: center; 
+  gap: 6px;
 }
 
 .stat-card.highlight {
@@ -143,7 +143,7 @@ html[data-theme="dark"] .icon-mode-img {
    ========================================================================== */
 .custom-dropdown {
   position: relative;
-  width: 140px; /* 시안에 맞게 적절한 고정 가로폭 부여 */
+  width: 140px; 
 }
 
 /* 세모 버튼이 포함된 트리거 영역 */
@@ -168,29 +168,22 @@ html[data-theme="dark"] .icon-mode-img {
   border-color: var(--primary);
 }
 
-/* 선택된 라벨 (평소엔 텍스트가 없음) */
+/* 선택된 라벨 (평소엔 텍스트 X) */
 .selected-label {
   font-size: 14px;
   color: var(--text-main);
 }
 
-/* 오른쪽 끝 세모 역삼각형 아이콘 (CSS로 구현) */
 .arrow-icon {
   width: 0;
   height: 0;
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
-  border-top: 6px solid var(--text-sub); /* 아래를 향하는 삼각형 */
+  border-top: 6px solid var(--text-sub);
   transition: transform 0.2s ease;
 }
 
-/* 드롭다운이 열렸을 때 세모 아이콘이 부드럽게 위로 뒤집히는 효과 */
-.custom-dropdown.active .arrow-icon {
-  transform: rotate(180deg);
-}
 
-/* 세모를 눌렀을 때 아래로 툭 떨어지는 실제 메뉴 리스트 (평소엔 숨김) */
-.dropdown-menu-list {
   position: absolute;
   top: calc(100% + 6px);
   left: 0;
@@ -201,15 +194,15 @@ html[data-theme="dark"] .icon-mode-img {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   padding: 6px 0;
   z-index: 90;
-  display: none; /* 기본 숨김 */
+  display: none;
 }
 
-/* active 클래스가 붙었을 때만 메뉴 리스트를 블록 노출 */
+
 .custom-dropdown.active .dropdown-menu-list {
   display: block;
 }
 
-/* 개별 옵션 아이템 목록 */
+
 .dropdown-menu-list li {
   padding: 10px 16px;
   font-size: 14px;
@@ -220,7 +213,7 @@ html[data-theme="dark"] .icon-mode-img {
     color 0.2s;
 }
 
-/* 옵션 리스트에 마우스를 올렸을 때 보라색 계열로 하이라이트 */
+
 .dropdown-menu-list li:hover {
   background-color: rgba(99, 102, 241, 0.08);
   color: var(--primary);
@@ -244,13 +237,12 @@ html[data-theme="dark"] .icon-mode-img {
   justify-content: center;
 }
 
-/* [핵심] 두 텍스트가 겹치거나 나란히 나와서 늘어나는 현상 방지 */
 .sort-btn .asc-text,
 .sort-btn .desc-text {
-  display: none; /* 우선 둘 다 숨김 */
+  display: none; 
 }
 
-/* 속성 값에 따라 딱 하나만 display: block 또는 inline으로 켜줍니다 */
+
 .sort-btn[data-sort="asc"] .asc-text {
   display: inline-block;
 }
@@ -259,7 +251,7 @@ html[data-theme="dark"] .icon-mode-img {
   display: inline-block;
 }
 
-/* 다크모드 스펙 고정 */
+
 html[data-theme="dark"] .sort-btn {
   background-color: #222638;
   border-color: #2e354f;
@@ -298,13 +290,12 @@ html[data-theme="dark"] .sort-btn {
   color: var(--danger);
   font-weight: 500;
 
-  /* 빨간색 언더바(밑줄) 완벽하게 제거 */
+
   text-decoration: none !important;
 
   cursor: pointer;
 }
 
-/* 마우스를 올렸을 때도 밑줄이 다시 안 생기도록 방어 */
 .btn-danger-link:hover {
   text-decoration: none !important;
 }
@@ -370,7 +361,7 @@ html[data-theme="dark"] .sort-btn {
   display: none;
 }
 
-/* 개별 카드 컴포넌트 */
+
 .todo-card {
   background-color: var(--bg-card);
   border: 1px solid var(--border-color);
