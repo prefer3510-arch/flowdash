@@ -1,4 +1,4 @@
-/* 라이트 모드 */
+
 :root {
   --bg-main: #f8f9fa;
   --bg-card: #ffffff;
@@ -9,12 +9,12 @@
   --text-sub: #666666;
   --text-muted: #999999;
 
-  --primary: #6366f1; /* 시안 속 보라색 메인 포인트 컬러 */
+  --primary: #6366f1; 
   --primary-hover: #4f46e5;
   --border-color: #e5e7eb;
   --danger: #ef4444;
 
-  /* 우선순위 컬러 */
+
   --tag-high-bg: #fee2e2;
   --tag-high-text: #ef4444;
   --tag-mid-bg: #ffedd5;
@@ -31,7 +31,6 @@ body {
     color 0.3s;
 }
 
-/* 1920w 기준 화면 전체 컨테이너 레이아웃 틀 */
 .dashboard-container {
   width: 100%;
   max-width: 1440px;
