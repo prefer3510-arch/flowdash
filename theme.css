@@ -1,4 +1,4 @@
-/* 다크 모드 스타일 변수 오버라이딩 */
+
 [data-theme="dark"] {
   --bg-main: #0f172a;
   --bg-card: #1e293b;
@@ -11,13 +11,13 @@
 
   --border-color: #334155;
 
-  /* 다크 모드 가독성을 고려한 태그 컬러 조정 */
+
   --tag-high-bg: rgba(239, 68, 68, 0.2);
   --tag-mid-bg: rgba(249, 115, 22, 0.2);
   --tag-low-bg: rgba(34, 197, 94, 0.2);
 }
 
-/* 테마 변경 시 카드 및 배경 부드러운 전환 효과 */
+
 .dashboard-container,
 .stat-card,
 .todo-card,
@@ -32,7 +32,7 @@
 }
 
 /* =================================================================
-   5. 다크모드 테마 스타일 (theme.css - 1920w 데스크톱)
+   5. 다크모드  / 1920w 데스크톱
    ================================================================= */
 
 /* 기본 라이트모드 변수 정의 */
@@ -62,7 +62,7 @@ html[data-theme="light"] {
     --theme-purple: #6366f1; /* 메인 포인트 퍼플 */
   }
 
-  /* 변수 기반 스타일 매핑 적용 */
+  
   html[data-theme="dark"] body {
     background-color: var(--bg-page);
     color: var(--text-main);
@@ -85,7 +85,7 @@ html[data-theme="light"] {
     color: var(--text-sub);
   }
 
-  /* 인풋 및 드롭다운 제어 */
+
   html[data-theme="dark"] .search-bar,
   html[data-theme="dark"] .dropdown-toggle-btn,
   html[data-theme="dark"] .dropdown-menu-list,
@@ -97,14 +97,14 @@ html[data-theme="light"] {
     color: var(--text-main);
   }
 
-  /* 클릭 혹은 포커스 시 보더 하이라이트 변화 */
+
   html[data-theme="dark"] .custom-dropdown.active .dropdown-toggle-btn,
   html[data-theme="dark"] .search-bar:focus {
     border-color: var(--border-active);
     box-shadow: 0 0 0 2px rgba(129, 140, 248, 0.2);
   }
 
-  /* 버튼 투명도 및 완료 처리 오버레이 */
+
   html[data-theme="dark"] .sort-btn {
     border-color: var(--border-color);
     color: var(--text-main);
