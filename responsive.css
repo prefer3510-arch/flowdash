@@ -1,4 +1,4 @@
-/* 태블릿 이하 해상도 조절 (1024px 미만) */
+
 @media (max-width: 1024px) {
   .stats-container {
     grid-template-columns: repeat(3, 1fr);
@@ -12,7 +12,7 @@
   }
 }
 
-/* 모바일 해상도 조절 (768px 미만) */
+
 @media (max-width: 768px) {
   .dashboard-container {
     padding: 20px 12px;
