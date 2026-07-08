@@ -1,5 +1,5 @@
 /* ==========================================================================
-   1. 상단 헤더 영역 (header)
+   헤더
    ========================================================================== */
 .main-header {
   display: flex;
@@ -17,7 +17,8 @@
 
 .editable-nickname {
   color: var(--primary);
-  border-bottom: 2px dashed var(--primary);
+  border-bottom: none !important; 
+  text-decoration: none !important; 
   cursor: pointer;
 }
 
@@ -27,19 +28,36 @@
   margin-top: 4px;
 }
 
+/* =================================================================
+   테마 변경 버튼 
+   ================================================================= */
+
 .theme-btn {
   width: 40px;
   height: 40px;
-  border-radius: 50%;
-  border: 1px solid var(--border-color);
-  background-color: var(--bg-card);
+  border-radius: 50%; 
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0; 
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: center; 
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    border-color 0.2s;
+  padding: 0; 
+}
+
+
+.icon-mode-img {
+  width: 20px; 
+  height: 20px;
+  object-fit: contain; 
+  display: block;
 }
 
 /* ==========================================================================
-   2. 통계 대시보드 영역 (stats)
+    통계 대시보드
    ========================================================================== */
 .stats-container {
   display: grid;
@@ -47,14 +65,16 @@
   gap: 16px;
 }
 
+
 .stat-card {
   background-color: var(--bg-card);
   border: 1px solid var(--border-color);
-  padding: 20px;
+  padding: 18px 20px; 
   border-radius: 12px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  justify-content: center; 
+  gap: 6px; 
 }
 
 .stat-card.highlight {
@@ -78,7 +98,7 @@
 }
 
 /* ==========================================================================
-   3. 컨트롤 영역 & 서브 바 (controls)
+  서브 바
    ========================================================================== */
 .controls-container {
   display: flex;
@@ -107,25 +127,119 @@
   fill: var(--text-muted);
 }
 
-.select-box {
+/* ==========================================================================
+   ■ 커스텀 토글 드롭다운 스타일 규칙
+   ========================================================================== */
+.custom-dropdown {
+  position: relative;
+  width: 140px; /* 시안에 맞게 적절한 고정 가로폭 부여 */
+}
+
+/* 세모 버튼이 포함된 트리거 영역 */
+.dropdown-toggle-btn {
+  width: 100%;
+  height: 45px;
   background-color: var(--bg-card);
   border: 1px solid var(--border-color);
-  padding: 12px 36px 12px 16px;
   border-radius: 8px;
+  padding: 0 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   cursor: pointer;
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23666666'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C//svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  background-size: 16px;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
+}
+
+.dropdown-toggle-btn:focus,
+.custom-dropdown.active .dropdown-toggle-btn {
+  border-color: var(--primary);
+}
+
+
+.selected-label {
+  font-size: 14px;
+  color: var(--text-main);
+}
+
+
+.arrow-icon {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid var(--text-sub); 
+  transition: transform 0.2s ease;
+}
+
+
+.custom-dropdown.active .arrow-icon {
+  transform: rotate(180deg);
+}
+
+
+.dropdown-menu-list {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  width: 100%;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 6px 0;
+  z-index: 90;
+  display: none; /* 기본 숨김 */
+}
+
+
+.custom-dropdown.active .dropdown-menu-list {
+  display: block;
+}
+
+
+.dropdown-menu-list li {
+  padding: 10px 16px;
+  font-size: 14px;
+  color: var(--text-sub);
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+}
+
+
+.dropdown-menu-list li:hover {
+  background-color: rgba(99, 102, 241, 0.08);
+  color: var(--primary);
 }
 
 .sort-btn {
-  padding: 12px 16px;
-  border: 1px solid var(--border-color);
-  background-color: var(--bg-card);
-  border-radius: 8px;
+  padding: 10px 16px;
+  border-radius: 20px;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  font-size: 14px;
   font-weight: 500;
+  color: #1e293b;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sort-btn .asc-text,
+.sort-btn .desc-text {
+  display: none; 
+}
+
+.sort-btn[data-sort="asc"] .asc-text {
+  display: inline-block;
+}
+
+.sort-btn[data-sort="desc"] .desc-text {
+  display: inline-block;
 }
 
 .btn-primary {
@@ -159,12 +273,17 @@
   font-size: 14px;
   color: var(--danger);
   font-weight: 500;
-  text-decoration: underline;
+
+
+  text-decoration: none !important;
+
+  cursor: pointer;
 }
 
-/* ==========================================================================
-   4. 칸반 보드 영역 & 카드 (board & card)
-   ========================================================================== */
+
+.btn-danger-link:hover {
+  text-decoration: none !important;
+}
 .kanban-board {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -186,10 +305,15 @@
 .board-title {
   font-size: 18px;
   font-weight: 700;
-  margin-bottom: 16px;
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+
   display: flex;
   align-items: center;
-  gap: 8px;
+  justify-content: space-between;
+
+  border-bottom: 2px solid var(--border-color);
+  position: relative;
 }
 
 .count-badge {
@@ -218,7 +342,6 @@
   display: none;
 }
 
-/* 개별 카드 컴포넌트 */
 .todo-card {
   background-color: var(--bg-card);
   border: 1px solid var(--border-color);
@@ -273,10 +396,14 @@
   gap: 4px;
 }
 
-.todo-card.completed .card-title,
-.todo-card.completed .card-content {
-  text-decoration: line-through;
+.todo-card.completed .card-title {
+  text-decoration: line-through !important;
   opacity: 0.5;
+}
+
+.todo-card.completed .card-content {
+  text-decoration: none !important;
+  opacity: 0.6;
 }
 
 /* 푸터 */
@@ -288,7 +415,7 @@
 }
 
 /* ==========================================================================
-   5. 새 할 일 생성 / 수정 모달 (modal)
+   새 할 일 생성 / 수정 모달 
    ========================================================================== */
 .modal-overlay {
   position: fixed;
@@ -297,7 +424,7 @@
   width: 100%;
   height: 100%;
   background-color: var(--overlay);
-  backdrop-filter: blur(4px); /* 뒷배경 블러 처리 기획 수용 */
+  backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -363,7 +490,6 @@
   resize: none;
 }
 
-/* 타원형 커스텀 라디오 배지 버튼 */
 .priority-radio-group {
   border: none;
   display: flex;
@@ -394,7 +520,6 @@
   transition: all 0.2s;
 }
 
-/* 체크(선택) 되었을 때의 색상 스위칭 패턴 */
 .radio-hidden:checked + .priority-badge-btn.high {
   background-color: var(--tag-high-bg);
   border-color: var(--tag-high-text);
@@ -413,6 +538,8 @@
 
 .modal-select {
   width: 100%;
+  height: 45px;
+  padding: 0 16px;
 }
 
 .modal-footer-buttons {
