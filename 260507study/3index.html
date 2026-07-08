@@ -1,0 +1,24 @@
+<form action="/contact" method="post">
+  <label for="name">이름</label>
+  <input type="text" id="name" name="name" placeholder="홍길동" />
+
+  <label for="email">이메일</label>
+  <input type="email" id="email" name="email" placeholder="hong@example.com" />
+
+  <label for="type">문의유형</label>
+  <select id="type" name="type">
+    <option value="">선택하세요</option>
+    <option value="general">일반문의</option>
+    <option value="tech">기술지원</option>
+  </select>
+
+  <label for="message">문의 내용</label>
+  <textarea>
+    id="message"
+    name="message"
+    rows="4"
+    placeholder="내용을 입력하세요"
+  </textarea>
+
+  <button type="submit">문의 제출</button>
+</form>

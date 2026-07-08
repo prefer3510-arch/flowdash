@@ -1,0 +1,47 @@
+<form action="/event" method="post">
+  <fieldset>
+    <legend>참가자 정보</legend>
+  </fieldset>
+
+  <label for="name">이름</label>
+  <input type="text" id="name" name="name" required />
+
+  <label for="email">이메일</label>
+  <input type="email" id="email" name="email" required />
+
+  <label for="phone">연락처</label>
+  <input type="tel" id="phone" name="phone" />
+
+  <fieldset>
+    <legend>이벤트 선택</legend>
+  </fieldset>
+
+  <label for="edate">참가 날짜</label>
+  <input type="date" id="edate" name="event_edate" required />
+
+  <fieldset>
+    <legend>참가 세션</legend>
+
+    <label><input type="radio" name="session" value="am" />오전 </label>
+
+    <label><input type="radio" name="session" value="pm" />오후 </label>
+
+    <label for="food">식사 선택</label>
+    <select id="food" name="food">
+      <option value="">선택하세요</option>
+      <option value="Korean">한식</option>
+      <option value="western">양식</option>
+      <option value="none">필요없음</option>
+    </select>
+  </fieldset>
+
+  <label for="memo">특이 사항</label>
+  <textarea
+    id="memo"
+    name="memo"
+    rows="3"
+    placeholder="알레르기·요청사항 등"
+  ></textarea>
+
+  <button type="submit">신청하기</button>
+</form>

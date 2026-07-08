@@ -1,0 +1,12 @@
+.topics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.card {
+  padding: 12px;
+  border-radius: 18px;
+  text-align: center;
+  background: rgba(59, 130, 246, 0.2);
+}

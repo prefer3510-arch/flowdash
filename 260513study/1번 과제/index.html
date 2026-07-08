@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>달콤상점</title>
+    <link rel="stylesheet" href="reset.css" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="site-header__inner">
+        <h1 class="logo"><a href="#main">달콤상점</a></h1>
+        <nav class="site-nav">
+          <ul>
+            <li>
+              <a href="#products">추천 상품</a>
+            </li>
+            <li>
+              <a href="#price">가격표</a>
+            </li>
+            <li>
+              <a href="#order">주문 문의</a>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="hero">
+        <h2 class="sr-only">달콤상점 메인 소개</h2>
+
+        <div class="hero__content">
+          <p class="hero__eyebrow">오늘의 디저트</p>
+          <h2>
+            작지만 확실한<br />
+            달콤함
+          </h2>
+          <p>수제 쿠키와 케이크를 원하는 날짜에 예약해보세요.</p>
+          <a class="button" href="#">주문 문의하기</a>
+        </div>
+
+        <div class="hero__image-box">
+          <img
+            src="https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=900&q=80"
+            alt="초코칩 쿠키"
+            class="hero__image"
+          />
+        </div>
+      </section>
+
+      <section id="products" class="section products-section">
+        <div class="section-title">
+          <p class="section-title__eyebrow">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-cookie"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M6 7.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m4.5.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3m-.5 3.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"
+              />
+              <path
+                d="M8 0a7.96 7.96 0 0 0-4.075 1.114q-.245.102-.437.28A8 8 0 1 0 8 0m3.25 14.201a1.5 1.5 0 0 0-2.13.71A7 7 0 0 1 8 15a6.97 6.97 0 0 1-3.845-1.15 1.5 1.5 0 1 0-2.005-2.005A6.97 6.97 0 0 1 1 8c0-1.953.8-3.719 2.09-4.989a1.5 1.5 0 1 0 2.469-1.574A7 7 0 0 1 8 1c1.42 0 2.742.423 3.845 1.15a1.5 1.5 0 1 0 2.005 2.005A6.97 6.97 0 0 1 15 8c0 .596-.074 1.174-.214 1.727a1.5 1.5 0 1 0-1.025 2.25 7 7 0 0 1-2.51 2.224Z"
+              />
+            </svg>
+            Sweet Picks
+          </p>
+          <h2>오늘의 쿠키 박스</h2>
+        </div>
+
+        <ul class="product-list">
+          <li>
+            <article class="product-card">
+              <a href="#order">
+                <div class="product-card__image-box">
+                  <img
+                    src="https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=900&q=80"
+                    alt="초코칩 쿠키"
+                  />
+                  <span class="product-card__badge">BEST</span>
+                  <p class="product-card__desc">
+                    진한 초콜릿칩이 콕콕 박힌 시그니처 쿠키
+                  </p>
+                  <span class="product-card__cart"
+                    ><svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      class="bi bi-cart2"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l1.25 5h8.22l1.25-5zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0"
+                      />
+                    </svg>
+                    구매하기</span
+                  >
+                </div>
+
+                <div class="product-card__content">
+                  <h3>초코칩 쿠키 박스</h3>
+                  <p><strong>12,000원</strong></p>
+                </div>
+              </a>
+            </article>
+          </li>
+          <li>
+            <article class="product-card">
+              <a href="#order">
+                <div class="product-card__image-box">
+                  <img
+                    src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=900&q=80"
+                    alt="초코칩 쿠키"
+                  />
+                  <span class="product-card__badge">NEW</span>
+                  <p class="product-card__desc">
+                    여러 맛을 한 번에 즐기는 랜덤 쿠키 세트
+                  </p>
+                  <span class="product-card__cart"
+                    ><svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      class="bi bi-cart2"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l1.25 5h8.22l1.25-5zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0"
+                      />
+                    </svg>
+                    구매하기</span
+                  >
+                </div>
+
+                <div class="product-card__content">
+                  <h3>어소티드 쿠키</h3>
+                  <p><strong>15,000원</strong></p>
+                </div>
+              </a>
+            </article>
+          </li>
+          <li>
+            <article class="product-card">
+              <a href="#order">
+                <div class="product-card__image-box">
+                  <img
+                    src="https://images.unsplash.com/photo-1590080875515-8a3a8dc5735e?auto=format&fit=crop&w=900&q=80"
+                    alt="버터 쿠키 세트"
+                  />
+                  <span class="product-card__badge">HOT</span>
+                  <p class="product-card__desc">
+                    고소한 버터향이 오래남는 담백한 쿠키
+                  </p>
+                  <span class="product-card__cart"
+                    ><svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="currentColor"
+                      class="bi bi-cart2"
+                      viewBox="0 0 16 16"
+                    >
+                      <path
+                        d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l1.25 5h8.22l1.25-5zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0"
+                      />
+                    </svg>
+                    구매하기</span
+                  >
+                </div>
+
+                <div class="product-card__content">
+                  <h3>버터 쿠키 세트</h3>
+                  <p><strong>10,500원</strong></p>
+                </div>
+              </a>
+            </article>
+          </li>
+        </ul>
+      </section>
+
+      <section id="price" class="section price-section">
+        <div class="section-title">
+          <p class="section-title__eyebrow">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              viewBox="0 0 16 16"
+              aria-hidden="true"
+            >
+              <path
+                d="M14.5 3a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2z"
+              />
+              <path
+                d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8m0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 10.5m-1-5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0M4 8a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0m0 2.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0"
+              />
+            </svg>
+            Price List
+          </p>
+          <h2>디저트 가격표</h2>
+        </div>
+
+        <table>
+          <caption class="sr-only">
+            추천 디저트 3종 가격표
+          </caption>
+
+          <thead>
+            <tr>
+              <th scope="col">상품명</th>
+              <th scope="col">구성</th>
+              <th scope="col">가격</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>초코칩 쿠키 박스</td>
+              <td>쿠키 6개입</td>
+              <td>12,000원</td>
+            </tr>
+
+            <tr>
+              <td>어소티드 쿠키</td>
+              <td>랜덤 쿠키 8개입</td>
+              <td>15,000원</td>
+            </tr>
+
+            <tr>
+              <td>버터 쿠키 세트</td>
+              <td>버터 쿠키 10개입</td>
+              <td>10,500원</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="order" class="section">
+        <h2>주문 문의</h2>
+
+        <form class="order-form">
+          <label class="order-form__label">
+            이름
+            <input type="text" name="name" required />
+          </label>
+
+          <label class="order-form__label">
+            연락처
+            <input type="tel" name="phone" required />
+          </label>
+
+          <label class="order-form__label">
+            상품 선택
+            <select name="product" required>
+              <option>상품을 선택해주세요</option>
+              <option>초코칩 쿠키 박스 - 12,000원</option>
+              <option>어소티드 쿠키 - 15,000원</option>
+              <option>버터 쿠키 세트 - 10,500원</option>
+            </select>
+          </label>
+
+          <label class="order-form__label">
+            요청사항
+            <textarea name="message"></textarea>
+          </label>
+
+          <label class="order-form__label">
+            <input type="checkbox" required />
+            개인정보 수집에 동의합니다.
+          </label>
+
+          <button type="submit" class="order-form__submit">문의 보내기</button>
+        </form>
+      </section>
+    </main>
+  </body>
+</html>

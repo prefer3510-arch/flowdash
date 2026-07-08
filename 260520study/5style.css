@@ -1,0 +1,31 @@
+.course-card {
+  border: 1px solid;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #f8fafc;
+}
+.course-card__title {
+  padding: 10px 14px;
+  font-weight: 700;
+}
+.course-card__desc {
+  padding: 12px 14px;
+  font-size: 0.86rem;
+}
+.course-card__link {
+  padding: 0 14px 14px;
+  font-weight: 700;
+}
+.course-card--blue {
+  border-color: #dbeafe;
+}
+.course-card--blue .course-card__title {
+  background: #dbeafe;
+  color: #1e3a8a;
+}
+.course-card--blue .course-card__desc {
+  color: #334155;
+}
+.course-card--blue .course-card__link {
+  color: #2563eb;
+}

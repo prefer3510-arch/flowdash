@@ -1,0 +1,12 @@
+.hero {
+  min-height: 60vh;
+}
+
+.intro {
+  padding: 24px 16px;
+}
+
+.reviews {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 640px;
+}

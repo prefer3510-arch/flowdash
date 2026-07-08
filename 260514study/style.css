@@ -1,0 +1,11 @@
+:where(h1, h2, h3) {
+  font-weight: 700;
+}
+
+article :is(h2, h3) {
+  color: #1e3a8a;
+}
+
+article p {
+  color: #761b1b;
+}

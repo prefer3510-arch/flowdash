@@ -1,0 +1,26 @@
+main,
+aside {
+  container-type: inline-size;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: 3px;
+  background: #7c3aed;
+}
+
+@container (min-width: 280px) {
+  .body {
+    flex-direction: row;
+  }
+  .thumb {
+    width: 30px;
+    height: 30px;
+  }
+}

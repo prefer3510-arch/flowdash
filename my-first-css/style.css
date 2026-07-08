@@ -1,0 +1,22 @@
+h2 {
+  color: aqua;
+}
+
+ul li:nth-child(odd) {
+  background: red;
+}
++ un li:nth-child(even) {
+  background: red;
+}
+
+p {
+  color: blue !important;
+}
+
+#title {
+  color: yellow;
+}
+
+.big {
+  color: green;
+}

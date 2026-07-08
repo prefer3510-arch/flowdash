@@ -1,0 +1,23 @@
+.pricing {
+  display: flex;
+  gap: 12px;
+}
+
+.plan,
+.plan-a,
+.plan-pro {
+  flex: 1;
+}
+
+.plan-a {
+  order: 2;
+}
+
+.plan-pro {
+  order: 1;
+}
+
+.badge {
+  flex-shrink: 0;
+  color: red;
+}

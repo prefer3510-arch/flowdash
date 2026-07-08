@@ -1,0 +1,20 @@
+.product {
+  container-type: inline-size;
+}
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.thumb {
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  background: #7c3aed;
+}
+
+@container (min-width: 320px) {
+  .body {
+    flex-direction: row;
+  }
+}

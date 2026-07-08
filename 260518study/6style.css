@@ -1,0 +1,11 @@
+.gallary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.photo {
+  aspect-ratio: 1;
+  background: linear-gradient(135deg, #83a2ca, #3b56f0);
+  border-radius: 4px;
+}

@@ -1,0 +1,8 @@
+.banner {
+  background: linear-gradient(135deg, #7c3ead, #ec4899);
+  color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 18);
+  text-align: center;
+  line-height: 2.5;
+}

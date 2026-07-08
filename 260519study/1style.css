@@ -1,0 +1,19 @@
+.cardpack {
+  display: flex;
+  gap: 8px;
+}
+
+.card {
+  padding: 12;
+  flex: 1;
+  border-radius: 4px;
+  background-color: #b0c9eb;
+  color: #4737d6;
+  text-align: center;
+}
+
+@media (max-width: 599px) {
+  .cardpack {
+    flex-direction: column;
+  }
+}

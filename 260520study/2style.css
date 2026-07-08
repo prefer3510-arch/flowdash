@@ -1,0 +1,28 @@
+:root {
+  --card-bg: #ffffff;
+  --card-text: #0f172a;
+  --card-padding: 16px;
+  --card-radius: 12px;
+  --card-border: #cbd5e1;
+
+  --badge-bg: #dbeafe;
+  --badge-text: #1d4ed8;
+  --badge-pad-y: 4px;
+  --badge-pad-x: 10px;
+  --badge-radius: 9999px;
+}
+
+.study-card {
+  background: var(--card-bg);
+  color: var(--card-text);
+  padding: var(--card-padding);
+  border-radius: var(--card-radius);
+  border: 1px solid var(--card-border);
+}
+
+.badge {
+  padding: var(--badge-pad-y) var(--badge-pad-x);
+  border-radius: var(--badge-radius);
+  background: var(--badge-bg);
+  color: var(--badge-text);
+}

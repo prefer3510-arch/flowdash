@@ -42,7 +42,7 @@ todoForm.addEventListener("submit", function (event) {
   event.preventDefault();
 
   const titleValue = todoTitleInput.value.trim();
-  const contentValue = todoContentInput.value.trim(); // ◀ 오타 수정 완료!
+  const contentValue = todoContentInput.value.trim();
 
   const checkedPriority = document.querySelector(
     'input[name="priority"]:checked',
@@ -101,3 +101,5 @@ todoForm.addEventListener("submit", function (event) {
 
   closeModal();
 });
+
+updateStatusByDOM();

@@ -1,0 +1,19 @@
+body {
+  font-family: "Noto Sans KR", sans-serif;
+  text-align: center;
+  background-color: gray;
+}
+
+h2 {
+  color: blueviolet;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.label {
+  color: blue;
+  letter-spacing: 0.05em;
+  text-transform: capitalize;
+  font-style: italic;
+}

@@ -1,0 +1,22 @@
+.grid {
+  display: grid;
+  grid-template-columns: [start] 1fr [mid1] 1fr [mid2] 1fr [end];
+  gap: 6px;
+}
+
+.big {
+  grid-column: start/mid2;
+  background-color: blueviolet;
+}
+.small {
+  grid-column: mid2/end;
+  background-color: aqua;
+}
+.a {
+  grid-column: start/mid1;
+  background-color: bisque;
+}
+.b {
+  grid-column: mid1/end;
+  background-color: darkmagenta;
+}

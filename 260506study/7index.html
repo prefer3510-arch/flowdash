@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>할 일 목록</title>
+    <style>
+      .todo {
+        list-style: none;
+        padding: 0;
+      }
+      .todo li {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.4rem 0;
+        border-bottom: 1px solid #eee;
+      }
+      .todo input:checked + label {
+        text-decoration: line-through;
+        color: #999;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>오늘의 할 일</h1>
+    <ul class="todo">
+      <li><input type="checkbox" id="t1" /></li>
+      <li><label for="t1">운동하기</label></li>
+      <li><label for="t1">밥먹기</label></li>
+    </ul>
+  </body>
+</html>

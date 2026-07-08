@@ -1,0 +1,22 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 20px;
+  background-color: blue;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 8px;
+  align-items: center;
+}
+
+main {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.card {
+  background: #dbeafe;
+  padding: 10px;
+  text-align: center;
+}

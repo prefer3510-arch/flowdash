@@ -1,0 +1,33 @@
+.card {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 60px;
+  gap: 6px;
+}
+
+.card-featured {
+  grid-column: span 2;
+  grid-row: span 2;
+  background: blue;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.card-small {
+  grid-column: span 1;
+  background: red;
+  color: #fff;
+  padding: 8px;
+  text-align: center;
+}
+
+.card-wide {
+  grid-column: span 3;
+  background: yellow;
+  color: #19ff2c;
+  padding: 8px;
+  text-align: center;
+}

@@ -1,0 +1,36 @@
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 8px;
+}
+
+.hero {
+  grid-column: span 12;
+  background-color: green;
+}
+
+.main {
+  grid-column: span 8;
+  background-color: aqua;
+}
+
+.side {
+  grid-column: span 4;
+  background-color: pink;
+}
+
+.half {
+  grid-column: span 6;
+  background-color: blue;
+}
+
+.quarter {
+  grid-column: span 3;
+  background-color: brown;
+}
+
+.card {
+  border-radius: 6px;
+  padding: 12px;
+  text-align: center;
+}

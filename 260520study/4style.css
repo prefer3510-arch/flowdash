@@ -1,0 +1,19 @@
+.box {
+  padding: 12px 14px;
+  border-radius: 10px;
+}
+.box--leader {
+  border: 1px solid #fecaca;
+  background: #fff1f2;
+}
+
+.box__titie {
+  font-weight: 700;
+  color: #9f1239;
+}
+
+.box__text {
+  margin-top: 4px;
+  font-size: 0.85rem;
+  color: #4b5563;
+}

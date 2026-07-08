@@ -1,0 +1,10 @@
+.card {
+  width: calc(100% - 1.5rem);
+  max-width: 16rem;
+  margin: 0 auto;
+  text-align: center;
+  background-color: blue;
+  color: #fff;
+  padding: 12px;
+  border-radius: 6px;
+}

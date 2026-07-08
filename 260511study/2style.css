@@ -1,0 +1,23 @@
+/* reset.css (첫 번째 로드) */
+p {
+  color: black;
+}
+a {
+  color: blue;
+}
+
+/* theme.css (두 번째 로드) */
+.title {
+  color: purple !important;
+}
+.widget p {
+  color: teal;
+}
+
+/* custom.css (세 번째 로드) */
+#sidebar .title {
+  color: red;
+}
+.link {
+  color: green;
+}

@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="2style.css" />
+  </head>
+  <body>
+    <h1>회원가입</h1>
+    <form>
+      <div class="card">
+        <label for="email">이메일</label>
+        <input
+          id="email"
+          type="email"
+          required
+          placeholder="user@example.com"
+        />
+      </div>
+
+      <div class="password">
+        <label for="password">비밀번호</label>
+        <input id="password" type="password" required minlength="8" />
+      </div>
+
+      <button type="submit">가입하기</button>
+    </form>
+  </body>
+</html>

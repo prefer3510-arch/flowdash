@@ -1,0 +1,14 @@
+.box {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 6px solid #ffffff;
+  border-top-color: #e22a2a;
+  animation: spin 0.5s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

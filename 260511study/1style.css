@@ -1,0 +1,15 @@
+h2 {
+  color: red;
+}
+ul li:nth-of-type(odd) {
+  background: silver;
+}
+ul li:nth-of-type(even) {
+  background: yellow;
+}
+button {
+  color: pink;
+}
+button:hover {
+  color: aqua;
+}

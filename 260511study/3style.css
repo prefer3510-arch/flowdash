@@ -1,0 +1,13 @@
+h2 {
+  color: red;
+  font-size: 1.5rem;
+}
+
+p {
+  color: rgb(0, 0, 255);
+}
+
+.big {
+  color: green;
+  font-size: 1.5rem;
+}
