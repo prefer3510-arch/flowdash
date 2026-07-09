@@ -15,6 +15,13 @@ const todoList = document.getElementById("todo-list");
 const doingList = document.getElementById("doing-list");
 const doneList = document.getElementById("done-list");
 
+// 대시보드 카운트 / 성취도 태그들 가져오기 (새로 기입 2026.07.10)
+const statTotal = document.getElementById("stat-total");
+const statTodo = document.getElementById("stat-todo");
+const statDoing = document.getElementById("stat-doing");
+const statDone = document.getElementById("stat-done");
+const statAchievement = document.getElementById("stat-achievement");
+
 // 전체 할 일 데이터를 저장하는 배열
 const todos = [];
 
@@ -220,6 +227,32 @@ sortToggleBtn.addEventListener("click", function () {
   renderTodos();
 });
 
+// (새로 기입 2026.07.10)
+function updateDashboard() {
+  const total = todos.length;
+
+  // 각 상태(status)에 맞는 개수 계산 (새로 기입 2026.07.10)
+  const todoNum = todos.filter(function (todo) {
+    return todo.status === "todo";
+  }).length;
+  const doingNum = todos.filter(function (todo) {
+    return todo.status === "doing";
+  }).length;
+  const doneNum = todos.filter(function (todo) {
+    return todo.status === "done";
+  }).length;
+
+  // 성취도 계산 (전체 개수가 0일 때는 0%, 있을 때는 반올림 계산) (새로 기입 2026.07.10)
+  const achievement = total === 0 ? 0 : Math.round((doneNum / total) * 100);
+
+  // HTML 화면에 실시간으로 값 반영 (새로 기입 2026.07.10)
+  if (statTotal) statTotal.textContent = total;
+  if (statTodo) statTodo.textContent = todoNum;
+  if (statDoing) statDoing.textContent = doingNum;
+  if (statDone) statDone.textContent = doneNum;
+  if (statAchievement) statAchievement.textContent = `${achievement}%`;
+}
+
 // 여기서부터는 todos 대신 sortedTodos를 사용한다.
 function renderTodos() {
   // 기존 화면 비우기
@@ -253,6 +286,9 @@ function renderTodos() {
       doneList.insertAdjacentHTML("beforeend", cardHTML);
     }
   });
+
+  // 여기 새로 기입 (2026.07.10) - 대시보드 카운트/성취도 업데이트
+  updateDashboard();
 }
 
 // 할 일 데이터 1개를 카드 HTML로 만들어주는 함수
