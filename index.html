@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FlowDash - Task Dashboard</title>
+
+    <link rel="stylesheet" href="reset.css" />
+    <link rel="stylesheet" href="base.css" />
+    <link rel="stylesheet" href="components.css" />
+    <link rel="stylesheet" href="theme.css" />
+    <link rel="stylesheet" href="responsive.css" />
+
+    <script type="module" src="generation.js" defer></script>
+  </head>
+  <body>
+    <div id="app" class="dashboard-container">
+      <header class="main-header">
+        <div class="greeting-area">
+          <h1 class="greeting-text">
+            <span id="greeting-ment">안녕하세요</span>,
+            <span id="nickname-display" class="editable-nickname" tabindex="0"
+              >FlowDash</span
+            >님 🖐
+          </h1>
+          <p id="current-date" class="date-text">2026년 1월 22일</p>
+        </div>
+
+        <button id="theme-toggle-btn" class="theme-btn" aria-label="테마 토글">
+          <img
+            src="https://img.icons8.com/?size=100&id=11377&format=png&color=000000"
+            class="icon-mode-img"
+            alt="테마 아이콘"
+          />
+        </button>
+      </header>
+
+      <section id="stats-dashboard" class="stats-container">
+        <article class="stat-card">
+          <span class="stat-label">Total Tasks</span>
+          <span id="stat-total" class="stat-value">2</span>
+        </article>
+
+        <article class="stat-card">
+          <span class="stat-label">To Do</span>
+          <span id="stat-todo" class="stat-value">0</span>
+        </article>
+
+        <article class="stat-card">
+          <span class="stat-label">In Progress</span>
+          <span id="stat-doing" class="stat-value">1</span>
+        </article>
+
+        <article class="stat-card">
+          <span class="stat-label">Done</span>
+          <span id="stat-done" class="stat-value">1</span>
+        </article>
+
+        <article class="stat-card highlight">
+          <span class="stat-label">Achievement</span>
+          <span id="stat-achievement" class="stat-value">50%</span>
+        </article>
+      </section>
+
+      <nav class="controls-container">
+        <div class="search-wrapper">
+          <input
+            type="search"
+            id="search-input"
+            class="search-bar"
+            placeholder="검색어를 입력하세요"
+            autocomplete="off"
+          />
+        </div>
+
+        <div class="custom-dropdown" id="dropdown-period">
+          <button
+            class="dropdown-toggle-btn"
+            aria-label="기간 필터 선택"
+            data-value="all"
+          >
+            <span class="selected-label"></span>
+            <span class="arrow-icon"></span>
+          </button>
+          <ul class="dropdown-menu-list">
+            <li data-value="all">전체 기간</li>
+            <li data-value="today">오늘</li>
+            <li data-value="7days">최근 7일</li>
+          </ul>
+        </div>
+
+        <div class="custom-dropdown" id="dropdown-priority">
+          <button
+            class="dropdown-toggle-btn"
+            aria-label="우선순위 필터 선택"
+            data-value="all"
+          >
+            <span class="selected-label"></span>
+            <span class="arrow-icon"></span>
+          </button>
+          <ul class="dropdown-menu-list">
+            <li data-value="all">전체 우선순위</li>
+            <li data-value="high">높음</li>
+            <li data-value="mid">중간</li>
+            <li data-value="low">낮음</li>
+          </ul>
+        </div>
+
+        <button id="sort-toggle-btn" class="sort-btn" data-sort="asc">
+          <span class="asc-text">정렬: 오름차순 ↑</span>
+          <span class="desc-text">정렬: 내림차순 ↓</span>
+        </button>
+        <button id="open-modal-btn" class="btn-primary">+ 새 할 일</button>
+      </nav>
+
+      <section class="sub-controls-line">
+        <div class="status-badge-line">
+          <span class="active-filter-badge">정렬: 오름차순</span>
+        </div>
+
+        <button id="clear-all-btn" class="btn-danger-link">
+          전체 데이터 초기화
+        </button>
+      </section>
+
+      <main class="kanban-board" id="kanban-board">
+        <section class="board-column" data-status="todo" id="board-todo">
+          <h2 class="board-title">
+            할 일 <span class="count-badge" id="count-todo">0</span>
+          </h2>
+
+          <div class="card-list" id="todo-list">
+            <p class="empty-state" id="todo-empty">할 일이 없습니다</p>
+          </div>
+        </section>
+
+        <section class="board-column" data-status="doing" id="board-doing">
+          <h2 class="board-title">
+            진행 중 <span class="count-badge" id="count-doing">1</span>
+          </h2>
+
+          <div class="card-list" id="doing-list">
+            <article class="todo-card" data-id="sample-id-1">
+              <div class="card-tag priority-mid">중간</div>
+              <h3 class="card-title">할 일 예시</h3>
+              <p class="card-content">할 일 내용 입니다</p>
+              <div class="card-dates">
+                <span class="date-item created"
+                  ><i class="icon-calendar"></i> 2026. 01. 22. 01:08</span
+                >
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="board-column" data-status="done" id="board-done">
+          <h2 class="board-title">
+            완료 <span class="count-badge" id="count-done">1</span>
+          </h2>
+          <div class="card-list" id="done-list">
+            <article class="todo-card completed" data-id="sample-id-2">
+              <div class="card-tag priority-high">높음</div>
+              <h3 class="card-title">할 일 완료 예시</h3>
+              <p class="card-content">완료된 아이템 예시 입니다</p>
+              <div class="card-dates">
+                <span class="date-item created"
+                  ><i class="icon-calendar"></i> 2026. 01. 22. 01:09</span
+                >
+                <span class="date-item completed-time"
+                  ><i class="icon-check"></i> 2026. 01. 22. 01:09</span
+                >
+              </div>
+            </article>
+          </div>
+        </section>
+      </main>
+
+      <footer class="main-footer">
+        <p>© 2026 FlowDash. All rights reserved.</p>
+      </footer>
+    </div>
+
+    <div id="todo-modal" class="modal-overlay hidden">
+      <div class="modal-content" role="dialog" aria-labelledby="modal-title">
+        <h2 class="modal-title" id="modal-title">새 할 일</h2>
+        <form id="todo-form" novalidate>
+          <div class="form-group">
+            <label for="todo-title-input" class="form-label">제목 *</label>
+            <input
+              type="text"
+              id="todo-title-input"
+              name="title"
+              class="form-control-input"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="todo-content-input" class="form-label">내용</label>
+            <textarea
+              id="todo-content-input"
+              name="content"
+              class="form-control-textarea"
+            ></textarea>
+          </div>
+
+          <div class="form-row-group">
+            <div class="form-group half">
+              <label class="form-label">우선순위</label>
+              <fieldset class="priority-radio-group" id="priority-selector">
+                <legend class="visually-hidden">우선순위 선택</legend>
+                <input
+                  type="radio"
+                  id="priority-high"
+                  name="priority"
+                  value="high"
+                  class="radio-hidden"
+                />
+                <label for="priority-high" class="priority-badge-btn high"
+                  >높음</label
+                >
+                <input
+                  type="radio"
+                  id="priority-mid"
+                  name="priority"
+                  value="mid"
+                  class="radio-hidden"
+                  checked
+                />
+                <label for="priority-mid" class="priority-badge-btn mid"
+                  >중간</label
+                >
+                <input
+                  type="radio"
+                  id="priority-low"
+                  name="priority"
+                  value="low"
+                  class="radio-hidden"
+                />
+                <label for="priority-low" class="priority-badge-btn low"
+                  >낮음</label
+                >
+              </fieldset>
+            </div>
+
+            <div class="form-group half">
+              <label for="todo-status-select" class="form-label">상태</label>
+              <div class="select-wrapper">
+                <select
+                  id="todo-status-select"
+                  name="status"
+                  class="select-box modal-select"
+                >
+                  <option value="todo" selected>할 일</option>
+                  <option value="doing">진행 중</option>
+                  <option value="done">완료</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <footer class="form-actions modal-footer-buttons">
+            <button
+              type="button"
+              id="close-modal-btn"
+              class="btn-secondary-link"
+            >
+              취소
+            </button>
+            <button
+              type="submit"
+              id="submit-todo-btn"
+              class="btn-submit-purple"
+            >
+              저장하기
+            </button>
+          </footer>
+        </form>
+      </div>
+    </div>
+
+    <div id="confirm-modal" class="modal-overlay hidden">
+      <div class="modal-content confirm-box" role="alertdialog">
+        <h2 class="confirm-title" id="confirm-title">삭제 확인</h2>
+        <p class="confirm-message" id="confirm-message">
+          정말로 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.
+        </p>
+        <footer class="form-actions">
+          <button type="button" id="confirm-cancel-btn" class="btn-secondary">
+            취소
+          </button>
+          <button type="button" id="confirm-action-btn" class="btn-danger">
+            삭제하기
+          </button>
+        </footer>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,41 @@
+:root {
+  --bg-main: #f8f9fa;
+  --bg-card: #ffffff;
+  --bg-modal: #ffffff;
+  --overlay: rgba(0, 0, 0, 0.4);
+
+  --text-main: #1a1a1a;
+  --text-sub: #666666;
+  --text-muted: #999999;
+
+  --primary: #6366f1;
+  --primary-hover: #4f46e5;
+  --border-color: #e5e7eb;
+  --danger: #ef4444;
+
+  /* 우선순위 컬러 */
+  --tag-high-bg: #fee2e2;
+  --tag-high-text: #ef4444;
+  --tag-mid-bg: #ffedd5;
+  --tag-mid-text: #f97316;
+  --tag-low-bg: #dcfce7;
+  --tag-low-text: #22c55e;
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+}
+
+.dashboard-container {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
