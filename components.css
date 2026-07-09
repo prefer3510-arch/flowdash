@@ -597,3 +597,50 @@ html[data-theme="dark"] .sort-btn {
   border-radius: 8px;
   font-weight: 600;
 }
+
+/* 드롭다운 전체 박스를 메뉴 위치 기준으로 만든다. */
+.custom-dropdown {
+  position: relative;
+}
+
+/* 드롭다운 메뉴는 기본적으로 숨긴다. */
+.custom-dropdown .dropdown-menu-list {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  width: 100%;
+  background-color: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  padding: 8px 0;
+  margin: 0;
+  list-style: none;
+  z-index: 100;
+}
+
+/* open 클래스가 붙으면 메뉴를 보이게 한다. */
+.custom-dropdown.open .dropdown-menu-list {
+  display: block;
+}
+
+/* 메뉴 항목 스타일 */
+.custom-dropdown .dropdown-menu-list li {
+  padding: 10px 14px;
+  cursor: pointer;
+}
+
+/* 메뉴 항목 hover 효과 */
+.custom-dropdown .dropdown-menu-list li:hover {
+  background-color: #f3f4f6;
+}
+
+/* 선택된 항목 앞에 체크 표시 */
+.custom-dropdown .dropdown-menu-list li.active::before {
+  content: "✓ ";
+}
+
+/* 드롭다운 버튼에 마우스를 올리면 손가락 모양 */
+.custom-dropdown .dropdown-toggle-btn {
+  cursor: pointer;
+}
