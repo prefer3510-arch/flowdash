@@ -55,7 +55,6 @@
   display: block;
 }
 
-/* 다크모드*/
 html[data-theme="dark"] .theme-btn {
   background-color: #222638;
   border-color: #2e354f;
@@ -74,7 +73,6 @@ html[data-theme="dark"] .icon-mode-img {
   gap: 16px;
 }
 
-/* 1. 통계 카드 내부 여백 및 정렬 미세 조정 */
 .stat-card {
   background-color: var(--bg-card);
   border: 1px solid var(--border-color);
@@ -141,7 +139,7 @@ html[data-theme="dark"] .icon-mode-img {
    ========================================================================== */
 .custom-dropdown {
   position: relative;
-  width: 140px;
+  width: 140px; /* 시안에 맞게 적절한 고정 가로폭 부여 */
 }
 
 /* 세모 버튼이 포함된 트리거 영역 */
@@ -166,7 +164,6 @@ html[data-theme="dark"] .icon-mode-img {
   border-color: var(--primary);
 }
 
-/* 선택된 라벨 (평소엔 텍스트 X) */
 .selected-label {
   font-size: 14px;
   color: var(--text-main);
@@ -181,7 +178,11 @@ html[data-theme="dark"] .icon-mode-img {
   transition: transform 0.2s ease;
 }
 
-.custom-dropdown .dropdown-menu-list {
+.custom-dropdown.active .arrow-icon {
+  transform: rotate(180deg);
+}
+
+.dropdown-menu-list {
   position: absolute;
   top: calc(100% + 6px);
   left: 0;
@@ -199,6 +200,7 @@ html[data-theme="dark"] .icon-mode-img {
   display: block;
 }
 
+/* 개별 옵션 */
 .dropdown-menu-list li {
   padding: 10px 16px;
   font-size: 14px;
@@ -318,10 +320,9 @@ html[data-theme="dark"] .sort-btn {
   padding-bottom: 12px;
   margin-bottom: 20px;
 
-  /* 양 끝 정렬을 위한 핵심 속성 추가 */
   display: flex;
   align-items: center;
-  justify-content: space-between; /* 텍스트는 왼쪽, 숫자 배지는 오른쪽 끝으로 배치 */
+  justify-content: space-between;
 
   border-bottom: 2px solid var(--border-color);
   position: relative;
@@ -574,6 +575,7 @@ html[data-theme="dark"] .sort-btn {
   font-weight: 600;
 }
 
+/* 6. 컨펌 박스 전용 */
 .confirm-box {
   max-width: 400px;
   text-align: center;
