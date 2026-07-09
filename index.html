@@ -10,8 +10,6 @@
     <link rel="stylesheet" href="components.css" />
     <link rel="stylesheet" href="theme.css" />
     <link rel="stylesheet" href="responsive.css" />
-
-    <script type="module" src="generation.js" defer></script>
   </head>
   <body>
     <div id="app" class="dashboard-container">
@@ -79,13 +77,14 @@
             aria-label="기간 필터 선택"
             data-value="all"
           >
-            <span class="selected-label"></span>
+            <span class="selected-label">전체 기간</span>
             <span class="arrow-icon"></span>
           </button>
           <ul class="dropdown-menu-list">
-            <li data-value="all">전체 기간</li>
+            <li data-value="all" class="active">전체 기간</li>
             <li data-value="today">오늘</li>
             <li data-value="7days">최근 7일</li>
+            <li data-value="30days">최근 30일</li>
           </ul>
         </div>
 
@@ -95,11 +94,11 @@
             aria-label="우선순위 필터 선택"
             data-value="all"
           >
-            <span class="selected-label"></span>
+            <span class="selected-label">전체 우선순위</span>
             <span class="arrow-icon"></span>
           </button>
           <ul class="dropdown-menu-list">
-            <li data-value="all">전체 우선순위</li>
+            <li data-value="all" class="active">전체 우선순위</li>
             <li data-value="high">높음</li>
             <li data-value="mid">중간</li>
             <li data-value="low">낮음</li>
@@ -208,7 +207,6 @@
             <div class="form-group half">
               <label class="form-label">우선순위</label>
               <fieldset class="priority-radio-group" id="priority-selector">
-                <legend class="visually-hidden">우선순위 선택</legend>
                 <input
                   type="radio"
                   id="priority-high"
@@ -295,5 +293,6 @@
         </footer>
       </div>
     </div>
+    <script type="module" src="generation.js" defer></script>
   </body>
 </html>
