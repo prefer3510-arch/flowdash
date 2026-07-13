@@ -666,11 +666,35 @@ if (kanbanBoard) {
     }
   });
 }
-// 삭제하기 버튼 클릭
-confirmActionBtn.addEventListener("click", function () {
-  todos.length = 0;
+/* ==========================================================================
+  [추가 작업] 다크모드 / 라이트모드 토글 제어 시스템
+   ========================================================================== */
+(function () {
+  const themeToggleBtn = document.getElementById("theme-toggle-btn");
+  const htmlElement = document.documentElement;
 
-  renderTodos();
+  // 브라우저 캐시(localStorage) 혹은 시스템 설정 확인 후 초기 테마 세팅
+  const savedTheme = localStorage.getItem("theme");
+  const systemPrefersDark = window.matchMedia(
+    "(prefers-color-scheme: dark)",
+  ).matches;
+  const initialTheme = savedTheme || (systemPrefersDark ? "dark" : "light");
 
-  confirmModal.classList.add("hidden");
-});
+  // 테마 변경 반영 및 저장 함수
+  function applyTheme(theme) {
+    htmlElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }
+
+  // 초기 로드 시 테마 적용
+  applyTheme(initialTheme);
+
+  // 테마 버튼 클릭 이벤트 연결
+  if (themeToggleBtn) {
+    themeToggleBtn.addEventListener("click", function () {
+      const currentTheme = htmlElement.getAttribute("data-theme");
+      const newTheme = currentTheme === "dark" ? "light" : "dark";
+      applyTheme(newTheme);
+    });
+  }
+})();
