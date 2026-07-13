@@ -1,93 +1,103 @@
 @charset "UTF-8";
 
 @media (max-width: 767px) {
+  /* 1. 헤더 영역 보정 (텍스트 크기 조절 및 줄바꿈 정리) */
   .main-header {
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    position: relative !important;
-    gap: 8px !important;
+    flex-direction: column;
+    align-items: flex-start;
+    position: relative;
+    gap: 8px;
   }
 
   .greeting-text {
-    display: block !important;
-    font-size: 20px !important;
-    line-height: 1.4 !important;
+    display: block;
+    font-size: 20px;
+    line-height: 1.4;
   }
 
   #greeting-ment,
   .editable-nickname {
-    display: inline-block !important;
-    white-space: nowrap !important;
+    display: inline-block;
+    white-space: nowrap;
   }
 
+  /* 달 모양 테마 버튼 위치 고정 */
   .theme-btn {
-    position: absolute !important;
-    right: 0 !important;
-    top: 0 !important;
-    margin: 0 !important;
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin: 0;
   }
 
+  /* 2. 통계 카드 영역 (가로 2열 배치) */
   .stats-container {
-    display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 12px !important;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
   }
 
   .stat-card {
-    grid-column: auto !important;
+    grid-column: auto;
   }
 
+  /* 마지막 5번째 Achievement 카드는 한 줄을 다 차지하게 처리 */
   .stat-card.highlight {
-    grid-column: span 2 !important;
+    grid-column: span 2;
   }
 
+  /* 3. 컨트롤 바 영역 (드롭다운 가로 2열 배치 반영) */
   .controls-container {
-    display: flex !important;
-    flex-direction: row !important;
-    flex-wrap: wrap !important;
-    gap: 10px !important;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
   }
 
+  /* 검색창 100% */
   .search-wrapper {
-    width: 100% !important;
-    flex: none !important;
+    width: 100%;
+    flex: none;
   }
 
+  /* 드롭다운 2개를 가로로 나란히 배치 */
   .custom-dropdown {
-    display: inline-flex !important;
-    width: calc(50% - 5px) !important;
-    flex: 1 !important;
+    display: inline-flex;
+    width: calc(50% - 5px);
+    flex: 1;
   }
 
   .dropdown-toggle-btn {
-    width: 100% !important;
+    width: 100%;
   }
 
+  /* 정렬 버튼과 새 할일 버튼은 다시 100% 가로폭 */
   .sort-btn,
   .btn-primary {
-    width: 100% !important;
-    flex: none !important;
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    box-sizing: border-box !important;
+    width: 100%;
+    flex: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
   }
 
+  /* 4. 하단 정렬 정보 및 초기화 버튼 라인 */
   .sub-controls-line {
-    display: flex !important;
-    flex-direction: row !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    width: 100% !important;
-    margin-top: 4px !important;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 4px;
   }
 
+  /* 5. 칸반 보드 1열 처리 */
   .kanban-board {
-    grid-template-columns: 1fr !important;
-    gap: 16px !important;
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
 
   .kanban-board #board-done {
-    grid-column: auto !important;
+    grid-column: auto;
   }
 }
