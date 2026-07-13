@@ -1,3 +1,66 @@
+// 닉네임 입력하면 수정 부분
+const nickname = document.getElementById("nickname-display");
+const MAX_LENGTH = 10;
+
+// 엔터키 누르면 이벤트 발생하면서 이름 수정
+nickname.addEventListener("keydown", function (event) {
+  if (event.key === "Enter") {
+    event.preventDefault();
+    nickname.blur();
+  }
+});
+
+// 타이핑 할 때 실시간 글자 수 제한 부분
+nickname.addEventListener("input", function () {
+  if (nickname.textContent.length > MAX_LENGTH) {
+    nickname.textContent = nickname.textContent.substring(0, MAX_LENGTH);
+
+    // 여긴 입력 커서 위치 뒤로 유지
+    const range = document.createRange();
+    const sel = window.getSelection();
+    range.selectNodeContents(nickname);
+    range.collapse(false);
+    sel.removeAllRanges();
+    sel.addRange(range);
+  }
+});
+
+// 기본 복붙 차단하기
+nickname.addEventListener("paste", function (evnet) {
+  event.preventDefault();
+});
+
+// 입력창에서 벗어나면 입력한 닉네임 출력
+nickname.addEventListener("blur", function () {
+  const updateName = nickname.textContent.trim();
+
+  // 만약 입력값이 공백이면 기본값 출력
+  if (updateName === "") {
+    nickname.innerText = "FlowDash";
+    return;
+  }
+
+  console.log("수정된 닉네임:", updateName);
+});
+
+// 실시간 날짜 업데이트
+const todayDate = document.getElementById("current-date");
+function updateDateTime() {
+  const now = new Date();
+
+  const year = now.getFullYear();
+  const month = now.getMonth() + 1;
+  const date = now.getDate();
+
+  todayDate.textContent = `${year}년 ${month}월 ${date}일`;
+}
+
+updateDateTime();
+
+setInterval(updateDateTime, 1000 * 60);
+
+// 윗 부분 추가 ( 2026. 07. 13)
+
 // HTML 태그(요소)들 정확하게 가져오기
 
 const todoModal = document.getElementById("todo-modal");
