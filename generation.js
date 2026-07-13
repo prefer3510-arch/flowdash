@@ -59,7 +59,7 @@ updateDateTime();
 
 setInterval(updateDateTime, 1000 * 60);
 
-// 윗 부분 추가 ( 2026. 07. 13)
+// 윗 부분 새로 추가 ( 2026. 07. 13)
 
 // HTML 태그(요소)들 정확하게 가져오기
 
@@ -88,6 +88,8 @@ const statAchievement = document.getElementById("stat-achievement");
 // 전체 할 일 데이터를 저장하는 배열
 const todos = [];
 
+let currentEditId = null;
+
 // 현재 선택된 기간 필터
 let currentPeriodFilter = "all";
 
@@ -96,13 +98,23 @@ let currentPriorityFilter = "all";
 
 // 모달 열기 / 닫기 함수 정의
 
-function openModal() {
+function openModal(isEdit = false) {
   todoModal.classList.remove("hidden");
+
+  const modalTitle = document.getElementById("modal-title");
+  if (modalTitle) {
+    if (isEdit === true) {
+      modalTitle.textContent = "할 일 수정";
+    } else {
+      modalTitle.textContent = "새 할 일";
+    }
+  }
 }
 
 function closeModal() {
   todoModal.classList.add("hidden");
   todoForm.reset();
+  currentEditId = null;
 }
 
 // 버튼에 이벤트 연결
@@ -141,19 +153,38 @@ todoForm.addEventListener("submit", function (event) {
   // 새 할 일 데이터 생성
   const now = Date.now();
 
-  const newTodo = {
-    id: now,
-    title: titleValue,
-    content: contentValue,
-    priority: priorityValue,
-    status: statusValue,
-    createdAt: now,
-    completedAt: statusValue === "done" ? now : null,
-  };
+  // 수정 모드 추가 (2026.07.13)
+  if (currentEditId !== null) {
+    const todoIndex = todos.findIndex(function (t) {
+      return t.id === currentEditId;
+    });
 
-  // 배열에 저장
-  todos.push(newTodo);
+    if (todoIndex !== -1) {
+      todos[todoIndex].title = titleValue;
+      todos[todoIndex].content = contentValue;
+      todos[todoIndex].priority = priorityValue;
 
+      if (statusValue === "done" && todos[todoIndex].status !== "done") {
+        todos[todoIndex].completedAt = now;
+      } else if (statusValue !== "done") {
+        todos[todoIndex].completedAt = null;
+      }
+      todos[todoIndex].status = statusValue;
+    }
+  } else {
+    const newTodo = {
+      id: now,
+      title: titleValue,
+      content: contentValue,
+      priority: priorityValue,
+      status: statusValue,
+      createdAt: now,
+      completedAt: statusValue === "done" ? now : null,
+    };
+
+    // 배열에 저장
+    todos.push(newTodo);
+  }
   // 필터/정렬 조건에 맞게 화면 다시 그리기
   renderTodos();
 
@@ -352,6 +383,8 @@ function renderTodos() {
 
   // 여기 새로 기입 (2026.07.10) - 대시보드 카운트/성취도 업데이트
   updateDashboard();
+
+  updateAllCounts(); // 여기 새로 기입 ( 2026.07.13 카드 추가 시 카운트 ++)
 }
 
 // 할 일 데이터 1개를 카드 HTML로 만들어주는 함수
@@ -374,14 +407,16 @@ function createTodoCard(todo) {
       <p class="card-content">${todo.content}</p>
       <div class="card-dates">
         <span class="date-item created">
-          <i class="icon-calendar"></i> ${formatDate(todo.createdAt)}
+  //이거 클래스 명 바꿨습니다
+          <i class="fa-solid fa-calendar"></i> ${formatDate(todo.createdAt)}
         </span>
         
         ${
           // 완료 시간이 있으면 완료 날짜도 표시한다.
           todo.completedAt
             ? `<span class="date-item completed-time">
-                <i class="icon-check"></i> ${formatDate(todo.completedAt)}
+  //이것도 클래스명 바꿨어요
+                <i class="fa-solid fa-check"></i> ${formatDate(todo.completedAt)}
               </span>`
             : ""
         }
@@ -396,4 +431,60 @@ function formatDate(timestamp) {
 
   // 예: 2026. 07. 09. 11:23 형태로 변환
   return `${date.getFullYear()}. ${String(date.getMonth() + 1).padStart(2, "0")}. ${String(date.getDate()).padStart(2, "0")}. ${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
+}
+
+// 박스 칸 개수 추가 및 감소
+function updateAllCounts() {
+  //할 일 개수 세기
+  const todoCount = document.querySelectorAll("#todo-list .todo-card").length;
+  const doingCount = document.querySelectorAll("#doing-list .todo-card").length;
+  const doneCount = document.querySelectorAll("#done-list .todo-card").length;
+
+  const countTodoBadge = document.getElementById("count-todo");
+  const countDoingBadge = document.getElementById("count-doing");
+  const countDoneBadge = document.getElementById("count-done");
+
+  if (countTodoBadge) countTodoBadge.textContent = todoCount;
+  if (countDoingBadge) countDoingBadge.textContent = doingCount;
+  if (countDoneBadge) countDoneBadge.textContent = doneCount;
+
+  const todoEmpty = document.getElementById("todo-empty");
+  if (todoEmpty) {
+    todoEmpty.style.display = todoCount === 0 ? "block" : "none";
+  }
+}
+
+// 보드 안 카드 클릭했을 때 열기
+const kanbanBoard = document.getElementById("kanban-board");
+if (kanbanBoard) {
+  kanbanBoard.addEventListener("click", function (event) {
+    const card = event.target.closest(".todo-card");
+
+    if (!card) return; // 카드 빈 공간 누르면 중단
+
+    const todoId = Number(card.dataset.id);
+
+    const targetTodo = todos.find(function (t) {
+      return t.id === todoId;
+    });
+
+    if (targetTodo) {
+      // 일치하는 데이터 찾으면 모달창에 기존 데이터 넣기
+      currentEditId = todoId;
+
+      // 기존 모달창 입력값들 넣기
+      todoTitleInput.value = targetTodo.title;
+      todoContentInput.value = targetTodo.content;
+      statusSelect.value = targetTodo.status;
+
+      const priorityRadio = document.querySelector(
+        `input[name="priority"][value="${targetTodo.priority}"]`,
+      );
+      if (priorityRadio) {
+        priorityRadio.checked = true;
+      }
+      // 수정모드로 모달 창 띄우기
+      openModal(true);
+    }
+  });
 }
