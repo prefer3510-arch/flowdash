@@ -100,6 +100,15 @@ const sortStatusValue = document.getElementById("sort-status-value");
 // 전체 데이터 초기화 버튼 선택
 const clearAllBtn = document.getElementById("clear-all-btn");
 
+// 삭제 확인 모달
+const confirmModal = document.getElementById("confirm-modal");
+const confirmTitle = document.getElementById("confirm-title");
+const confirmMessage = document.getElementById("confirm-message");
+
+// 삭제 확인 모달 버튼
+const confirmCancelBtn = document.getElementById("confirm-cancel-btn");
+const confirmActionBtn = document.getElementById("confirm-action-btn");
+
 // 전체 할 일 데이터를 저장하는 배열
 const todos = [];
 
@@ -560,7 +569,7 @@ if (searchInput) {
 
     if (currentSearchKeyword !== "") {
       // 입력한 검색어만 핑크색 영역에 넣기
-      searchValue.textContent = currentSearchKeyword;
+      searchValue.textContent = `"${currentSearchKeyword}"`;
 
       // 검색어 배지 표시
       searchKeywordDisplay.style.display = "inline-block";
@@ -589,23 +598,18 @@ if (closeModalBtn) {
 }
 
 // 전체 데이터 초기화 버튼 클릭
-if (clearAllBtn) {
-  clearAllBtn.addEventListener("click", function () {
-    // 삭제 확인창 표시
-    const isConfirmed = confirm("모든 할 일 데이터를 삭제하시겠습니까?");
+clearAllBtn.addEventListener("click", function () {
+  confirmTitle.textContent = "데이터 초기화";
+  confirmMessage.innerHTM =
+    "모든 할 일 데이터를 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.";
 
-    // 취소를 누르면 함수 종료
-    if (!isConfirmed) {
-      return;
-    }
+  confirmModal.classList.remove("hidden");
+});
 
-    // 전체 할 일 데이터 삭제
-    todos.length = 0;
-
-    // 카드 목록과 대시보드 숫자 다시 표시
-    renderTodos();
-  });
-}
+// 취소 버튼 클릭
+confirmCancelBtn.addEventListener("click", function () {
+  confirmModal.classList.add("hidden");
+});
 
 // 박스 칸 개수 추가 및 감소
 function updateAllCounts() {
@@ -662,3 +666,11 @@ if (kanbanBoard) {
     }
   });
 }
+// 삭제하기 버튼 클릭
+confirmActionBtn.addEventListener("click", function () {
+  todos.length = 0;
+
+  renderTodos();
+
+  confirmModal.classList.add("hidden");
+});
