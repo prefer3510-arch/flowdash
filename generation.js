@@ -407,7 +407,6 @@ function createTodoCard(todo) {
       <p class="card-content">${todo.content}</p>
       <div class="card-dates">
         <span class="date-item created">
-  //이거 클래스 명 바꿨습니다
           <i class="fa-solid fa-calendar"></i> ${formatDate(todo.createdAt)}
         </span>
         
@@ -415,7 +414,6 @@ function createTodoCard(todo) {
           // 완료 시간이 있으면 완료 날짜도 표시한다.
           todo.completedAt
             ? `<span class="date-item completed-time">
-  //이것도 클래스명 바꿨어요
                 <i class="fa-solid fa-check"></i> ${formatDate(todo.completedAt)}
               </span>`
             : ""
