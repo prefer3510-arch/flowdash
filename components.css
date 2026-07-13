@@ -644,3 +644,27 @@ html[data-theme="dark"] .sort-btn {
 .custom-dropdown .dropdown-toggle-btn {
   cursor: pointer;
 }
+
+/* 정렬 배지와 검색어 배지를 가로로 배치 */
+.status-badge-line {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 각 배지 크기는 글자 길이만큼 */
+.active-filter-badge {
+  display: inline-block;
+  width: fit-content;
+}
+
+/* 정렬:, 검색어: 부분 */
+.filter-label {
+  color: #666;
+}
+
+/* 오름차순, 실제 검색어 부분 */
+.filter-value {
+  color: #ff6b9a;
+}

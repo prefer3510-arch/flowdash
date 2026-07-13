@@ -85,6 +85,21 @@ const statDoing = document.getElementById("stat-doing");
 const statDone = document.getElementById("stat-done");
 const statAchievement = document.getElementById("stat-achievement");
 
+// 현재 적용된 필터 조건을 표시할 요소 가져오기
+const filterStatusText = document.getElementById("filter-status-text");
+
+// 검색어가 표시될 div 만들기
+const searchKeywordDisplay = document.getElementById("search-keyword-display");
+// 검색창 요소 가져오기
+const searchInput = document.getElementById("search-input");
+// 실제 검색어가 표시될 span 가져오기
+const searchValue = document.getElementById("search-value");
+// 정렬 상태의 오름차순/내림차순 값
+const sortStatusValue = document.getElementById("sort-status-value");
+
+// 전체 데이터 초기화 버튼 선택
+const clearAllBtn = document.getElementById("clear-all-btn");
+
 // 전체 할 일 데이터를 저장하는 배열
 const todos = [];
 
@@ -95,6 +110,9 @@ let currentPeriodFilter = "all";
 
 // 현재 선택된 우선순위 필터
 let currentPriorityFilter = "all";
+
+// 현재 입력된 검색어
+let currentSearchKeyword = "";
 
 // 모달 열기 / 닫기 함수 정의
 
@@ -289,10 +307,16 @@ priorityMenuItems.forEach(function (item) {
     // 클릭한 항목에 선택 표시 추가
     item.classList.add("active");
 
-    // 버튼 텍스트를 클릭한 항목으로 변경
-    prioritySelectedLabel.textContent = item.textContent;
+    // 버튼에 클릭한 항목의 글씨 표시
+    prioritySelectedLabel.textContent = item.textContent.trim();
 
-    // 선택 후 우선순위 메뉴 닫기
+    // 클릭한 우선순위 값을 변수에 저장
+    currentPriorityFilter = item.dataset.value;
+
+    // 변경된 우선순위 조건으로 카드 다시 그리기
+    renderTodos();
+
+    // 선택 후 드롭다운 닫기
     dropdownPriority.classList.remove("open");
   });
 });
@@ -303,21 +327,25 @@ document.addEventListener("click", function () {
   dropdownPriority.classList.remove("open");
 });
 
-/// 정렬: 오름차순 / 내림차순 전환 ///
-
 // 정렬 버튼 선택
 const sortToggleBtn = document.getElementById("sort-toggle-btn");
 
-// 정렬 버튼 클릭 시 오름차순/내림차순 텍스트 전환
+// 정렬 버튼 클릭 시 오름차순/내림차순 변경
 sortToggleBtn.addEventListener("click", function () {
   if (sortToggleBtn.dataset.sort === "asc") {
     sortToggleBtn.dataset.sort = "desc";
     sortToggleBtn.textContent = "정렬: 내림차순 ↓";
+
+    // 아래 정렬 배지 값 변경
+    sortStatusValue.textContent = "내림차순";
   } else {
     sortToggleBtn.dataset.sort = "asc";
     sortToggleBtn.textContent = "정렬: 오름차순 ↑";
+
+    // 아래 정렬 배지 값 변경
+    sortStatusValue.textContent = "오름차순";
   }
-  // 정렬 상태가 바뀐 뒤 화면을 다시 그린다.
+
   renderTodos();
 });
 
@@ -347,29 +375,72 @@ function updateDashboard() {
   if (statAchievement) statAchievement.textContent = `${achievement}%`;
 }
 
-// 여기서부터는 todos 대신 sortedTodos를 사용한다.
 function renderTodos() {
-  // 기존 화면 비우기
+  // 기존 카드 화면 비우기
   todoList.innerHTML = "";
   doingList.innerHTML = "";
   doneList.innerHTML = "";
 
+  // 현재 검색어를 소문자로 변경
+  const keyword = currentSearchKeyword.toLowerCase();
+
+  // 현재 시간
+  const now = Date.now();
+
+  // 검색어, 기간, 우선순위 조건에 맞는 할 일만 남기기
+  const filteredTodos = todos.filter(function (todo) {
+    const title = (todo.title || "").toLowerCase();
+    const content = (todo.content || "").toLowerCase();
+
+    // 검색어 조건
+    const matchesSearch =
+      keyword === "" || title.includes(keyword) || content.includes(keyword);
+
+    // 우선순위 조건
+    const matchesPriority =
+      currentPriorityFilter === "all" ||
+      todo.priority === currentPriorityFilter;
+
+    // 기간 조건
+    let matchesPeriod = true;
+
+    if (currentPeriodFilter === "today") {
+      const today = new Date();
+      const createdDate = new Date(todo.createdAt);
+
+      matchesPeriod =
+        today.getFullYear() === createdDate.getFullYear() &&
+        today.getMonth() === createdDate.getMonth() &&
+        today.getDate() === createdDate.getDate();
+    } else if (currentPeriodFilter === "7days" || currentPeriodFilter === "7") {
+      const sevenDays = 7 * 24 * 60 * 60 * 1000;
+      matchesPeriod = now - todo.createdAt <= sevenDays;
+    } else if (
+      currentPeriodFilter === "30days" ||
+      currentPeriodFilter === "30"
+    ) {
+      const thirtyDays = 30 * 24 * 60 * 60 * 1000;
+      matchesPeriod = now - todo.createdAt <= thirtyDays;
+    }
+
+    // 검색어, 우선순위, 기간 조건을 모두 만족해야 표시
+    return matchesSearch && matchesPriority && matchesPeriod;
+  });
+
+  // 현재 정렬 방식 확인
   const sortType = sortToggleBtn.dataset.sort;
 
-  // todos 배열을 복사한 뒤, 제목 기준으로 정렬한다.
-  const sortedTodos = [...todos].sort(function (a, b) {
-    // 오름차순이면 제목을 가나다순으로 정렬한다.
+  // 제목을 기준으로 가나다순 또는 역순 정렬
+  filteredTodos.sort(function (a, b) {
     if (sortType === "asc") {
       return a.title.localeCompare(b.title, "ko");
     }
 
-    // 내림차순이면 제목을 역순으로 정렬한다.
-    else {
-      return b.title.localeCompare(a.title, "ko");
-    }
+    return b.title.localeCompare(a.title, "ko");
   });
-  // 정렬된 todo들을 상태별 칸에 다시 넣는다.
-  sortedTodos.forEach(function (todo) {
+
+  // 필터링과 정렬이 끝난 카드 화면에 표시
+  filteredTodos.forEach(function (todo) {
     const cardHTML = createTodoCard(todo);
 
     if (todo.status === "todo") {
@@ -381,41 +452,80 @@ function renderTodos() {
     }
   });
 
-  // 여기 새로 기입 (2026.07.10) - 대시보드 카운트/성취도 업데이트
+  // 대시보드 숫자와 성취도 업데이트
   updateDashboard();
 
   updateAllCounts(); // 여기 새로 기입 ( 2026.07.13 카드 추가 시 카운트 ++)
+
+  // 현재 적용 중인 필터 조건 표시
+  if (filterStatusText) {
+    const filterTexts = [];
+
+    // 검색어가 있으면 표시
+    if (currentSearchKeyword !== "") {
+      filterTexts.push(`검색어: ${currentSearchKeyword}`);
+    }
+
+    // 전체 기간이 아니면 표시
+    if (currentPeriodFilter !== "all") {
+      filterTexts.push(`기간: ${periodSelectedLabel.textContent.trim()}`);
+    }
+
+    // 전체 우선순위가 아니면 표시
+    if (currentPriorityFilter !== "all") {
+      filterTexts.push(`우선순위: ${prioritySelectedLabel.textContent.trim()}`);
+    }
+
+    // 적용된 조건이 있으면 박스로 표시
+    if (filterTexts.length > 0) {
+      filterStatusText.textContent = filterTexts.join(" · ");
+      filterStatusText.style.display = "block";
+    } else {
+      filterStatusText.textContent = "";
+      filterStatusText.style.display = "none";
+    }
+  }
 }
 
 // 할 일 데이터 1개를 카드 HTML로 만들어주는 함수
 function createTodoCard(todo) {
-  // 기본 우선순위 텍스트는 중간
+  // 기본 우선순위 텍스트
   let priorityText = "중간";
 
-  // 우선순위 값에 따라 화면에 보여줄 한글 텍스트 설정
-  if (todo.priority === "high") priorityText = "높음";
-  if (todo.priority === "low") priorityText = "낮음";
+  if (todo.priority === "high") {
+    priorityText = "높음";
+  } else if (todo.priority === "low") {
+    priorityText = "낮음";
+  }
 
-  // 완료 상태이면 completed 클래스를 추가한다.
+  // 완료 상태이면 completed 클래스 추가
   const isCompletedClass = todo.status === "done" ? "completed" : "";
 
-  // 카드 HTML 문자열을 만들어서 반환한다.
+  // 카드 HTML 문자열 반환
   return `
     <article class="todo-card ${isCompletedClass}" data-id="${todo.id}">
-      <div class="card-tag priority-${todo.priority}">${priorityText}</div>
+      <div class="card-tag priority-${todo.priority}">
+        ${priorityText}
+      </div>
+
       <h3 class="card-title">${todo.title}</h3>
-      <p class="card-content">${todo.content}</p>
+
+      <p class="card-content">${todo.content || ""}</p>
+
       <div class="card-dates">
         <span class="date-item created">
-          <i class="icon-calendar"></i> ${formatDate(todo.createdAt)}
+          <i class="icon-calendar"></i>
+          ${formatDate(todo.createdAt)}
         </span>
-        
+
         ${
-          // 완료 시간이 있으면 완료 날짜도 표시한다.
           todo.completedAt
-            ? `<span class="date-item completed-time">
-                <i class="icon-check"></i> ${formatDate(todo.completedAt)}
-              </span>`
+            ? `
+              <span class="date-item completed-time">
+                <i class="icon-check"></i>
+                ${formatDate(todo.completedAt)}
+              </span>
+            `
             : ""
         }
       </div>
@@ -423,12 +533,78 @@ function createTodoCard(todo) {
   `;
 }
 
-// timestamp 숫자를 화면에 보여줄 날짜 문자열로 바꾸는 함수
+// timestamp를 날짜 문자열로 변경
 function formatDate(timestamp) {
   const date = new Date(timestamp);
 
-  // 예: 2026. 07. 09. 11:23 형태로 변환
-  return `${date.getFullYear()}. ${String(date.getMonth() + 1).padStart(2, "0")}. ${String(date.getDate()).padStart(2, "0")}. ${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  const hour = String(date.getHours()).padStart(2, "0");
+  const minute = String(date.getMinutes()).padStart(2, "0");
+
+  return `${year}. ${month}. ${day}. ${hour}:${minute}`;
+}
+
+// 검색어 표시 박스 초기 설정
+if (searchKeywordDisplay) {
+  searchKeywordDisplay.classList.add("search-keyword-display");
+  searchKeywordDisplay.style.display = "none";
+}
+
+// 검색창에 입력할 때마다 실행
+if (searchInput) {
+  searchInput.addEventListener("input", function () {
+    // 입력한 검색어 저장
+    currentSearchKeyword = searchInput.value.trim();
+
+    if (currentSearchKeyword !== "") {
+      // 입력한 검색어만 핑크색 영역에 넣기
+      searchValue.textContent = currentSearchKeyword;
+
+      // 검색어 배지 표시
+      searchKeywordDisplay.style.display = "inline-block";
+    } else {
+      // 검색어를 지우면 배지 숨기기
+      searchValue.textContent = "";
+      searchKeywordDisplay.style.display = "none";
+    }
+
+    // 검색 조건으로 카드 다시 그리기
+    renderTodos();
+  });
+}
+
+// 처음 화면 표시
+renderTodos();
+
+// 버튼에 이벤트 연결
+
+if (openModalBtn) {
+  openModalBtn.addEventListener("click", openModal);
+}
+
+if (closeModalBtn) {
+  closeModalBtn.addEventListener("click", closeModal);
+}
+
+// 전체 데이터 초기화 버튼 클릭
+if (clearAllBtn) {
+  clearAllBtn.addEventListener("click", function () {
+    // 삭제 확인창 표시
+    const isConfirmed = confirm("모든 할 일 데이터를 삭제하시겠습니까?");
+
+    // 취소를 누르면 함수 종료
+    if (!isConfirmed) {
+      return;
+    }
+
+    // 전체 할 일 데이터 삭제
+    todos.length = 0;
+
+    // 카드 목록과 대시보드 숫자 다시 표시
+    renderTodos();
+  });
 }
 
 // 박스 칸 개수 추가 및 감소
