@@ -667,3 +667,98 @@ html[data-theme="dark"] .icon-sun {
   padding: 10px 20px;
   border-radius: 8px;
 }
+
+/* 정렬 배지와 검색어 배지를 가로로 배치 */
+.status-badge-line {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 각 배지 크기는 글자 길이만큼 */
+.active-filter-badge {
+  display: inline-block;
+  width: fit-content;
+}
+
+/* 정렬:, 검색어: 부분 */
+.filter-label {
+  color: #666;
+}
+
+/* 오름차순, 실제 검색어 부분 */
+.filter-value {
+  color: #ff6b9a;
+}
+
+/* 삭제 확인 모달 전체 박스 */
+#confirm-modal .confirm-box {
+  width: 400px;
+  max-width: calc(100% - 40px);
+  padding: 32px 36px 28px;
+  border-radius: 16px;
+  text-align: center;
+}
+
+/* 삭제 확인 제목 */
+#confirm-modal .confirm-title {
+  margin: 0 0 14px;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+/* 삭제 확인 설명 */
+#confirm-modal .confirm-message {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #6b7280;
+}
+
+/* 취소, 삭제하기 버튼 영역 */
+#confirm-modal .form-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+/* 취소 버튼 */
+#confirm-cancel-btn {
+  min-width: 96px;
+  height: 44px;
+  padding: 0 20px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  background-color: #ffffff;
+  color: #4b5563;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* 삭제하기 버튼 */
+#confirm-action-btn {
+  min-width: 96px;
+  height: 44px;
+  padding: 0 20px;
+  border: none;
+  border-radius: 10px;
+  background-color: #f04444;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* 버튼에 마우스를 올렸을 때 */
+#confirm-cancel-btn:hover {
+  background-color: #f3f4f6;
+}
+
+#confirm-action-btn:hover {
+  background-color: #dc2626;
+}
