@@ -366,6 +366,7 @@ html[data-theme="dark"] .icon-sun {
   box-shadow: 0 8px 16px rgba(43, 17, 58, 0.06);
 }
 
+/*여기가 x 삭제버튼*/
 .delete-card-btn {
   position: absolute;
   top: 14px;
