@@ -294,7 +294,7 @@ html[data-theme="dark"] .icon-sun {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  min-height: 500px;
+  height: 100%;
 }
 
 .column-header {
@@ -346,9 +346,11 @@ html[data-theme="dark"] .icon-sun {
   display: flex;
   flex-direction: column;
   gap: 14px;
-
-  /* 내부 요소를 위쪽부터 배치 */
-  justify-content: flex-start;
+  flex: 1;
+  min-height: 100px;
+}
+  
+ { justify-content: flex-start;
 }
 
 .empty-state {
