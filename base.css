@@ -1,0 +1,63 @@
+@font-face {
+  font-family: "SeoulNotice";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/2505-1@1.0/SeoulAlrimTTF-Medium.woff2")
+    format("woff2");
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "OneStoreMobilePop";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-POP.woff")
+    format("woff");
+  font-weight: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "OmuDaye";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2304-01@1.0/omyu_pretty.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-display: swap;
+}
+
+:root {
+  --bg-main: #ffeef2;
+  --bg-card: #ffffff;
+  --bg-modal: #ffffff;
+  --overlay: rgba(43, 17, 58, 0.4);
+
+  --text-main: #2b113a;
+  --text-sub: #b83b6c;
+  --text-muted: #d66894;
+
+  --primary: #ff4a7d;
+  --primary-hover: #e03264;
+  --border-color: #ffd2df;
+  --danger: #ef4444;
+
+  --tag-high-bg: #fee2e2;
+  --tag-high-text: #ef4444;
+  --tag-mid-bg: #ffedd5;
+  --tag-mid-text: #f97316;
+  --tag-low-bg: #dcfce7;
+  --tag-low-text: #22c55e;
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  font-family: "OmuDaye", sans-serif;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+}
+
+.dashboard-container {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}

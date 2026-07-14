@@ -1,0 +1,108 @@
+@charset "UTF-8";
+
+@media (max-width: 767px) {
+  .main-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    position: relative !important;
+    gap: 8px !important;
+  }
+
+  .greeting-text {
+    display: block !important;
+    font-size: 20px !important;
+    line-height: 1.4 !important;
+  }
+
+  #greeting-ment,
+  .editable-nickname {
+    display: inline-block !important;
+    white-space: nowrap !important;
+  }
+
+  .theme-btn {
+    position: absolute !important;
+    right: 0 !important;
+    top: 0 !important;
+    margin: 0 !important;
+  }
+
+  .stats-container {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+
+  .stat-card {
+    grid-column: auto !important;
+  }
+
+  .stat-card.highlight {
+    grid-column: span 2 !important;
+  }
+
+  .controls-container {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+  }
+
+  .search-wrapper {
+    width: 100% !important;
+    flex: none !important;
+  }
+
+  .custom-dropdown {
+    display: inline-flex !important;
+    width: calc(50% - 5px) !important;
+    flex: 1 !important;
+  }
+
+  .dropdown-toggle-btn {
+    width: 100% !important;
+  }
+
+  .sort-btn,
+  .btn-primary {
+    width: 100% !important;
+    flex: none !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    box-sizing: border-box !important;
+  }
+
+  .sub-controls-line {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100% !important;
+    margin-top: 4px !important;
+  }
+
+  .kanban-board {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  .kanban-board #board-done {
+    grid-column: auto !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .controls-container {
+    flex-wrap: nowrap !important;
+  }
+  .custom-dropdown {
+    width: 150px !important;
+    flex: none !important;
+    display: inline-block !important;
+  }
+  .search-wrapper {
+    width: auto !important;
+    flex: 1 !important;
+  }
+}
