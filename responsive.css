@@ -1,108 +1,107 @@
 @charset "UTF-8";
 
+/* ==========================================================================
+   FlowDash 모바일 전용 반응형 레이아웃 (767px 이하)
+   ========================================================================== */
 @media (max-width: 767px) {
-  .main-header {
+  /* 1. 헤더 영역 보정 (유연한 상하 배치 및 줄바꿈 방지) */
+  .dashboard-container .main-header {
     flex-direction: column;
     align-items: flex-start;
     position: relative;
     gap: 8px;
   }
 
-  .greeting-text {
+  .main-header .greeting-text {
     display: block;
     font-size: 20px;
     line-height: 1.4;
   }
 
   #greeting-ment,
-  .editable-nickname {
+  .main-header .editable-nickname {
     display: inline-block;
     white-space: nowrap;
   }
 
-  .theme-btn {
+  /* 우측 상단 다크모드 버튼 위치 고정 */
+  .main-header .theme-btn {
     position: absolute;
     right: 0;
     top: 0;
     margin: 0;
   }
 
-  .stats-container {
+  /* 2. 업무 통계 카드 영역 (가로 2열 그리드 배치) */
+  .dashboard-container .stats-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
   }
 
-  .stat-card {
+  .stats-container .stat-card {
     grid-column: auto;
   }
 
-  .stat-card.highlight {
+  /* 첫 번째 전체 업무 카드가 2열 전체를 차지하게 설정 */
+  .stats-container .stat-card.highlight {
     grid-column: span 2;
   }
 
-  .controls-container {
+  /* 3. 검색 및 컨트롤러 영역 */
+  .dashboard-container .controls-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  /* 검색창 100% 가로폭 지정 */
+  .controls-container .search-wrapper {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* 4. 드롭다운 및 버튼 묶음 (.sub-controls-line) 유연화 */
+  .controls-container .sub-controls-line {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
+    flex-wrap: wrap; /* 자식 요소들이 넘치면 아래 줄로 떨어지게 유도 */
     gap: 10px;
-  }
-
-  .search-wrapper {
     width: 100%;
-    flex: none;
   }
 
-  .custom-dropdown {
+  /* [핵심] 기간, 우선순위 드롭다운 2개를 정확히 가로로 반씩(50%) 나누어 배치 */
+  .sub-controls-line .custom-dropdown {
     display: inline-flex;
-    width: calc(50% - 5px);
-    flex: 1;
+    width: calc(50% - 5px); /* gap(10px)을 감안한 완벽한 절반 크기 계산 */
+    flex: 1 0 calc(50% - 5px);
   }
 
-  .dropdown-toggle-btn {
+  /* 드롭다운 버튼 자체도 가로폭을 가득 채우도록 지정 */
+  .custom-dropdown .dropdown-toggle-btn {
     width: 100%;
   }
 
-  .sort-btn,
-  .btn-primary {
+  /* 정렬, 전체 삭제, 새 할일 버튼은 각각 독립된 100% 줄로 세로 나열 */
+  .sub-controls-line .sort-btn,
+  .sub-controls-line .btn-secondary,
+  .sub-controls-line .btn-primary {
     width: 100%;
     flex: none;
     display: flex;
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
+    margin: 0; /* 기존 마진 상쇄 */
   }
 
-  .sub-controls-line {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    margin-top: 4px;
-  }
-
-  .kanban-board {
+  /* 5. 칸반 보드 1열 배치 처리 */
+  .dashboard-container .kanban-board {
     grid-template-columns: 1fr;
     gap: 16px;
   }
 
-  .kanban-board #board-done {
+  .kanban-board .board-column {
     grid-column: auto;
-  }
-}
-
-@media (min-width: 768px) {
-  .controls-container {
-    flex-wrap: nowrap;
-  }
-  .custom-dropdown {
-    width: 150px;
-    flex: none;
-    display: inline-block;
-  }
-  .search-wrapper {
-    width: auto;
-    flex: 1;
   }
 }
