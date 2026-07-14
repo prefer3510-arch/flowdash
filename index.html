@@ -112,23 +112,6 @@
           </button>
 
           <button id="open-modal-btn" class="btn-primary">+ 새 할 일</button>
-      <section class="sub-controls-line">
-        <div class="status-badge-line">
-    
-          <span id="sort-status-display" class="active-filter-badge">
-            <span class="filter-label">정렬:</span>
-            <span id="sort-status-value" class="filter-value">오름차순</span>
-          </span>
-
-       
-          <span
-            id="search-keyword-display"
-            class="active-filter-badge"
-            style="display: none"
-          >
-            <span class="filter-label">검색어:</span>
-            <span id="search-value" class="filter-value"></span>
-          </span>
         </div>
       </div>
 
@@ -164,21 +147,6 @@
               <h2 class="column-name">완료</h2>
               <span id="done-count" class="column-count">0</span>
             </div>
-        <section class="board-column" data-status="done" id="board-done">
-          <h2 class="board-title">
-            완료 <span class="count-badge" id="count-done">1</span>
-          </h2>
-          <div class="card-list" id="done-list">
-            <article class="todo-card completed" data-id="sample-id-2">
-              <div class="card-tag priority-high">높음</div>
-              <h3 class="card-title">할 일 완료 예시</h3>
-              <p class="card-content">완료된 아이템 예시 입니다</p>
-              <div class="card-dates">
-                <span class="date-item created"
-                  ><i class="icon-calendar"></i> 2026. 01. 22. 01:09</span
-                >
-              </div>
-            </article>
           </div>
           <div class="column-cards-area" id="done-list"></div>
         </section>
@@ -287,10 +255,6 @@
         <h2 class="confirm-title" id=\"confirm-title\">삭제 확인</h2>
         <p class=\"confirm-message\" id=\"confirm-message\">
           정말로 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.
-        <h2 class="confirm-title" id="confirm-title">삭제 확인</h2>
-        <p class="confirm-message" id="confirm-message">
-          정말로 삭제하시겠습니까? <br />
-          이 작업은 되돌릴 수 없습니다.
         </p>
         <footer class="form-actions">
           <button type="button" id="confirm-cancel-btn" class="btn-secondary">
