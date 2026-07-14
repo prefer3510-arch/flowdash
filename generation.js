@@ -170,10 +170,10 @@ todoForm.addEventListener("submit", function (event) {
 
   const statusValue = statusSelect.value;
 
-  // 제목 없으면 안내하고 중단
-  if (titleValue === "") {
-    alert("제목을 입력해주세요!");
-    todoTitleInput.focus();
+  // 제목 없으면 안내하고 중단 (제목 입력 칸에 문구 뜨도록 수정 07.14)
+  if (titleValue.trim() === "") {
+    todoTitleInput.required = true;
+    todoTitleInput.reportValidity();
     return;
   }
 
@@ -512,7 +512,9 @@ function createTodoCard(todo) {
 
   // 카드 HTML 문자열 반환
   return `
-  <article class="todo-card ${isCompletedClass}" data-id="${todo.id}">
+    <article class="todo-card ${isCompletedClass}" data-id="${todo.id}">
+    <button type="button" class="delete-card-btn" aria-label="삭제">&times;</button>
+
     <div class="card-tag priority-${todo.priority}">
       ${priorityText}
     </div>
@@ -636,6 +638,10 @@ function updateAllCounts() {
 const kanbanBoard = document.getElementById("kanban-board");
 if (kanbanBoard) {
   kanbanBoard.addEventListener("click", function (event) {
+    if (event.target.classList.contains("delete-card-btn")) {
+      return; // X 눌렀을 때 수정 모달 뜨는거 방지
+    }
+
     const card = event.target.closest(".todo-card");
 
     if (!card) return; // 카드 빈 공간 누르면 중단
@@ -698,3 +704,56 @@ if (kanbanBoard) {
     });
   }
 })();
+
+// 카드 삭제 기능
+const confirmDoingBtn = document.getElementById("confirm-action-btn");
+const confirmNoBtn = document.getElementById("confirm-cancel-btn");
+const deleteModal = document.getElementById("confirm-modal");
+
+let cardDelete = null;
+
+const mainKanbanBoard = document.querySelector(".kanban-board");
+
+if (mainKanbanBoard) {
+  mainKanbanBoard.addEventListener("click", (event) => {
+    if (event.target.classList.contains("delete-card-btn")) {
+      cardDelete = event.target.closest(".todo-card");
+
+      if (deleteModal) {
+        deleteModal.classList.remove("hidden");
+        deleteModal.classList.add("show");
+      }
+    }
+  });
+}
+
+if (confirmDoingBtn) {
+  confirmDoingBtn.addEventListener("click", () => {
+    if (cardDelete) {
+      const todoId = Number(cardDelete.dataset.id);
+      const todoIndex = todos.findIndex((t) => t.id === todoId);
+      if (todoIndex !== -1) {
+        todos.splice(todoIndex, 1);
+      }
+      cardDelete.remove();
+      cardDelete = null;
+      renderTodos();
+    }
+
+    if (deleteModal) {
+      deleteModal.classList.remove("show");
+      deleteModal.classList.add("hidden");
+    }
+  });
+}
+
+if (confirmNoBtn) {
+  confirmNoBtn.addEventListener("click", () => {
+    cardDelete = null;
+
+    if (deleteModal) {
+      deleteModal.classList.remove("show");
+      deleteModal.classList.add("hidden");
+    }
+  });
+}
