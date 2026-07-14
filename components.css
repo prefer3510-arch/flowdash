@@ -349,9 +349,6 @@ html[data-theme="dark"] .icon-sun {
   flex: 1;
   min-height: 100px;
 }
-  
- { justify-content: flex-start;
-}
 
 .empty-state {
   text-align: center;
