@@ -1,10 +1,12 @@
 @charset "UTF-8";
 
 /* ==========================================================================
-   FlowDash 모바일 전용 반응형 레이아웃 (767px 이하)
+   1. Mobile 구간 (320px ~ 767px)
+   - 칸반 보드: 1열 중심 레이아웃 (세로로 스택)
+   - 컨트롤 바: 검색창 100%, 드롭다운 가로 반반 배치
    ========================================================================== */
 @media (max-width: 767px) {
-  /* 1. 헤더 영역 보정 (유연한 상하 배치 및 줄바꿈 방지) */
+  /* 헤더 영역 보정 */
   .dashboard-container .main-header {
     flex-direction: column;
     align-items: flex-start;
@@ -24,7 +26,6 @@
     white-space: nowrap;
   }
 
-  /* 우측 상단 다크모드 버튼 위치 고정 */
   .main-header .theme-btn {
     position: absolute;
     right: 0;
@@ -32,57 +33,49 @@
     margin: 0;
   }
 
-  /* 2. 업무 통계 카드 영역 (가로 2열 그리드 배치) */
+  /* 업무 통계 카드 (가로 2열 그리드) */
   .dashboard-container .stats-container {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
   }
 
-  .stats-container .stat-card {
-    grid-column: auto;
-  }
-
-  /* 첫 번째 전체 업무 카드가 2열 전체를 차지하게 설정 */
   .stats-container .stat-card.highlight {
     grid-column: span 2;
   }
 
-  /* 3. 검색 및 컨트롤러 영역 */
+  /* 검색 및 컨트롤러 영역 */
   .dashboard-container .controls-container {
     display: flex;
     flex-direction: column;
     gap: 12px;
   }
 
-  /* 검색창 100% 가로폭 지정 */
   .controls-container .search-wrapper {
     width: 100%;
     box-sizing: border-box;
   }
 
-  /* 4. 드롭다운 및 버튼 묶음 (.sub-controls-line) 유연화 */
   .controls-container .sub-controls-line {
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap; /* 자식 요소들이 넘치면 아래 줄로 떨어지게 유도 */
+    flex-wrap: wrap;
     gap: 10px;
     width: 100%;
   }
 
-  /* [핵심] 기간, 우선순위 드롭다운 2개를 정확히 가로로 반씩(50%) 나누어 배치 */
+  /* 드롭다운 가로 반반 배정 */
   .sub-controls-line .custom-dropdown {
     display: inline-flex;
-    width: calc(50% - 5px); /* gap(10px)을 감안한 완벽한 절반 크기 계산 */
+    width: calc(50% - 5px);
     flex: 1 0 calc(50% - 5px);
   }
 
-  /* 드롭다운 버튼 자체도 가로폭을 가득 채우도록 지정 */
   .custom-dropdown .dropdown-toggle-btn {
     width: 100%;
   }
 
-  /* 정렬, 전체 삭제, 새 할일 버튼은 각각 독립된 100% 줄로 세로 나열 */
+  /* 나머지 버튼들은 100% 가로폭 세로 나열 */
   .sub-controls-line .sort-btn,
   .sub-controls-line .btn-secondary,
   .sub-controls-line .btn-primary {
@@ -92,10 +85,10 @@
     justify-content: center;
     align-items: center;
     box-sizing: border-box;
-    margin: 0; /* 기존 마진 상쇄 */
+    margin: 0;
   }
 
-  /* 5. 칸반 보드 1열 배치 처리 */
+  /* 칸반 보드 1열 중심 레이아웃 (세로 스택) */
   .dashboard-container .kanban-board {
     grid-template-columns: 1fr;
     gap: 16px;
@@ -103,5 +96,58 @@
 
   .kanban-board .board-column {
     grid-column: auto;
+  }
+}
+
+/* ==========================================================================
+   2. Tablet 구간 (768px ~ 1199px)
+   - 칸반 보드: 2열 이상 배치 가능 (보드 2열 + 아래 1열 스택 구조 적용)
+   - 컨트롤 바: 한 줄에 적절히 흐르도록 조정
+   ========================================================================== */
+@media (min-width: 768px) and (max-width: 1199px) {
+  /* 통계 카드 3열 배치 (중간 크기 화면 최적화) */
+  .dashboard-container .stats-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+
+  .stats-container .stat-card.highlight {
+    grid-column: span 1;
+  }
+
+  /* 칸반 보드 2열 + 1열 배치 구조 */
+  .dashboard-container .kanban-board {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 기본 2열 구성 */
+    gap: 20px;
+  }
+
+  /* 세 번째 컬럼(완료 보드)은 아래쪽으로 내려가서 혼자 가로를 꽉 채우도록 설정 */
+  .kanban-board #col-done {
+    grid-column: span 2;
+  }
+}
+
+/* ==========================================================================
+   3. Desktop 구간 (1200px 이상)
+   ========================================================================== */
+@media (min-width: 1200px) {
+  /* 3보드가 한 화면에 동시에 나란히 보이도록 배치 */
+  .dashboard-container .kanban-board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 정밀한 3열 고정 */
+    gap: 24px;
+  }
+
+  .kanban-board .board-column {
+    grid-column: auto; /* 태블릿에서 적용된 그리드 확장 속성 초기화 */
+  }
+
+  /* 통계 카드 데스크톱 5열 일렬 배치 */
+  .dashboard-container .stats-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
   }
 }
