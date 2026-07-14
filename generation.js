@@ -484,11 +484,6 @@ function renderTodos() {
   if (filterStatusText) {
     const filterTexts = [];
 
-    // 검색어가 있으면 표시
-    if (currentSearchKeyword !== "") {
-      filterTexts.push(`검색어: ${currentSearchKeyword}`);
-    }
-
     // 전체 기간이 아니면 표시
     if (currentPeriodFilter !== "all") {
       filterTexts.push(`기간: ${periodSelectedLabel.textContent.trim()}`);
@@ -619,7 +614,7 @@ if (clearAllBtn) {
   clearAllBtn.addEventListener("click", function () {
     confirmTitle.textContent = "데이터 초기화";
     confirmMessage.innerHTML =
-      "모든 할 일 데이터를 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.";
+      "모든 할 일 데이터를 삭제하시겠습니까? <br />이 작업은 되돌릴 수 없습니다.";
 
     confirmModal.classList.remove("hidden");
   });

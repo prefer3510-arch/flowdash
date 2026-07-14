@@ -85,8 +85,9 @@
             type="search"
             id="search-input"
             class="search-bar"
-            placeholder="검색어를 입력하세요"
+            placeholder="검색어를 입력하세요 (최대 100자)"
             autocomplete="off"
+            maxlength="100"
           />
         </div>
 
@@ -142,6 +143,12 @@
             + 새 할 일
           </button>
         </div>
+      </div>
+
+      <div class="list-utility-bar">
+        <p class="sort-status-text-block">
+          정렬 상태: <span id="sort-status-value">내림차순</span>
+        </p>
 
         <div id="search-keyword-display" style="display: none">
           검색어:
@@ -149,12 +156,6 @@
         </div>
 
         <div id="filter-status-text" style="display: none"></div>
-      </div>
-
-      <div class="list-utility-bar">
-        <p class="sort-status-text-block">
-          정렬 상태: <span id="sort-status-value">내림차순</span>
-        </p>
 
         <button type="button" id="clear-all-btn" class="btn-secondary">
           전체 삭제
