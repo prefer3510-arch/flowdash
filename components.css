@@ -1,6 +1,3 @@
-/* ==========================================================================
-   1. 상단 헤더 영역 (header)
-   ========================================================================== */
 .main-header {
   display: flex;
   justify-content: space-between;
@@ -8,8 +5,9 @@
 }
 
 .greeting-text {
+  font-family: "SeoulNotice", sans-serif;
   font-size: 28px;
-  font-weight: 700;
+  font-weight: 500;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -28,65 +26,83 @@
   margin-top: 4px;
 }
 
-/* =================================================================
-   테마 변경 버튼 동그라미 스타일 세부 보정
-   ================================================================= */
-
 .theme-btn {
-  width: 40px;
-  height: 40px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
-  background-color: #ffffff;
-  border: 1px solid #e2e8f0;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   transition:
-    background-color 0.2s,
-    border-color 0.2s;
+    background-color 0.3s,
+    border-color 0.3s,
+    transform 0.2s;
   padding: 0;
+  position: relative;
+  overflow: hidden;
 }
 
-.icon-mode-img {
-  width: 20px;
-  height: 20px;
-  object-fit: contain;
-  display: block;
+.theme-btn:hover {
+  transform: scale(1.05);
 }
 
-html[data-theme="dark"] .theme-btn {
-  background-color: #222638;
-  border-color: #2e354f;
+.theme-btn i {
+  position: absolute;
+  font-size: 20px;
+  transition:
+    transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    opacity 0.5s ease;
 }
 
-html[data-theme="dark"] .icon-mode-img {
-  filter: invert(1);
+html[data-theme="light"] .icon-moon {
+  opacity: 1;
+  transform: rotate(0deg);
+  color: #ff4a7d;
+}
+html[data-theme="light"] .icon-sun {
+  opacity: 0;
+  transform: rotate(-180deg);
+  color: #ffb100;
 }
 
-/* ==========================================================================
-   2. 통계 대시보드 영역 (stats)
-   ========================================================================== */
+html[data-theme="dark"] .icon-moon {
+  opacity: 0;
+  transform: rotate(180deg);
+  color: #ff4a7d;
+}
+html[data-theme="dark"] .icon-sun {
+  opacity: 1;
+  transform: rotate(0deg);
+  color: #ffb100;
+}
+
 .stats-container {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 16px;
+  gap: 20px;
+  margin-top: 32px;
 }
 
 .stat-card {
   background-color: var(--bg-card);
   border: 1px solid var(--border-color);
-  padding: 18px 20px;
-  border-radius: 12px;
+  border-radius: 16px;
+  padding: 24px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 6px;
+  gap: 12px;
 }
 
 .stat-card.highlight {
   border-color: var(--primary);
-  background-color: rgba(99, 102, 241, 0.05);
+  background-image: linear-gradient(
+    135deg,
+    var(--bg-card) 0%,
+    rgba(255, 74, 125, 0.05) 100%
+  );
 }
 
 .stat-label {
@@ -95,78 +111,78 @@ html[data-theme="dark"] .icon-mode-img {
   font-weight: 500;
 }
 
-.stat-value {
-  font-size: 24px;
-  font-weight: 700;
+.stat-count {
+  font-family: "OneStoreMobilePop", sans-serif;
+  font-size: 36px;
+  color: var(--text-main);
+  font-weight: normal;
 }
 
-.stat-card.highlight .stat-value {
-  color: var(--primary);
-}
-
-/* ==========================================================================
-   3. 컨트롤 영역 & 서브 바 (controls)
-   ========================================================================== */
 .controls-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 32px;
+  gap: 16px;
+}
+
+.search-wrapper {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-wrapper .search-icon {
+  position: absolute;
+  left: 16px;
+  color: var(--text-muted);
+  font-size: 15px;
+  pointer-events: none;
+}
+
+.search-bar {
+  width: 100%;
+  height: 48px;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 0 16px 0 44px;
+  font-size: 14px;
+  color: var(--text-main);
+}
+
+.search-bar::placeholder {
+  color: var(--text-muted);
+}
+
+.search-bar:focus {
+  border-color: var(--primary);
+}
+
+.sub-controls-line {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.search-wrapper {
-  position: relative;
-  flex: 1;
-}
-
-.search-bar {
-  width: 100%;
-  background-color: var(--bg-card);
-  border: 1px solid var(--border-color);
-  padding: 12px 16px 12px 40px;
-  border-radius: 8px;
-}
-
-.icon-search {
-  position: absolute;
-  left: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  fill: var(--text-muted);
-}
-
-/* ==========================================================================
-   ■ 커스텀 토글 드롭다운 스타일 규칙
-   ========================================================================== */
 .custom-dropdown {
   position: relative;
-  width: 140px; /* 시안에 맞게 적절한 고정 가로폭 부여 */
 }
 
-/* 세모 버튼이 포함된 트리거 영역 */
 .dropdown-toggle-btn {
-  width: 100%;
-  height: 45px;
+  height: 48px;
   background-color: var(--bg-card);
   border: 1px solid var(--border-color);
-  border-radius: 8px;
+  border-radius: 12px;
   padding: 0 16px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  cursor: pointer;
-  transition:
-    border-color 0.2s,
-    box-shadow 0.2s;
-}
-
-.dropdown-toggle-btn:focus,
-.custom-dropdown.active .dropdown-toggle-btn {
-  border-color: var(--primary);
-}
-
-.selected-label {
-  font-size: 14px;
+  justify-content: space-between;
+  gap: 24px;
+  min-width: 130px;
   color: var(--text-main);
+  font-size: 14px;
 }
 
 .arrow-icon {
@@ -174,11 +190,12 @@ html[data-theme="dark"] .icon-mode-img {
   height: 0;
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
-  border-top: 6px solid var(--text-sub);
+  border-top: 5px solid var(--text-sub);
   transition: transform 0.2s ease;
 }
 
-.custom-dropdown.active .arrow-icon {
+.custom-dropdown.active .arrow-icon,
+.custom-dropdown.open .arrow-icon {
   transform: rotate(180deg);
 }
 
@@ -189,189 +206,206 @@ html[data-theme="dark"] .icon-mode-img {
   width: 100%;
   background-color: var(--bg-card);
   border: 1px solid var(--border-color);
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  padding: 6px 0;
-  z-index: 90;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(43, 17, 58, 0.08);
+  padding: 8px 0;
   display: none;
+  z-index: 100;
 }
 
-.custom-dropdown.active .dropdown-menu-list {
+.custom-dropdown.active .dropdown-menu-list,
+.custom-dropdown.open .dropdown-menu-list {
   display: block;
 }
 
-/* 개별 옵션 */
 .dropdown-menu-list li {
-  padding: 10px 16px;
+  padding: 12px 16px;
   font-size: 14px;
-  color: var(--text-sub);
+  color: var(--text-main);
   cursor: pointer;
-  transition:
-    background-color 0.2s,
-    color 0.2s;
 }
 
 .dropdown-menu-list li:hover {
-  background-color: rgba(99, 102, 241, 0.08);
+  background-color: var(--bg-main);
   color: var(--primary);
 }
 
-/* =================================================================
-   정렬 토글 버튼 상태 제어 컴포넌트 스타일 (.sort-btn)
-   ================================================================= */
-
 .sort-btn {
-  padding: 10px 16px;
-  border-radius: 20px;
-  background-color: #ffffff;
-  border: 1px solid #e2e8f0;
+  height: 48px;
+  padding: 0 20px;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
   font-size: 14px;
-  font-weight: 500;
-  color: #1e293b;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.sort-btn .asc-text,
-.sort-btn .desc-text {
-  display: none;
-}
-
-.sort-btn[data-sort="asc"] .asc-text {
-  display: inline-block;
-}
-
-.sort-btn[data-sort="desc"] .desc-text {
-  display: inline-block;
-}
-
-html[data-theme="dark"] .sort-btn {
-  background-color: #222638;
-  border-color: #2e354f;
-  color: #f8fafc;
+  color: var(--text-main);
+  white-space: nowrap;
 }
 
 .btn-primary {
+  font-family: "SeoulNotice", sans-serif;
+  height: 48px;
+  padding: 0 24px;
   background-color: var(--primary);
   color: #ffffff;
-  padding: 12px 24px;
-  border-radius: 8px;
-  font-weight: 600;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 500;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(255, 74, 125, 0.25);
+  cursor: pointer;
+
+  transition:
+    opacity 0.2s,
+    transform 0.1s;
 }
 
 .btn-primary:hover {
-  background-color: var(--primary-hover);
+  opacity: 0.9;
+}
+.btn-primary:active {
+  transform: scale(0.97);
 }
 
-.sub-controls-line {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: -12px;
-}
-
-.active-filter-badge {
-  font-size: 13px;
-  color: var(--text-sub);
-  background-color: var(--border-color);
-  padding: 6px 12px;
-  border-radius: 20px;
-}
-
-.btn-danger-link {
-  font-size: 14px;
-  color: var(--danger);
-  font-weight: 500;
-
-  text-decoration: none !important;
-
-  cursor: pointer;
-}
-
-.btn-danger-link:hover {
-  text-decoration: none !important;
-}
-/* ==========================================================================
-   4. 칸반 보드 영역 & 카드 (board & card)
-   ========================================================================== */
 .kanban-board {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
+  margin-top: 32px;
   align-items: start;
 }
 
 .board-column {
-  background-color: rgba(0, 0, 0, 0.02);
-  border-radius: 16px;
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 20px;
   padding: 20px;
-  border: 1px dashed var(--border-color);
-}
-
-[data-theme="dark"] .board-column {
-  background-color: rgba(255, 255, 255, 0.02);
-}
-
-.board-title {
-  font-size: 18px;
-  font-weight: 700;
-  padding-bottom: 12px;
-  margin-bottom: 20px;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  border-bottom: 2px solid var(--border-color);
-  position: relative;
-}
-
-.count-badge {
-  font-size: 12px;
-  background-color: var(--border-color);
-  color: var(--text-sub);
-  padding: 2px 8px;
-  border-radius: 10px;
-}
-
-.card-list {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  min-height: 200px;
+  gap: 16px;
+  min-height: 500px;
+}
+
+.column-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 4px;
+}
+
+.column-title-set {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.column-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.dot-todo {
+  background-color: #ff4a7d;
+}
+.dot-doing {
+  background-color: #ffb100;
+}
+.dot-done {
+  background-color: #22c55e;
+}
+
+.column-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.column-count {
+  font-size: 13px;
+  color: var(--text-muted);
+  background-color: var(--bg-card);
+  padding: 2px 8px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  font-weight: 500;
+}
+
+.column-cards-area {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 400px;
 }
 
 .empty-state {
   text-align: center;
   color: var(--text-muted);
-  padding: 40px 0;
   font-size: 14px;
-}
-
-.empty-state.hidden {
-  display: none;
+  padding: 40px 0;
+  border: 2px dashed var(--border-color);
+  border-radius: 16px;
 }
 
 .todo-card {
   background-color: var(--bg-card);
   border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 16px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+  border-radius: 16px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 12px;
+  box-shadow: 0 4px 6px rgba(43, 17, 58, 0.02);
   position: relative;
+  cursor: grab;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+}
+
+.todo-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(43, 17, 58, 0.06);
+}
+
+/*여기가 x 삭제버튼*/
+.delete-card-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: var(--bg-main);
+  color: var(--text-sub);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  cursor: pointer;
+  opacity: 0;
+  transform: scale(0.8);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease,
+    background-color 0.2s;
+  z-index: 10;
+}
+
+.todo-card:hover .delete-card-btn {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.delete-card-btn:hover {
+  background-color: #ff4a7d;
+  color: #ffffff;
 }
 
 .card-tag {
   align-self: flex-start;
   font-size: 11px;
   font-weight: 600;
-  padding: 4px 8px;
-  border-radius: 4px;
+  padding: 4px 10px;
+  border-radius: 20px;
 }
 
 .priority-high {
@@ -390,45 +424,52 @@ html[data-theme="dark"] .sort-btn {
 .card-title {
   font-size: 16px;
   font-weight: 600;
+  color: var(--text-main);
+  line-height: 1.4;
 }
 
 .card-content {
   font-size: 14px;
   color: var(--text-sub);
-  line-height: 1.4;
+  line-height: 1.5;
 }
 
 .card-dates {
-  font-size: 12px;
-  color: var(--text-muted);
-  border-top: 1px solid var(--border-color);
-  padding-top: 10px;
   display: flex;
   flex-direction: column;
   gap: 4px;
+  border-top: 1px solid var(--border-color);
+  padding-top: 12px;
+  margin-top: 4px;
+}
+
+.date-item {
+  font-size: 12px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.card-dates .date-item i {
+  font-family: "Font Awesome 6 Free" !important;
+  font-weight: 900;
+  color: var(--text-sub);
+}
+
+.icon-calendar::before {
+  content: "\f133" !important;
+}
+
+.icon-check::before {
+  content: "\f00c" !important;
 }
 
 .todo-card.completed .card-title {
-  text-decoration: line-through !important;
-  opacity: 0.5;
-}
-
-.todo-card.completed .card-content {
-  text-decoration: none !important;
-  opacity: 0.6;
-}
-
-/* 푸터 */
-.main-footer {
-  text-align: center;
-  padding: 20px 0;
+  text-decoration: line-through;
   color: var(--text-muted);
-  font-size: 13px;
 }
 
-/* ==========================================================================
-   5. 새 할 일 생성 / 수정 모달 (modal)
-   ========================================================================== */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -436,7 +477,6 @@ html[data-theme="dark"] .sort-btn {
   width: 100%;
   height: 100%;
   background-color: var(--overlay);
-  backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -450,62 +490,71 @@ html[data-theme="dark"] .sort-btn {
 .modal-content {
   background-color: var(--bg-modal);
   border: 1px solid var(--border-color);
+  border-radius: 24px;
+  padding: 32px;
   width: 100%;
   max-width: 520px;
-  border-radius: 16px;
-  padding: 28px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 20px 50px rgba(43, 17, 58, 0.15);
 }
 
 .modal-title {
-  font-size: 20px;
-  font-weight: 700;
-  margin-bottom: 24px;
+  font-family: "SeoulNotice", sans-serif;
+  font-size: 22px;
+  color: var(--text-main);
+  font-weight: 500;
+}
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-top: 24px;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin-bottom: 20px;
 }
 
-.form-row-group {
+.form-group-row {
   display: flex;
   gap: 16px;
-  margin-bottom: 20px;
 }
 
-.form-group.half {
+.flex-1 {
   flex: 1;
-  margin-bottom: 0;
 }
 
 .form-label {
   font-size: 14px;
-  font-weight: 600;
-  color: var(--text-sub);
+  font-weight: 500;
+  color: var(--text-main);
 }
 
 .form-control-input,
 .form-control-textarea {
   width: 100%;
-  border: 1px solid var(--border-color);
   background-color: var(--bg-main);
-  padding: 12px;
-  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 14px;
   color: var(--text-main);
 }
 
 .form-control-textarea {
-  height: 120px;
+  height: 100px;
   resize: none;
 }
 
-.priority-radio-group {
-  border: none;
+.priority-selector {
   display: flex;
   gap: 8px;
+}
+
+.priority-label-wrapper {
+  flex: 1;
 }
 
 .radio-hidden {
@@ -520,16 +569,15 @@ html[data-theme="dark"] .sort-btn {
 }
 
 .priority-badge-btn {
-  flex: 1;
+  display: block;
   text-align: center;
   padding: 10px 0;
-  border-radius: 8px;
-  font-size: 13px;
-  font-weight: 600;
+  background-color: var(--bg-main);
   border: 1px solid var(--border-color);
+  border-radius: 12px;
+  font-size: 14px;
   cursor: pointer;
-  background-color: var(--bg-card);
-  transition: all 0.2s;
+  color: var(--text-main);
 }
 
 .radio-hidden:checked + .priority-badge-btn.high {
@@ -552,6 +600,9 @@ html[data-theme="dark"] .sort-btn {
   width: 100%;
   height: 45px;
   padding: 0 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background-color: var(--bg-main);
 }
 
 .modal-footer-buttons {
@@ -568,81 +619,54 @@ html[data-theme="dark"] .sort-btn {
 }
 
 .btn-submit-purple {
+  font-family: "SeoulNotice", sans-serif;
   background-color: var(--primary);
   color: #ffffff;
   padding: 12px 24px;
-  border-radius: 8px;
-  font-weight: 600;
+  border-radius: 12px;
+  font-size: 15px;
+  cursor: pointer;
+  transition:
+    opacity 0.2s,
+    transform 0.1s;
 }
 
-/* 6. 컨펌 박스 전용 */
+.btn-submit-purple:hover {
+  opacity: 0.9;
+}
+.btn-submit-purple:active {
+  transform: scale(0.97);
+}
+
 .confirm-box {
   max-width: 400px;
   text-align: center;
 }
+
 .confirm-title {
+  font-family: "SeoulNotice", sans-serif;
   font-size: 18px;
-  margin-bottom: 12px;
+  color: var(--text-main);
 }
+
 .confirm-message {
   font-size: 14px;
   color: var(--text-sub);
-  margin-bottom: 24px;
-  line-height: 1.5;
+  margin-top: 12px;
 }
-.btn-danger {
-  background-color: var(--danger);
-  color: white;
-  padding: 12px 24px;
+
+.btn-secondary {
+  background-color: var(--bg-main);
+  border: 1px solid var(--border-color);
+  padding: 10px 20px;
   border-radius: 8px;
-  font-weight: 600;
 }
 
-/* 드롭다운 전체 박스를 메뉴 위치 기준으로 만든다. */
-.custom-dropdown {
-  position: relative;
-}
-
-/* 드롭다운 메뉴는 기본적으로 숨긴다. */
-.custom-dropdown .dropdown-menu-list {
-  display: none;
-  position: absolute;
-  top: calc(100% + 8px);
-  left: 0;
-  width: 100%;
-  background-color: white;
-  border: 1px solid #e5e7eb;
-  border-radius: 10px;
-  padding: 8px 0;
-  margin: 0;
-  list-style: none;
-  z-index: 100;
-}
-
-/* open 클래스가 붙으면 메뉴를 보이게 한다. */
-.custom-dropdown.open .dropdown-menu-list {
-  display: block;
-}
-
-/* 메뉴 항목 스타일 */
-.custom-dropdown .dropdown-menu-list li {
-  padding: 10px 14px;
-  cursor: pointer;
-}
-
-/* 메뉴 항목 hover 효과 */
-.custom-dropdown .dropdown-menu-list li:hover {
-  background-color: #f3f4f6;
-}
-
-/* 선택된 항목 앞에 체크 표시 */
-.custom-dropdown .dropdown-menu-list li.active::before {
-  content: "✓ ";
-}
-
-/* 드롭다운 버튼에 마우스를 올리면 손가락 모양 */
-.custom-dropdown .dropdown-toggle-btn {
-  cursor: pointer;
+.btn-danger {
+  background-color: #ef4444;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
 }
 
 /* 정렬 배지와 검색어 배지를 가로로 배치 */

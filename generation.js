@@ -523,19 +523,21 @@ function createTodoCard(todo) {
 
       <div class="card-dates">
         <span class="date-item created">
+          <i class="fa-solid fa-calendar"></i> ${formatDate(todo.createdAt)}
           <i class="icon-calendar"></i>
           ${formatDate(todo.createdAt)}
         </span>
 
         ${
           todo.completedAt
-            ? `
+
+            ?<span class="date-item completed-time">
+                <i class="fa-solid fa-check"></i> ${formatDate(todo.completedAt)}
+              </span>`
               <span class="date-item completed-time">
                 <i class="icon-check"></i>
                 ${formatDate(todo.completedAt)}
               </span>
-            `
-            : ""
         }
       </div>
     </article>
