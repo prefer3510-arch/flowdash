@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
     <title>FlowDash - Task Dashboard</title>
 
     <link rel="stylesheet" href="reset.css" />
@@ -10,16 +11,23 @@
     <link rel="stylesheet" href="components.css" />
     <link rel="stylesheet" href="theme.css" />
     <link rel="stylesheet" href="responsive.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
 
     <script type="module" src="generation.js" defer></script>
   </head>
+
   <body>
     <div id="app" class="dashboard-container">
+      <!-- 헤더 -->
       <header class="main-header">
         <div class="greeting-area">
           <h1 class="greeting-text">
             <span id="greeting-ment">안녕하세요</span>,
+
             <span
               id="nickname-display"
               class="editable-nickname"
@@ -28,41 +36,55 @@
               >FlowDash</span
             >님 🖐
           </h1>
+
           <p id="current-date" class="date-text">2026년 1월 22일</p>
         </div>
 
-        <button id="theme-toggle-btn" class="theme-btn" aria-label="테마 변경">
+        <button
+          type="button"
+          id="theme-toggle-btn"
+          class="theme-btn"
+          aria-label="테마 변경"
+        >
           <i class="fa-solid fa-moon icon-moon"></i>
           <i class="fa-solid fa-sun icon-sun"></i>
         </button>
       </header>
 
+      <!-- 업무 통계 -->
       <section class="stats-container">
         <div class="stat-card highlight">
           <h2 class="stat-label">전체 업무</h2>
-          <p id="total-tasks" class="stat-count">0</p>
+          <p id="stat-total" class="stat-count">0</p>
         </div>
+
         <div class="stat-card">
           <h2 class="stat-label">할 일</h2>
-          <p id="todo-tasks" class="stat-count">0</p>
+          <p id="stat-todo" class="stat-count">0</p>
         </div>
+
         <div class="stat-card">
           <h2 class="stat-label">진행 중</h2>
-          <p id="doing-tasks" class="stat-count">0</p>
+          <p id="stat-doing" class="stat-count">0</p>
         </div>
+
         <div class="stat-card">
           <h2 class="stat-label">완료 업무</h2>
-          <p id="done-tasks" class="stat-count">0</p>
+          <p id="stat-done" class="stat-count">0</p>
         </div>
+
         <div class="stat-card">
           <h2 class="stat-label">완료율</h2>
-          <p id="completion-rate" class="stat-count">0%</p>
+          <p id="stat-achievement" class="stat-count">0%</p>
         </div>
       </section>
 
+      <!-- 검색, 필터, 정렬 버튼 영역 -->
       <div class="controls-container">
+        <!-- 검색창 -->
         <div class="search-wrapper">
           <i class="fa-solid fa-magnifying-glass search-icon"></i>
+
           <input
             type="search"
             id="search-input"
@@ -73,8 +95,10 @@
         </div>
 
         <div class="sub-controls-line">
+          <!-- 기간 드롭다운 -->
           <div class="custom-dropdown" id="dropdown-period">
             <button
+              type="button"
               class="dropdown-toggle-btn"
               aria-label="기간 필터 선택"
               data-value="all"
@@ -82,16 +106,19 @@
               <span class="selected-label">전체 기간</span>
               <span class="arrow-icon"></span>
             </button>
+
             <ul class="dropdown-menu-list">
               <li data-value="all">전체 기간</li>
               <li data-value="today">오늘</li>
-              <li data-value="week">이번 주</li>
-              <li data-value="month">이번 달</li>
+              <li data-value="7days">최근 7일</li>
+              <li data-value="30days">최근 30일</li>
             </ul>
           </div>
 
+          <!-- 우선순위 드롭다운 -->
           <div class="custom-dropdown" id="dropdown-priority">
             <button
+              type="button"
               class="dropdown-toggle-btn"
               aria-label="우선순위 필터 선택"
               data-value="all"
@@ -99,6 +126,7 @@
               <span class="selected-label">전체 우선순위</span>
               <span class="arrow-icon"></span>
             </button>
+
             <ul class="dropdown-menu-list">
               <li data-value="all">전체 우선순위</li>
               <li data-value="high">높음</li>
@@ -107,61 +135,107 @@
             </ul>
           </div>
 
-          <button id="sort-toggle-btn" class="sort-btn" data-sort="desc">
-            최신순 📋
+          <!-- 정렬 버튼 -->
+          <button
+            type="button"
+            id="sort-toggle-btn"
+            class="sort-btn"
+            data-sort="desc"
+          >
+            정렬: 내림차순 ↓
           </button>
 
-          <button id="open-modal-btn" class="btn-primary">+ 새 할 일</button>
+          <!-- 전체 데이터 삭제 버튼 -->
+          <button type="button" id="clear-all-btn" class="btn-secondary">
+            전체 삭제
+          </button>
+
+          <!-- 새 할 일 버튼 -->
+          <button type="button" id="open-modal-btn" class="btn-primary">
+            + 새 할 일
+          </button>
         </div>
+
+        <!-- 검색어 표시 영역 -->
+        <div id="search-keyword-display" style="display: none">
+          검색어:
+          <span id="search-value"></span>
+        </div>
+
+        <!-- 현재 적용된 필터 표시 영역 -->
+        <div id="filter-status-text" style="display: none"></div>
+
+        <!-- 현재 정렬 상태 -->
+        <p>
+          정렬 상태:
+          <span id="sort-status-value">내림차순</span>
+        </p>
       </div>
 
-      <main class="kanban-board">
+      <!-- 칸반 보드 -->
+      <main id="kanban-board" class="kanban-board">
+        <!-- 할 일 -->
         <section class="board-column" id="col-todo">
           <div class="column-header">
             <div class="column-title-set">
               <span class="column-dot dot-todo"></span>
+
               <h2 class="column-name">할 일</h2>
-              <span id="todo-count" class="column-count">0</span>
+
+              <span id="count-todo" class="column-count">0</span>
             </div>
           </div>
-          <div class="column-cards-area" id="todo-list">
-            <div id="todo-empty" class="empty-state">할 일이 없습니다.</div>
-          </div>
+
+          <div class="column-cards-area" id="todo-list"></div>
+
+          <!-- todo-list 밖에 있어야 renderTodos로 삭제되지 않음 -->
+          <div id="todo-empty" class="empty-state">할 일이 없습니다.</div>
         </section>
 
+        <!-- 진행 중 -->
         <section class="board-column" id="col-doing">
           <div class="column-header">
             <div class="column-title-set">
               <span class="column-dot dot-doing"></span>
+
               <h2 class="column-name">진행 중</h2>
-              <span id="doing-count" class="column-count">0</span>
+
+              <span id="count-doing" class="column-count">0</span>
             </div>
           </div>
+
           <div class="column-cards-area" id="doing-list"></div>
         </section>
 
+        <!-- 완료 -->
         <section class="board-column" id="col-done">
           <div class="column-header">
             <div class="column-title-set">
               <span class="column-dot dot-done"></span>
+
               <h2 class="column-name">완료</h2>
-              <span id="done-count" class="column-count">0</span>
+
+              <span id="count-done" class="column-count">0</span>
             </div>
           </div>
+
           <div class="column-cards-area" id="done-list"></div>
         </section>
       </main>
     </div>
 
+    <!-- 할 일 추가 및 수정 모달 -->
     <div id="todo-modal" class="modal-overlay hidden">
       <div class="modal-content">
         <header class="modal-header">
-          <h2 class="modal-title">새 할 일 추가</h2>
+          <h2 id="modal-title" class="modal-title">새 할 일</h2>
         </header>
 
         <form id="todo-form" class="modal-form" novalidate>
+          <!-- 제목 입력 -->
           <div class="form-group">
-            <label for="todo-title-input" class="form-label">제목</label>
+            <label for="todo-title-input" class="form-label"> 제목 </label>
+
             <input
               type="text"
               id="todo-title-input"
@@ -172,8 +246,10 @@
             />
           </div>
 
+          <!-- 내용 입력 -->
           <div class="form-group">
-            <label for="todo-content-input" class="form-label">내용</label>
+            <label for="todo-content-input" class="form-label"> 내용 </label>
+
             <textarea
               id="todo-content-input"
               class="form-control-textarea"
@@ -183,8 +259,10 @@
           </div>
 
           <div class="form-group-row">
+            <!-- 우선순위 선택 -->
             <div class="form-group flex-1">
-              <label class="form-label">우선순위</label>
+              <span class="form-label">우선순위</span>
+
               <div class="priority-selector">
                 <label class="priority-label-wrapper">
                   <input
@@ -193,8 +271,10 @@
                     value="high"
                     class="radio-hidden"
                   />
-                  <span class="priority-badge-btn high">높음</span>
+
+                  <span class="priority-badge-btn high"> 높음 </span>
                 </label>
+
                 <label class="priority-label-wrapper">
                   <input
                     type="radio"
@@ -203,8 +283,10 @@
                     class="radio-hidden"
                     checked
                   />
-                  <span class="priority-badge-btn mid">중간</span>
+
+                  <span class="priority-badge-btn mid"> 중간 </span>
                 </label>
+
                 <label class="priority-label-wrapper">
                   <input
                     type="radio"
@@ -212,13 +294,18 @@
                     value="low"
                     class="radio-hidden"
                   />
-                  <span class="priority-badge-btn low">낮음</span>
+
+                  <span class="priority-badge-btn low"> 낮음 </span>
                 </label>
               </div>
             </div>
 
+            <!-- 상태 선택 -->
             <div class="form-group flex-1">
-              <label class="form-label">태그 설정</label>
+              <label for="todo-status-select" class="form-label">
+                태그 설정
+              </label>
+
               <div class="select-wrapper">
                 <select
                   id="todo-status-select"
@@ -230,7 +317,11 @@
                   <option value="done">완료</option>
                 </select>
               </div>
-            </div> </div> <footer class="form-actions modal-footer-buttons">
+            </div>
+          </div>
+
+          <!-- 모달 버튼 -->
+          <footer class="form-actions modal-footer-buttons">
             <button
               type="button"
               id="close-modal-btn"
@@ -238,6 +329,7 @@
             >
               취소
             </button>
+
             <button
               type="submit"
               id="submit-todo-btn"
@@ -250,16 +342,25 @@
       </div>
     </div>
 
+    <!-- 삭제 확인 모달 -->
     <div id="confirm-modal" class="modal-overlay hidden">
-      <div class="modal-content confirm-box" role="alertdialog">
-        <h2 class="confirm-title" id=\"confirm-title\">삭제 확인</h2>
-        <p class=\"confirm-message\" id=\"confirm-message\">
+      <div
+        class="modal-content confirm-box"
+        role="alertdialog"
+        aria-labelledby="confirm-title"
+        aria-describedby="confirm-message"
+      >
+        <h2 id="confirm-title" class="confirm-title">삭제 확인</h2>
+
+        <p id="confirm-message" class="confirm-message">
           정말로 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.
         </p>
+
         <footer class="form-actions">
           <button type="button" id="confirm-cancel-btn" class="btn-secondary">
             취소
           </button>
+
           <button type="button" id="confirm-action-btn" class="btn-danger">
             삭제하기
           </button>

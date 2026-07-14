@@ -512,36 +512,34 @@ function createTodoCard(todo) {
 
   // 카드 HTML 문자열 반환
   return `
-    <article class="todo-card ${isCompletedClass}" data-id="${todo.id}">
-      <div class="card-tag priority-${todo.priority}">
-        ${priorityText}
-      </div>
+  <article class="todo-card ${isCompletedClass}" data-id="${todo.id}">
+    <div class="card-tag priority-${todo.priority}">
+      ${priorityText}
+    </div>
 
-      <h3 class="card-title">${todo.title}</h3>
+    <h3 class="card-title">${todo.title}</h3>
 
-      <p class="card-content">${todo.content || ""}</p>
+    <p class="card-content">${todo.content || ""}</p>
 
-      <div class="card-dates">
-        <span class="date-item created">
-          <i class="fa-solid fa-calendar"></i> ${formatDate(todo.createdAt)}
-          <i class="icon-calendar"></i>
-          ${formatDate(todo.createdAt)}
-        </span>
+    <div class="card-dates">
+      <span class="date-item created">
+        <i class="fa-solid fa-calendar"></i>
+        ${formatDate(todo.createdAt)}
+      </span>
 
-        ${
-          todo.completedAt
-
-            ?<span class="date-item completed-time">
-                <i class="fa-solid fa-check"></i> ${formatDate(todo.completedAt)}
-              </span>`
-              <span class="date-item completed-time">
-                <i class="icon-check"></i>
-                ${formatDate(todo.completedAt)}
-              </span>
-        }
-      </div>
-    </article>
-  `;
+      ${
+        todo.completedAt
+          ? `
+            <span class="date-item completed-time">
+              <i class="fa-solid fa-check"></i>
+              ${formatDate(todo.completedAt)}
+            </span>
+          `
+          : ""
+      }
+    </div>
+  </article>
+`;
 }
 
 // timestamp를 날짜 문자열로 변경
