@@ -1,58 +1,88 @@
-// 닉네임 입력하면 수정 부분
+// 시간대 별 인사 적용 및 닉네임 로컬스토리지 저장
 const nickname = document.getElementById("nickname-display");
+const todayDate = document.getElementById("current-date");
+const greetingElement = document.getElementById("greeting-ment");
+
 const MAX_LENGTH = 10;
 
+// 페이지 켜졌을 때 저장된 닉네임 있는지 불러오기
+document.addEventListener("DOMContentLoaded", function () {
+  const saveNickname = localStorage.getItem("flowdash-nickname");
+
+  if (saveNickname && nickname) {
+    nickname.innerText = saveNickname;
+    console.log("로컬스토리지에서 불러온 닉네임:", saveNickname);
+  }
+});
+
 // 엔터키 누르면 이벤트 발생하면서 이름 수정
-nickname.addEventListener("keydown", function (event) {
-  if (event.key === "Enter") {
+if (nickname) {
+  nickname.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      nickname.blur();
+    }
+  });
+
+  // 타이핑 할 때 실시간 글자 수 제한 부분
+  nickname.addEventListener("input", function () {
+    if (nickname.textContent.length > MAX_LENGTH) {
+      nickname.textContent = nickname.textContent.substring(0, MAX_LENGTH);
+
+      // 여긴 입력 커서 위치 뒤로 유지
+      const range = document.createRange();
+      const sel = window.getSelection();
+      range.selectNodeContents(nickname);
+      range.collapse(false);
+      sel.removeAllRanges();
+      sel.addRange(range);
+    }
+  });
+
+  // 기본 복붙 차단하기
+  nickname.addEventListener("paste", function (evnet) {
     event.preventDefault();
-    nickname.blur();
-  }
-});
+  });
 
-// 타이핑 할 때 실시간 글자 수 제한 부분
-nickname.addEventListener("input", function () {
-  if (nickname.textContent.length > MAX_LENGTH) {
-    nickname.textContent = nickname.textContent.substring(0, MAX_LENGTH);
+  // 입력창에서 벗어나면 입력한 닉네임 출력 및 로컬스토리지 저장
+  nickname.addEventListener("blur", function () {
+    const updateName = nickname.textContent.trim();
 
-    // 여긴 입력 커서 위치 뒤로 유지
-    const range = document.createRange();
-    const sel = window.getSelection();
-    range.selectNodeContents(nickname);
-    range.collapse(false);
-    sel.removeAllRanges();
-    sel.addRange(range);
-  }
-});
+    // 만약 입력값이 공백이면 기본값 출력
+    if (updateName === "") {
+      nickname.innerText = "FlowDash";
+      return;
+    }
 
-// 기본 복붙 차단하기
-nickname.addEventListener("paste", function (evnet) {
-  event.preventDefault();
-});
-
-// 입력창에서 벗어나면 입력한 닉네임 출력
-nickname.addEventListener("blur", function () {
-  const updateName = nickname.textContent.trim();
-
-  // 만약 입력값이 공백이면 기본값 출력
-  if (updateName === "") {
-    nickname.innerText = "FlowDash";
-    return;
-  }
-
-  console.log("수정된 닉네임:", updateName);
-});
+    localStorage.setItem("flowdash-nickname", updateName);
+    console.log("로컬스토리지에 저장 성공! ->", updateName);
+  });
+}
 
 // 실시간 날짜 업데이트
-const todayDate = document.getElementById("current-date");
 function updateDateTime() {
   const now = new Date();
 
   const year = now.getFullYear();
   const month = now.getMonth() + 1;
   const date = now.getDate();
+  const hours = now.getHours();
 
-  todayDate.textContent = `${year}년 ${month}월 ${date}일`;
+  if (todayDate) {
+    todayDate.textContent = `${year}년 ${month}월 ${date}일`;
+  }
+
+  let greetingText = "";
+  if (hours >= 5 && hours < 12) {
+    greetingText = "굿모닝";
+  } else if (hours >= 12 && hours < 18) {
+    greetingText = "벌써 하루의 절반이 지나갔네요";
+  } else {
+    greetingText = "오늘 하루도 수고하셨습니다";
+  }
+  if (greetingElement) {
+    greetingElement.textContent = greetingText;
+  }
 }
 
 updateDateTime();
@@ -110,7 +140,7 @@ const confirmCancelBtn = document.getElementById("confirm-cancel-btn");
 const confirmActionBtn = document.getElementById("confirm-action-btn");
 
 // 전체 할 일 데이터를 저장하는 배열
-const todos = [];
+let todos = JSON.parse(localStorage.getItem("todos")) || []; // 로컬스토리지에서 기존 할 일 데이터 불러오기
 
 let currentEditId = null;
 
@@ -508,6 +538,8 @@ function renderTodos() {
       filterStatusText.style.display = "none";
     }
   }
+
+  localStorage.setItem("todos", JSON.stringify(todos)); // 렌더 발생마다 로컬스토리지 갱신
 }
 
 // 할 일 데이터 1개를 카드 HTML로 만들어주는 함수
@@ -616,7 +648,17 @@ if (closeModalBtn) {
   closeModalBtn.addEventListener("click", closeModal);
 }
 
+function closeConfirmModal() {
+  confirmModal.classList.add("hidden");
+  confirmModal.classList.remove("show");
+  cardToDelete = null;
+  isClearAllMode = false;
+}
+
 // 전체 데이터 초기화 버튼 클릭
+let cardToDelete = null; // 현재 삭제 대기 중인 카드를 담아둘 변수
+let isClearAllMode = false; // 전체 삭제 모드 여부 구분용 스위치
+
 if (clearAllBtn) {
   clearAllBtn.addEventListener("click", function () {
     confirmTitle.textContent = "데이터 초기화";
@@ -735,55 +777,77 @@ if (kanbanBoard) {
   }
 })();
 
-// 카드 삭제 기능
-const confirmDoingBtn = document.getElementById("confirm-action-btn");
-const confirmNoBtn = document.getElementById("confirm-cancel-btn");
-const deleteModal = document.getElementById("confirm-modal");
+// 카드 개별 삭제 기능 재추가
+(function () {
+  // 칸반 보드 전체에 클릭 이벤트 등록
+  const board = document.querySelector(".kanban-board");
+  if (!board) return;
 
-let cardDelete = null;
+  // 이벤트 캡처링(true)을 활용해 기존 다른 클릭 이벤트를 원천 차단하고 먼저 가로챕니다.
+  board.addEventListener(
+    "click",
+    function (event) {
+      if (event.target.classList.contains("delete-card-btn")) {
+        event.stopPropagation();
+        event.preventDefault();
 
-const mainKanbanBoard = document.querySelector(".kanban-board");
+        const card = event.target.closest(".todo-card");
+        if (!card) return;
 
-if (mainKanbanBoard) {
-  mainKanbanBoard.addEventListener("click", (event) => {
-    if (event.target.classList.contains("delete-card-btn")) {
-      cardDelete = event.target.closest(".todo-card");
+        const todoId = Number(card.dataset.id);
 
-      if (deleteModal) {
-        deleteModal.classList.remove("hidden");
-        deleteModal.classList.add("show");
+        const confirmPopup = document.createElement("div");
+        confirmPopup.style.cssText = `
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex; justify-content: center; align-items: center;
+        z-index: 9999;
+      `;
+
+        confirmPopup.innerHTML = `
+        <div style="background: var(--bg-card, #ffffff); padding: 24px; border-radius: 12px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.15); width: 320px;">
+          <h2 style="font-size: 18px; margin-bottom: 12px; color: var(--text-main, #000000); font-weight: bold;">할 일 삭제</h2>
+          <p style="font-size: 14px; margin-bottom: 24px; color: var(--text-sub, #666666); line-height: 1.5;">이 할 일을 정말로 삭제하시겠습니까?<br>삭제된 할 일은 복구할 수 없습니다.</p>
+          <div style="display: flex; gap: 8px; justify-content: center;">
+            <button id="cancel-single-delete" style="padding: 10px 18px; border-radius: 6px; border: 1px solid #ccc; background: transparent; cursor: pointer; color: var(--text-main, #333);">취소</button>
+            <button id="confirm-single-delete" style="padding: 10px 18px; border-radius: 6px; border: none; background: #e53e3e; color: white; font-weight: bold; cursor: pointer;">삭제</button>
+          </div>
+        </div>
+      `;
+
+        document.body.appendChild(confirmPopup);
+
+        // 취소 버튼 클릭 시 모달 창만 제거
+        confirmPopup
+          .querySelector("#cancel-single-delete")
+          .addEventListener("click", function () {
+            confirmPopup.remove();
+          });
+
+        // 삭제 버튼 클릭 시 배열에서 하나만 지우고 렌더링 및 저장 후 모달 창 제거
+        confirmPopup
+          .querySelector("#confirm-single-delete")
+          .addEventListener("click", function () {
+            // 전역변수 `todos`를 직접 filter하여 선택한 카드 한 개만 안전하게 도려냄
+            if (typeof todos !== "undefined") {
+              todos = todos.filter(function (t) {
+                return t.id !== todoId;
+              });
+            }
+
+            // 화면 갱신 수행 (내부에서 로컬스토리지 저장도 자동 반영)
+            if (typeof renderTodos === "function") {
+              renderTodos();
+            } else {
+              card.remove();
+            }
+
+            confirmPopup.remove();
+            console.log("개별 카드 삭제 완료!", todoId);
+          });
       }
-    }
-  });
-}
-
-if (confirmDoingBtn) {
-  confirmDoingBtn.addEventListener("click", () => {
-    if (cardDelete) {
-      const todoId = Number(cardDelete.dataset.id);
-      const todoIndex = todos.findIndex((t) => t.id === todoId);
-      if (todoIndex !== -1) {
-        todos.splice(todoIndex, 1);
-      }
-      cardDelete.remove();
-      cardDelete = null;
-      renderTodos();
-    }
-
-    if (deleteModal) {
-      deleteModal.classList.remove("show");
-      deleteModal.classList.add("hidden");
-    }
-  });
-}
-
-if (confirmNoBtn) {
-  confirmNoBtn.addEventListener("click", () => {
-    cardDelete = null;
-
-    if (deleteModal) {
-      deleteModal.classList.remove("show");
-      deleteModal.classList.add("hidden");
-    }
-  });
-}
+    },
+    true,
+  );
+})();
