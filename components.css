@@ -212,6 +212,12 @@ html[data-theme="dark"] .icon-sun {
   transform: rotate(180deg);
 }
 
+.custom-dropdown.active .dropdown-toggle-btn,
+.custom-dropdown.open .dropdown-toggle-btn {
+  border-color: var(--primary);
+  background-color: rgba(255, 74, 125, 0.08);
+}
+
 .dropdown-menu-list {
   position: absolute;
   top: calc(100% + 6px);
@@ -268,12 +274,13 @@ html[data-theme="dark"] .icon-sun {
   cursor: pointer;
 
   transition:
+    background-color 0.2s,
     opacity 0.2s,
     transform 0.1s;
 }
 
 .btn-primary:hover {
-  opacity: 0.9;
+  background-color: #ff769d;
 }
 .btn-primary:active {
   transform: scale(0.97);
@@ -283,7 +290,7 @@ html[data-theme="dark"] .icon-sun {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
-  margin-top: 32px;
+  margin-top: 8px;
   align-items: start;
 }
 
@@ -700,16 +707,29 @@ html[data-theme="dark"] .icon-sun {
 
 .list-utility-bar {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-top: 24px;
-  margin-bottom: 12px;
+  margin-top: 2px;
+  margin-bottom: 2px;
   padding: 0 4px;
+}
+.sort-status-text-block {
+  margin-right: 16px;
+}
+
+#search-keyword-display,
+#filter-status-text {
+  margin: 0;
+  line-height: 20px;
+  margin-left: 20px;
+}
+
+#clear-all-btn {
+  margin-left: auto;
 }
 
 /* 정렬 상태 가이드 텍스트 */
 .sort-status-text-block {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 500;
   color: var(--text-sub);
 }
@@ -722,4 +742,32 @@ html[data-theme="dark"] .icon-sun {
 /* 전체 삭제 버튼 위치 보정 */
 #clear-all-btn {
   margin-left: auto;
+}
+
+/* 정렬 상태 전체 문장 */
+.sort-status-text-block {
+  color: #666;
+}
+
+/* 오름차순, 내림차순 값 */
+#sort-status-value {
+  color: #ff6b9a;
+  font-weight: 600;
+}
+
+/* 검색어: 문장 전체 */
+#search-keyword-display {
+  color: #666;
+}
+
+/* 실제 검색어 값 */
+#search-value {
+  color: #ff6b9a;
+  font-weight: 600;
+}
+
+/* 기간·우선순위 필터 상태 */
+#filter-status-text {
+  color: #ff6b9a;
+  font-weight: 600;
 }
