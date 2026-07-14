@@ -94,6 +94,19 @@ html[data-theme="dark"] .icon-sun {
   display: flex;
   flex-direction: column;
   gap: 12px;
+
+  /* 기본 위치와 그림자 변경을 부드럽게 처리 */
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.stat-card:hover {
+  /* 위쪽으로 6px 이동 */
+  transform: translateY(-6px);
+
+  /* 카드 아래쪽에 그림자 효과 */
+  box-shadow: 0 12px 24px rgba(255, 79, 135, 0.18);
 }
 
 .stat-card.highlight {
@@ -333,7 +346,9 @@ html[data-theme="dark"] .icon-sun {
   display: flex;
   flex-direction: column;
   gap: 14px;
-  min-height: 400px;
+
+  /* 내부 요소를 위쪽부터 배치 */
+  justify-content: flex-start;
 }
 
 .empty-state {
@@ -343,6 +358,9 @@ html[data-theme="dark"] .icon-sun {
   padding: 40px 0;
   border: 2px dashed var(--border-color);
   border-radius: 16px;
+
+  /* 자동으로 아래로 밀리는 것 방지 */
+  margin-top: 0;
 }
 
 .todo-card {
@@ -366,7 +384,8 @@ html[data-theme="dark"] .icon-sun {
   box-shadow: 0 8px 16px rgba(43, 17, 58, 0.06);
 }
 
-/*여기가 x 삭제버튼*/
+/* 카드 삭제 버튼입니다*/
+
 .delete-card-btn {
   position: absolute;
   top: 14px;
@@ -389,6 +408,8 @@ html[data-theme="dark"] .icon-sun {
     background-color 0.2s;
   z-index: 10;
 }
+
+/*여기 커서 올리면 x자 나타납니당*/
 
 .todo-card:hover .delete-card-btn {
   opacity: 1;
@@ -657,9 +678,18 @@ html[data-theme="dark"] .icon-sun {
 
 .btn-secondary {
   background-color: var(--bg-main);
-  border: 1px solid var(--border-color);
   padding: 10px 20px;
   border-radius: 8px;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background-color: #ff4f87;
+  color: #ffffff;
+  cursor: pointer;
 }
 
 .btn-danger {
@@ -669,97 +699,28 @@ html[data-theme="dark"] .icon-sun {
   border-radius: 8px;
 }
 
-/* 정렬 배지와 검색어 배지를 가로로 배치 */
-.status-badge-line {
+.list-utility-bar {
   display: flex;
-  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
-  gap: 8px;
+  margin-top: 24px;
+  margin-bottom: 12px;
+  padding: 0 4px;
 }
 
-/* 각 배지 크기는 글자 길이만큼 */
-.active-filter-badge {
-  display: inline-block;
-  width: fit-content;
-}
-
-/* 정렬:, 검색어: 부분 */
-.filter-label {
-  color: #666;
-}
-
-/* 오름차순, 실제 검색어 부분 */
-.filter-value {
-  color: #ff6b9a;
-}
-
-/* 삭제 확인 모달 전체 박스 */
-#confirm-modal .confirm-box {
-  width: 400px;
-  max-width: calc(100% - 40px);
-  padding: 32px 36px 28px;
-  border-radius: 16px;
-  text-align: center;
-}
-
-/* 삭제 확인 제목 */
-#confirm-modal .confirm-title {
-  margin: 0 0 14px;
-  font-size: 22px;
-  font-weight: 700;
-  line-height: 1.4;
-}
-
-/* 삭제 확인 설명 */
-#confirm-modal .confirm-message {
-  margin: 0;
+/* 정렬 상태 가이드 텍스트 */
+.sort-status-text-block {
   font-size: 14px;
-  line-height: 1.7;
-  color: #6b7280;
+  font-weight: 500;
+  color: var(--text-sub);
 }
 
-/* 취소, 삭제하기 버튼 영역 */
-#confirm-modal .form-actions {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
-  margin-top: 28px;
-}
-
-/* 취소 버튼 */
-#confirm-cancel-btn {
-  min-width: 96px;
-  height: 44px;
-  padding: 0 20px;
-  border: 1px solid #d1d5db;
-  border-radius: 10px;
-  background-color: #ffffff;
-  color: #4b5563;
-  font-size: 15px;
+.sort-status-text-block span {
   font-weight: 600;
-  cursor: pointer;
+  color: var(--text-sub);
 }
 
-/* 삭제하기 버튼 */
-#confirm-action-btn {
-  min-width: 96px;
-  height: 44px;
-  padding: 0 20px;
-  border: none;
-  border-radius: 10px;
-  background-color: #f04444;
-  color: #ffffff;
-  font-size: 15px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
-/* 버튼에 마우스를 올렸을 때 */
-#confirm-cancel-btn:hover {
-  background-color: #f3f4f6;
-}
-
-#confirm-action-btn:hover {
-  background-color: #dc2626;
+/* 전체 삭제 버튼 위치 보정 */
+#clear-all-btn {
+  margin-left: auto;
 }
