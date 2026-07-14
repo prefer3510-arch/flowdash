@@ -22,7 +22,6 @@
 
   <body>
     <div id="app" class="dashboard-container">
-      <!-- 헤더 -->
       <header class="main-header">
         <div class="greeting-area">
           <h1 class="greeting-text">
@@ -51,7 +50,6 @@
         </button>
       </header>
 
-      <!-- 업무 통계 -->
       <section class="stats-container">
         <div class="stat-card highlight">
           <h2 class="stat-label">전체 업무</h2>
@@ -79,9 +77,7 @@
         </div>
       </section>
 
-      <!-- 검색, 필터, 정렬 버튼 영역 -->
       <div class="controls-container">
-        <!-- 검색창 -->
         <div class="search-wrapper">
           <i class="fa-solid fa-magnifying-glass search-icon"></i>
 
@@ -95,7 +91,6 @@
         </div>
 
         <div class="sub-controls-line">
-          <!-- 기간 드롭다운 -->
           <div class="custom-dropdown" id="dropdown-period">
             <button
               type="button"
@@ -115,7 +110,6 @@
             </ul>
           </div>
 
-          <!-- 우선순위 드롭다운 -->
           <div class="custom-dropdown" id="dropdown-priority">
             <button
               type="button"
@@ -135,7 +129,6 @@
             </ul>
           </div>
 
-          <!-- 정렬 버튼 -->
           <button
             type="button"
             id="sort-toggle-btn"
@@ -145,36 +138,30 @@
             정렬: 내림차순 ↓
           </button>
 
-          <!-- 전체 데이터 삭제 버튼 -->
-          <button type="button" id="clear-all-btn" class="btn-secondary">
-            전체 삭제
-          </button>
-
-          <!-- 새 할 일 버튼 -->
           <button type="button" id="open-modal-btn" class="btn-primary">
             + 새 할 일
           </button>
         </div>
 
-        <!-- 검색어 표시 영역 -->
         <div id="search-keyword-display" style="display: none">
           검색어:
           <span id="search-value"></span>
         </div>
 
-        <!-- 현재 적용된 필터 표시 영역 -->
         <div id="filter-status-text" style="display: none"></div>
-
-        <!-- 현재 정렬 상태 -->
-        <p>
-          정렬 상태:
-          <span id="sort-status-value">내림차순</span>
-        </p>
       </div>
 
-      <!-- 칸반 보드 -->
+      <div class="list-utility-bar">
+        <p class="sort-status-text-block">
+          정렬 상태: <span id="sort-status-value">내림차순</span>
+        </p>
+
+        <button type="button" id="clear-all-btn" class="btn-secondary">
+          전체 삭제
+        </button>
+      </div>
+
       <main id="kanban-board" class="kanban-board">
-        <!-- 할 일 -->
         <section class="board-column" id="col-todo">
           <div class="column-header">
             <div class="column-title-set">
@@ -188,11 +175,9 @@
 
           <div class="column-cards-area" id="todo-list"></div>
 
-          <!-- todo-list 밖에 있어야 renderTodos로 삭제되지 않음 -->
           <div id="todo-empty" class="empty-state">할 일이 없습니다.</div>
         </section>
 
-        <!-- 진행 중 -->
         <section class="board-column" id="col-doing">
           <div class="column-header">
             <div class="column-title-set">
@@ -207,7 +192,6 @@
           <div class="column-cards-area" id="doing-list"></div>
         </section>
 
-        <!-- 완료 -->
         <section class="board-column" id="col-done">
           <div class="column-header">
             <div class="column-title-set">
@@ -224,7 +208,6 @@
       </main>
     </div>
 
-    <!-- 할 일 추가 및 수정 모달 -->
     <div id="todo-modal" class="modal-overlay hidden">
       <div class="modal-content">
         <header class="modal-header">
@@ -232,7 +215,6 @@
         </header>
 
         <form id="todo-form" class="modal-form" novalidate>
-          <!-- 제목 입력 -->
           <div class="form-group">
             <label for="todo-title-input" class="form-label"> 제목 </label>
 
@@ -246,7 +228,6 @@
             />
           </div>
 
-          <!-- 내용 입력 -->
           <div class="form-group">
             <label for="todo-content-input" class="form-label"> 내용 </label>
 
@@ -259,7 +240,6 @@
           </div>
 
           <div class="form-group-row">
-            <!-- 우선순위 선택 -->
             <div class="form-group flex-1">
               <span class="form-label">우선순위</span>
 
@@ -300,7 +280,6 @@
               </div>
             </div>
 
-            <!-- 상태 선택 -->
             <div class="form-group flex-1">
               <label for="todo-status-select" class="form-label">
                 태그 설정
@@ -320,7 +299,6 @@
             </div>
           </div>
 
-          <!-- 모달 버튼 -->
           <footer class="form-actions modal-footer-buttons">
             <button
               type="button"
@@ -342,7 +320,6 @@
       </div>
     </div>
 
-    <!-- 삭제 확인 모달 -->
     <div id="confirm-modal" class="modal-overlay hidden">
       <div
         class="modal-content confirm-box"
