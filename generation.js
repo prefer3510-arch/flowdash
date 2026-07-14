@@ -180,22 +180,33 @@ todoForm.addEventListener("submit", function (event) {
   // 새 할 일 데이터 생성
   const now = Date.now();
 
-  // 수정 모드 추가 (2026.07.13)
+  // 수정 모드 추가
   if (currentEditId !== null) {
     const todoIndex = todos.findIndex(function (t) {
       return t.id === currentEditId;
     });
 
     if (todoIndex !== -1) {
+      // 상태를 변경하기 전 기존 상태 저장
+      const previousStatus = todos[todoIndex].status;
+
       todos[todoIndex].title = titleValue;
       todos[todoIndex].content = contentValue;
       todos[todoIndex].priority = priorityValue;
 
-      if (statusValue === "done" && todos[todoIndex].status !== "done") {
+      // 다른 상태에서 진행 중으로 변경하면 시간 저장
+      if (statusValue === "doing" && previousStatus !== "doing") {
+        todos[todoIndex].doingAt = now;
+      }
+
+      // 완료 상태로 변경하면 완료 시간 저장
+      if (statusValue === "done" && previousStatus !== "done") {
         todos[todoIndex].completedAt = now;
       } else if (statusValue !== "done") {
         todos[todoIndex].completedAt = null;
       }
+
+      // 선택한 상태 저장
       todos[todoIndex].status = statusValue;
     }
   } else {
@@ -206,10 +217,13 @@ todoForm.addEventListener("submit", function (event) {
       priority: priorityValue,
       status: statusValue,
       createdAt: now,
+
+      // 처음부터 진행 중으로 등록했을 때 시간 저장
+      doingAt: statusValue === "doing" ? now : null,
+
       completedAt: statusValue === "done" ? now : null,
     };
 
-    // 배열에 저장
     todos.push(newTodo);
   }
   // 필터/정렬 조건에 맞게 화면 다시 그리기
@@ -513,36 +527,45 @@ function createTodoCard(todo) {
   // 카드 HTML 문자열 반환
   return `
   <article class="todo-card ${isCompletedClass}" data-id="${todo.id}">
-    <div class="card-tag priority-${todo.priority}">
-      ${priorityText}
-    </div>
+  <div class="card-tag priority-${todo.priority}">
+  ${priorityText}
+</div>
 
-    <h3 class="card-title">${todo.title}</h3>
+<h3 class="card-title">${todo.title}</h3>
 
-    <p class="card-content">${todo.content || ""}</p>
-
+<p class="card-content">${todo.content || ""}</p>
     <div class="card-dates">
-      <span class="date-item created">
-        <i class="fa-solid fa-calendar"></i>
-        ${formatDate(todo.createdAt)}
-      </span>
+  <span class="date-item created">
+    <i class="fa-solid fa-calendar"></i>
+    ${formatDate(todo.createdAt)}
+  </span>
 
-      ${
-        todo.completedAt
-          ? `
-            <span class="date-item completed-time">
-              <i class="fa-solid fa-check"></i>
-              ${formatDate(todo.completedAt)}
-            </span>
-          `
-          : ""
-      }
-    </div>
-  </article>
-`;
+  ${
+    todo.doingAt
+      ? `
+        <span class="date-item doing-time">
+          <i class="fa-solid fa-play"></i>
+          ${formatDate(todo.doingAt)}
+        </span>
+      `
+      : ""
+  }
+
+  ${
+    todo.completedAt
+      ? `
+        <span class="date-item completed-time">
+          <i class="fa-solid fa-check"></i>
+          ${formatDate(todo.completedAt)}
+        </span>
+      `
+      : ""
+  }
+</div>
+    </article>
+  `;
 }
 
-// timestamp를 날짜 문자열로 변경
 function formatDate(timestamp) {
   const date = new Date(timestamp);
 
@@ -553,12 +576,6 @@ function formatDate(timestamp) {
   const minute = String(date.getMinutes()).padStart(2, "0");
 
   return `${year}. ${month}. ${day}. ${hour}:${minute}`;
-}
-
-// 검색어 표시 박스 초기 설정
-if (searchKeywordDisplay) {
-  searchKeywordDisplay.classList.add("search-keyword-display");
-  searchKeywordDisplay.style.display = "none";
 }
 
 // 검색창에 입력할 때마다 실행
@@ -598,18 +615,31 @@ if (closeModalBtn) {
 }
 
 // 전체 데이터 초기화 버튼 클릭
-clearAllBtn.addEventListener("click", function () {
-  confirmTitle.textContent = "데이터 초기화";
-  confirmMessage.innerHTM =
-    "모든 할 일 데이터를 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.";
+if (clearAllBtn) {
+  clearAllBtn.addEventListener("click", function () {
+    confirmTitle.textContent = "데이터 초기화";
+    confirmMessage.innerHTML =
+      "모든 할 일 데이터를 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.";
 
-  confirmModal.classList.remove("hidden");
-});
+    confirmModal.classList.remove("hidden");
+  });
+}
 
 // 취소 버튼 클릭
-confirmCancelBtn.addEventListener("click", function () {
-  confirmModal.classList.add("hidden");
-});
+if (confirmCancelBtn) {
+  confirmCancelBtn.addEventListener("click", function () {
+    confirmModal.classList.add("hidden");
+  });
+}
+
+// 삭제하기 버튼 클릭
+if (confirmActionBtn) {
+  confirmActionBtn.addEventListener("click", function () {
+    todos.length = 0;
+    renderTodos();
+    confirmModal.classList.add("hidden");
+  });
+}
 
 // 박스 칸 개수 추가 및 감소
 function updateAllCounts() {

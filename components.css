@@ -94,6 +94,19 @@ html[data-theme="dark"] .icon-sun {
   display: flex;
   flex-direction: column;
   gap: 12px;
+
+  /* 기본 위치와 그림자 변경을 부드럽게 처리 */
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.stat-card:hover {
+  /* 위쪽으로 6px 이동 */
+  transform: translateY(-6px);
+
+  /* 카드 아래쪽에 그림자 효과 */
+  box-shadow: 0 12px 24px rgba(255, 79, 135, 0.18);
 }
 
 .stat-card.highlight {
@@ -333,7 +346,9 @@ html[data-theme="dark"] .icon-sun {
   display: flex;
   flex-direction: column;
   gap: 14px;
-  min-height: 400px;
+
+  /* 내부 요소를 위쪽부터 배치 */
+  justify-content: flex-start;
 }
 
 .empty-state {
@@ -343,6 +358,9 @@ html[data-theme="dark"] .icon-sun {
   padding: 40px 0;
   border: 2px dashed var(--border-color);
   border-radius: 16px;
+
+  /* 자동으로 아래로 밀리는 것 방지 */
+  margin-top: 0;
 }
 
 .todo-card {
@@ -660,9 +678,18 @@ html[data-theme="dark"] .icon-sun {
 
 .btn-secondary {
   background-color: var(--bg-main);
-  border: 1px solid var(--border-color);
   padding: 10px 20px;
   border-radius: 8px;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.btn-secondary:hover {
+  background-color: #ff4f87;
+  color: #ffffff;
+  cursor: pointer;
 }
 
 .btn-danger {
