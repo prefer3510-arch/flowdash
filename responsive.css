@@ -2,107 +2,107 @@
 
 @media (max-width: 767px) {
   .main-header {
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    position: relative !important;
-    gap: 8px !important;
+    flex-direction: column;
+    align-items: flex-start;
+    position: relative;
+    gap: 8px;
   }
 
   .greeting-text {
-    display: block !important;
-    font-size: 20px !important;
-    line-height: 1.4 !important;
+    display: block;
+    font-size: 20px;
+    line-height: 1.4;
   }
 
   #greeting-ment,
   .editable-nickname {
-    display: inline-block !important;
-    white-space: nowrap !important;
+    display: inline-block;
+    white-space: nowrap;
   }
 
   .theme-btn {
-    position: absolute !important;
-    right: 0 !important;
-    top: 0 !important;
-    margin: 0 !important;
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin: 0;
   }
 
   .stats-container {
-    display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 12px !important;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
   }
 
   .stat-card {
-    grid-column: auto !important;
+    grid-column: auto;
   }
 
   .stat-card.highlight {
-    grid-column: span 2 !important;
+    grid-column: span 2;
   }
 
   .controls-container {
-    display: flex !important;
-    flex-direction: row !important;
-    flex-wrap: wrap !important;
-    gap: 10px !important;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
   }
 
   .search-wrapper {
-    width: 100% !important;
-    flex: none !important;
+    width: 100%;
+    flex: none;
   }
 
   .custom-dropdown {
-    display: inline-flex !important;
-    width: calc(50% - 5px) !important;
-    flex: 1 !important;
+    display: inline-flex;
+    width: calc(50% - 5px);
+    flex: 1;
   }
 
   .dropdown-toggle-btn {
-    width: 100% !important;
+    width: 100%;
   }
 
   .sort-btn,
   .btn-primary {
-    width: 100% !important;
-    flex: none !important;
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    box-sizing: border-box !important;
+    width: 100%;
+    flex: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
   }
 
   .sub-controls-line {
-    display: flex !important;
-    flex-direction: row !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    width: 100% !important;
-    margin-top: 4px !important;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 4px;
   }
 
   .kanban-board {
-    grid-template-columns: 1fr !important;
-    gap: 16px !important;
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
 
   .kanban-board #board-done {
-    grid-column: auto !important;
+    grid-column: auto;
   }
 }
 
 @media (min-width: 768px) {
   .controls-container {
-    flex-wrap: nowrap !important;
+    flex-wrap: nowrap;
   }
   .custom-dropdown {
-    width: 150px !important;
-    flex: none !important;
-    display: inline-block !important;
+    width: 150px;
+    flex: none;
+    display: inline-block;
   }
   .search-wrapper {
-    width: auto !important;
-    flex: 1 !important;
+    width: auto;
+    flex: 1;
   }
 }
