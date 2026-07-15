@@ -2,8 +2,8 @@
 
 > 공통 과제: To-do 사이트 제작,모달 창, 토탈 스코어 구현 
 > 팀원: 김예원, 박형우, 손도현, 최선호
-> 저장소: [GitHub]
-> 배포: [GitHub Pages
+ 저장소: [GitHub]
+배포: [GitHub Pages
 
 
 
