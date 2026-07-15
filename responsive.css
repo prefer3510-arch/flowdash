@@ -1,108 +1,153 @@
 @charset "UTF-8";
 
+/* ==========================================================================
+   1. Mobile 구간 (320px ~ 767px)
+   - 칸반 보드: 1열 중심 레이아웃 (세로로 스택)
+   - 컨트롤 바: 검색창 100%, 드롭다운 가로 반반 배치
+   ========================================================================== */
 @media (max-width: 767px) {
-  .main-header {
-    flex-direction: column !important;
-    align-items: flex-start !important;
-    position: relative !important;
-    gap: 8px !important;
+  /* 헤더 영역 보정 */
+  .dashboard-container .main-header {
+    flex-direction: column;
+    align-items: flex-start;
+    position: relative;
+    gap: 8px;
   }
 
-  .greeting-text {
-    display: block !important;
-    font-size: 20px !important;
-    line-height: 1.4 !important;
+  .main-header .greeting-text {
+    display: block;
+    font-size: 20px;
+    line-height: 1.4;
   }
 
   #greeting-ment,
-  .editable-nickname {
-    display: inline-block !important;
-    white-space: nowrap !important;
+  .main-header .editable-nickname {
+    display: inline-block;
+    white-space: nowrap;
   }
 
-  .theme-btn {
-    position: absolute !important;
-    right: 0 !important;
-    top: 0 !important;
-    margin: 0 !important;
+  .main-header .theme-btn {
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin: 0;
   }
 
-  .stats-container {
-    display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 12px !important;
+  /* 업무 통계 카드 (가로 2열 그리드) */
+  .dashboard-container .stats-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
   }
 
-  .stat-card {
-    grid-column: auto !important;
+  .stats-container .stat-card.highlight {
+    grid-column: span 2;
   }
 
-  .stat-card.highlight {
-    grid-column: span 2 !important;
+  /* 검색 및 컨트롤러 영역 */
+  .dashboard-container .controls-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
   }
 
-  .controls-container {
-    display: flex !important;
-    flex-direction: row !important;
-    flex-wrap: wrap !important;
-    gap: 10px !important;
+  .controls-container .search-wrapper {
+    width: 100%;
+    box-sizing: border-box;
   }
 
-  .search-wrapper {
-    width: 100% !important;
-    flex: none !important;
+  .controls-container .sub-controls-line {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
   }
 
-  .custom-dropdown {
-    display: inline-flex !important;
-    width: calc(50% - 5px) !important;
-    flex: 1 !important;
+  /* 드롭다운 가로 반반 배정 */
+  .sub-controls-line .custom-dropdown {
+    display: inline-flex;
+    width: calc(50% - 5px);
+    flex: 1 0 calc(50% - 5px);
   }
 
-  .dropdown-toggle-btn {
-    width: 100% !important;
+  .custom-dropdown .dropdown-toggle-btn {
+    width: 100%;
   }
 
-  .sort-btn,
-  .btn-primary {
-    width: 100% !important;
-    flex: none !important;
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    box-sizing: border-box !important;
+  /* 나머지 버튼들은 100% 가로폭 세로 나열 */
+  .sub-controls-line .sort-btn,
+  .sub-controls-line .btn-secondary,
+  .sub-controls-line .btn-primary {
+    width: 100%;
+    flex: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    margin: 0;
   }
 
-  .sub-controls-line {
-    display: flex !important;
-    flex-direction: row !important;
-    justify-content: space-between !important;
-    align-items: center !important;
-    width: 100% !important;
-    margin-top: 4px !important;
+  /* 칸반 보드 1열 중심 레이아웃 (세로 스택) */
+  .dashboard-container .kanban-board {
+    grid-template-columns: 1fr;
+    gap: 16px;
   }
 
-  .kanban-board {
-    grid-template-columns: 1fr !important;
-    gap: 16px !important;
-  }
-
-  .kanban-board #board-done {
-    grid-column: auto !important;
+  .kanban-board .board-column {
+    grid-column: auto;
   }
 }
 
-@media (min-width: 768px) {
-  .controls-container {
-    flex-wrap: nowrap !important;
+/* ==========================================================================
+   2. Tablet 구간 (768px ~ 1199px)
+   - 칸반 보드: 2열 이상 배치 가능 (보드 2열 + 아래 1열 스택 구조 적용)
+   - 컨트롤 바: 한 줄에 적절히 흐르도록 조정
+   ========================================================================== */
+@media (min-width: 768px) and (max-width: 1199px) {
+  /* 통계 카드 3열 배치 (중간 크기 화면 최적화) */
+  .dashboard-container .stats-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
   }
-  .custom-dropdown {
-    width: 150px !important;
-    flex: none !important;
-    display: inline-block !important;
+
+  .stats-container .stat-card.highlight {
+    grid-column: span 1;
   }
-  .search-wrapper {
-    width: auto !important;
-    flex: 1 !important;
+
+  /* 칸반 보드 2열 + 1열 배치 구조 */
+  .dashboard-container .kanban-board {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* 기본 2열 구성 */
+    gap: 20px;
+  }
+
+  /* 세 번째 컬럼(완료 보드)은 아래쪽으로 내려가서 혼자 가로를 꽉 채우도록 설정 */
+  .kanban-board #col-done {
+    grid-column: span 2;
+  }
+}
+
+/* ==========================================================================
+   3. Desktop 구간 (1200px 이상)
+   ========================================================================== */
+@media (min-width: 1200px) {
+  /* 3보드가 한 화면에 동시에 나란히 보이도록 배치 */
+  .dashboard-container .kanban-board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 정밀한 3열 고정 */
+    gap: 24px;
+  }
+
+  .kanban-board .board-column {
+    grid-column: auto; /* 태블릿에서 적용된 그리드 확장 속성 초기화 */
+  }
+
+  /* 통계 카드 데스크톱 5열 일렬 배치 */
+  .dashboard-container .stats-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
   }
 }

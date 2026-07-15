@@ -1,58 +1,103 @@
-// 닉네임 입력하면 수정 부분
+// 시간대 별 인사 적용 및 닉네임 로컬스토리지 저장
 const nickname = document.getElementById("nickname-display");
+const todayDate = document.getElementById("current-date");
+const greetingElement = document.getElementById("greeting-ment");
+
 const MAX_LENGTH = 10;
 
+// 페이지 켜졌을 때 저장된 닉네임 있는지 불러오기
+document.addEventListener("DOMContentLoaded", function () {
+  const saveNickname = localStorage.getItem("flowdash-nickname");
+
+  if (saveNickname && nickname) {
+    nickname.innerText = saveNickname;
+    console.log("로컬스토리지에서 불러온 닉네임:", saveNickname);
+  }
+});
+
 // 엔터키 누르면 이벤트 발생하면서 이름 수정
-nickname.addEventListener("keydown", function (event) {
-  if (event.key === "Enter") {
+if (nickname) {
+  nickname.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      nickname.blur();
+    }
+  });
+
+  // 타이핑 할 때 실시간 글자 수 제한 부분
+  nickname.addEventListener("input", function () {
+    if (nickname.textContent.length > MAX_LENGTH) {
+      nickname.textContent = nickname.textContent.substring(0, MAX_LENGTH);
+
+      // 여긴 입력 커서 위치 뒤로 유지
+      const range = document.createRange();
+      const sel = window.getSelection();
+      range.selectNodeContents(nickname);
+      range.collapse(false);
+      sel.removeAllRanges();
+      sel.addRange(range);
+    }
+  });
+
+  // 기본 복붙 차단하기
+  nickname.addEventListener("paste", function (evnet) {
     event.preventDefault();
-    nickname.blur();
+  });
+
+  // 입력창에서 벗어나면 입력한 닉네임 출력 및 로컬스토리지 저장
+  nickname.addEventListener("blur", function () {
+    const updateName = nickname.textContent.trim();
+
+    // 만약 입력값이 공백이면 기본값 출력
+    if (updateName === "") {
+      nickname.innerText = "FlowDash";
+      return;
+    }
+
+    localStorage.setItem("flowdash-nickname", updateName);
+    console.log("로컬스토리지에 저장 성공! ->", updateName);
+  });
+}
+// 새로고침할 때 인사말 이모지를 무작위로 변경
+document.addEventListener("DOMContentLoaded", function () {
+  const greetingEmoji = document.querySelector("#greeting-emoji");
+
+  // 핑크색 디자인과 어울리는 이모지 3개
+  const greetingEmojis = ["👋", "🫶", "🙌"];
+
+  // 0부터 이모지 배열 길이 사이의 무작위 번호 생성
+  const randomIndex = Math.floor(Math.random() * greetingEmojis.length);
+
+  // 선택된 이모지를 화면에 표시
+  if (greetingEmoji) {
+    greetingEmoji.textContent = greetingEmojis[randomIndex];
   }
-});
-
-// 타이핑 할 때 실시간 글자 수 제한 부분
-nickname.addEventListener("input", function () {
-  if (nickname.textContent.length > MAX_LENGTH) {
-    nickname.textContent = nickname.textContent.substring(0, MAX_LENGTH);
-
-    // 여긴 입력 커서 위치 뒤로 유지
-    const range = document.createRange();
-    const sel = window.getSelection();
-    range.selectNodeContents(nickname);
-    range.collapse(false);
-    sel.removeAllRanges();
-    sel.addRange(range);
-  }
-});
-
-// 기본 복붙 차단하기
-nickname.addEventListener("paste", function (evnet) {
-  event.preventDefault();
-});
-
-// 입력창에서 벗어나면 입력한 닉네임 출력
-nickname.addEventListener("blur", function () {
-  const updateName = nickname.textContent.trim();
-
-  // 만약 입력값이 공백이면 기본값 출력
-  if (updateName === "") {
-    nickname.innerText = "FlowDash";
-    return;
-  }
-
-  console.log("수정된 닉네임:", updateName);
 });
 
 // 실시간 날짜 업데이트
-const todayDate = document.getElementById("current-date");
 function updateDateTime() {
   const now = new Date();
 
   const year = now.getFullYear();
   const month = now.getMonth() + 1;
   const date = now.getDate();
+  const hours = now.getHours();
 
-  todayDate.textContent = `${year}년 ${month}월 ${date}일`;
+  if (todayDate) {
+    todayDate.textContent = `${year}년 ${month}월 ${date}일`;
+  }
+
+  let greetingText = "";
+  if (hours >= 5 && hours < 12) {
+    greetingText = "굿모닝";
+  } else if (hours >= 12 && hours < 18) {
+    greetingText = "벌써 하루의 절반이 지나갔네요";
+  } else {
+    greetingText = "오늘 하루도 수고하셨습니다";
+  }
+  if (greetingElement) {
+    greetingElement.textContent = greetingText;
+  }
 }
 
 updateDateTime();
@@ -110,7 +155,7 @@ const confirmCancelBtn = document.getElementById("confirm-cancel-btn");
 const confirmActionBtn = document.getElementById("confirm-action-btn");
 
 // 전체 할 일 데이터를 저장하는 배열
-const todos = [];
+let todos = JSON.parse(localStorage.getItem("flowdash-todos")) || []; // 로컬스토리지에서 기존 할 일 데이터 불러오기
 
 let currentEditId = null;
 
@@ -170,32 +215,43 @@ todoForm.addEventListener("submit", function (event) {
 
   const statusValue = statusSelect.value;
 
-  // 제목 없으면 안내하고 중단
-  if (titleValue === "") {
-    alert("제목을 입력해주세요!");
-    todoTitleInput.focus();
+  // 제목 없으면 안내하고 중단 (제목 입력 칸에 문구 뜨도록 수정 07.14)
+  if (titleValue.trim() === "") {
+    todoTitleInput.required = true;
+    todoTitleInput.reportValidity();
     return;
   }
 
   // 새 할 일 데이터 생성
   const now = Date.now();
 
-  // 수정 모드 추가 (2026.07.13)
+  // 수정 모드 추가
   if (currentEditId !== null) {
     const todoIndex = todos.findIndex(function (t) {
       return t.id === currentEditId;
     });
 
     if (todoIndex !== -1) {
+      // 상태를 변경하기 전 기존 상태 저장
+      const previousStatus = todos[todoIndex].status;
+
       todos[todoIndex].title = titleValue;
       todos[todoIndex].content = contentValue;
       todos[todoIndex].priority = priorityValue;
 
-      if (statusValue === "done" && todos[todoIndex].status !== "done") {
+      // 다른 상태에서 진행 중으로 변경하면 시간 저장
+      if (statusValue === "doing" && previousStatus !== "doing") {
+        todos[todoIndex].doingAt = now;
+      }
+
+      // 완료 상태로 변경하면 완료 시간 저장
+      if (statusValue === "done" && previousStatus !== "done") {
         todos[todoIndex].completedAt = now;
       } else if (statusValue !== "done") {
         todos[todoIndex].completedAt = null;
       }
+
+      // 선택한 상태 저장
       todos[todoIndex].status = statusValue;
     }
   } else {
@@ -206,10 +262,13 @@ todoForm.addEventListener("submit", function (event) {
       priority: priorityValue,
       status: statusValue,
       createdAt: now,
+
+      // 처음부터 진행 중으로 등록했을 때 시간 저장
+      doingAt: statusValue === "doing" ? now : null,
+
       completedAt: statusValue === "done" ? now : null,
     };
 
-    // 배열에 저장
     todos.push(newTodo);
   }
   // 필터/정렬 조건에 맞게 화면 다시 그리기
@@ -470,30 +529,31 @@ function renderTodos() {
   if (filterStatusText) {
     const filterTexts = [];
 
-    // 검색어가 있으면 표시
-    if (currentSearchKeyword !== "") {
-      filterTexts.push(`검색어: ${currentSearchKeyword}`);
-    }
-
     // 전체 기간이 아니면 표시
     if (currentPeriodFilter !== "all") {
-      filterTexts.push(`기간: ${periodSelectedLabel.textContent.trim()}`);
+      filterTexts.push(
+        `기간: <span class="filter-value">${periodSelectedLabel.textContent.trim()}</span>`,
+      );
     }
 
     // 전체 우선순위가 아니면 표시
     if (currentPriorityFilter !== "all") {
-      filterTexts.push(`우선순위: ${prioritySelectedLabel.textContent.trim()}`);
+      filterTexts.push(
+        `우선순위: <span class="filter-value">${prioritySelectedLabel.textContent.trim()}</span>`,
+      );
     }
 
     // 적용된 조건이 있으면 박스로 표시
     if (filterTexts.length > 0) {
-      filterStatusText.textContent = filterTexts.join(" · ");
+      filterStatusText.innerHTML = filterTexts.join(" · ");
       filterStatusText.style.display = "block";
     } else {
-      filterStatusText.textContent = "";
+      filterStatusText.innerHTML = "";
       filterStatusText.style.display = "none";
     }
   }
+
+  localStorage.setItem("flowdash-todos", JSON.stringify(todos)); // 렌더 발생마다 로컬스토리지 갱신
 }
 
 // 할 일 데이터 1개를 카드 HTML로 만들어주는 함수
@@ -513,38 +573,47 @@ function createTodoCard(todo) {
   // 카드 HTML 문자열 반환
   return `
     <article class="todo-card ${isCompletedClass}" data-id="${todo.id}">
-      <div class="card-tag priority-${todo.priority}">
-        ${priorityText}
-      </div>
+    <button type="button" class="delete-card-btn" aria-label="삭제">&times;</button>
 
-      <h3 class="card-title">${todo.title}</h3>
+  <div class="card-tag priority-${todo.priority}">
+  ${priorityText}
+</div>
 
-      <p class="card-content">${todo.content || ""}</p>
+<h3 class="card-title">${todo.title}</h3>
 
-      <div class="card-dates">
-        <span class="date-item created">
-          <i class="fa-solid fa-calendar"></i> ${formatDate(todo.createdAt)}
-          <i class="icon-calendar"></i>
-          ${formatDate(todo.createdAt)}
+<p class="card-content">${todo.content || ""}</p>
+    <div class="card-dates">
+  <span class="date-item created">
+    <i class="fa-solid fa-calendar"></i>
+    ${formatDate(todo.createdAt)}
+  </span>
+
+  ${
+    todo.status === "doing" && todo.doingAt
+      ? `
+        <span class="date-item doing-time">
+          <i class="fa-solid fa-play"></i>
+          ${formatDate(todo.doingAt)}
         </span>
+      `
+      : ""
+  }
 
-        ${
-          todo.completedAt
-
-            ?<span class="date-item completed-time">
-                <i class="fa-solid fa-check"></i> ${formatDate(todo.completedAt)}
-              </span>`
-              <span class="date-item completed-time">
-                <i class="icon-check"></i>
-                ${formatDate(todo.completedAt)}
-              </span>
-        }
-      </div>
+  ${
+    todo.completedAt
+      ? `
+        <span class="date-item completed-time">
+          <i class="fa-solid fa-check"></i>
+          ${formatDate(todo.completedAt)}
+        </span>
+      `
+      : ""
+  }
+</div>
     </article>
   `;
 }
 
-// timestamp를 날짜 문자열로 변경
 function formatDate(timestamp) {
   const date = new Date(timestamp);
 
@@ -555,12 +624,6 @@ function formatDate(timestamp) {
   const minute = String(date.getMinutes()).padStart(2, "0");
 
   return `${year}. ${month}. ${day}. ${hour}:${minute}`;
-}
-
-// 검색어 표시 박스 초기 설정
-if (searchKeywordDisplay) {
-  searchKeywordDisplay.classList.add("search-keyword-display");
-  searchKeywordDisplay.style.display = "none";
 }
 
 // 검색창에 입력할 때마다 실행
@@ -599,19 +662,42 @@ if (closeModalBtn) {
   closeModalBtn.addEventListener("click", closeModal);
 }
 
-// 전체 데이터 초기화 버튼 클릭
-clearAllBtn.addEventListener("click", function () {
-  confirmTitle.textContent = "데이터 초기화";
-  confirmMessage.innerHTM =
-    "모든 할 일 데이터를 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다.";
+function closeConfirmModal() {
+  confirmModal.classList.add("hidden");
+  confirmModal.classList.remove("show");
+  cardToDelete = null;
+  isClearAllMode = false;
+}
 
-  confirmModal.classList.remove("hidden");
-});
+// 전체 데이터 초기화 버튼 클릭
+let cardToDelete = null; // 현재 삭제 대기 중인 카드를 담아둘 변수
+let isClearAllMode = false; // 전체 삭제 모드 여부 구분용 스위치
+
+if (clearAllBtn) {
+  clearAllBtn.addEventListener("click", function () {
+    confirmTitle.textContent = "데이터 초기화";
+    confirmMessage.innerHTML =
+      "모든 할 일 데이터를 삭제하시겠습니까? <br />이 작업은 되돌릴 수 없습니다.";
+
+    confirmModal.classList.remove("hidden");
+  });
+}
 
 // 취소 버튼 클릭
-confirmCancelBtn.addEventListener("click", function () {
-  confirmModal.classList.add("hidden");
-});
+if (confirmCancelBtn) {
+  confirmCancelBtn.addEventListener("click", function () {
+    confirmModal.classList.add("hidden");
+  });
+}
+
+// 삭제하기 버튼 클릭
+if (confirmActionBtn) {
+  confirmActionBtn.addEventListener("click", function () {
+    todos.length = 0;
+    renderTodos();
+    confirmModal.classList.add("hidden");
+  });
+}
 
 // 박스 칸 개수 추가 및 감소
 function updateAllCounts() {
@@ -638,6 +724,10 @@ function updateAllCounts() {
 const kanbanBoard = document.getElementById("kanban-board");
 if (kanbanBoard) {
   kanbanBoard.addEventListener("click", function (event) {
+    if (event.target.classList.contains("delete-card-btn")) {
+      return; // X 눌렀을 때 수정 모달 뜨는거 방지
+    }
+
     const card = event.target.closest(".todo-card");
 
     if (!card) return; // 카드 빈 공간 누르면 중단
@@ -676,7 +766,7 @@ if (kanbanBoard) {
   const htmlElement = document.documentElement;
 
   // 브라우저 캐시(localStorage) 혹은 시스템 설정 확인 후 초기 테마 세팅
-  const savedTheme = localStorage.getItem("theme");
+  const savedTheme = localStorage.getItem("flowdash-theme");
   const systemPrefersDark = window.matchMedia(
     "(prefers-color-scheme: dark)",
   ).matches;
@@ -685,7 +775,7 @@ if (kanbanBoard) {
   // 테마 변경 반영 및 저장 함수
   function applyTheme(theme) {
     htmlElement.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
+    localStorage.setItem("flowdash-theme", theme);
   }
 
   // 초기 로드 시 테마 적용
@@ -699,4 +789,79 @@ if (kanbanBoard) {
       applyTheme(newTheme);
     });
   }
+})();
+
+// 카드 개별 삭제 기능 재추가
+(function () {
+  // 칸반 보드 전체에 클릭 이벤트 등록
+  const board = document.querySelector(".kanban-board");
+  if (!board) return;
+
+  // 이벤트 캡처링(true)을 활용해 기존 다른 클릭 이벤트를 원천 차단하고 먼저 가로챕니다.
+  board.addEventListener(
+    "click",
+    function (event) {
+      if (event.target.classList.contains("delete-card-btn")) {
+        event.stopPropagation();
+        event.preventDefault();
+
+        const card = event.target.closest(".todo-card");
+        if (!card) return;
+
+        const todoId = Number(card.dataset.id);
+
+        const confirmPopup = document.createElement("div");
+        confirmPopup.style.cssText = `
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex; justify-content: center; align-items: center;
+        z-index: 9999;
+      `;
+
+        confirmPopup.innerHTML = `
+        <div style="background: var(--bg-card, #ffffff); padding: 24px; border-radius: 12px; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.15); width: 320px;">
+          <h2 style="font-size: 18px; margin-bottom: 12px; color: var(--text-main, #000000); font-weight: bold;">할 일 삭제</h2>
+          <p style="font-size: 14px; margin-bottom: 24px; color: var(--text-sub, #666666); line-height: 1.5;">이 할 일을 정말로 삭제하시겠습니까?<br>삭제된 할 일은 복구할 수 없습니다.</p>
+          <div style="display: flex; gap: 8px; justify-content: center;">
+            <button id="cancel-single-delete" style="padding: 10px 18px; border-radius: 6px; border: 1px solid #ccc; background: transparent; cursor: pointer; color: var(--text-main, #333);">취소</button>
+            <button id="confirm-single-delete" style="padding: 10px 18px; border-radius: 6px; border: none; background: #e53e3e; color: white; font-weight: bold; cursor: pointer;">삭제</button>
+          </div>
+        </div>
+      `;
+
+        document.body.appendChild(confirmPopup);
+
+        // 취소 버튼 클릭 시 모달 창만 제거
+        confirmPopup
+          .querySelector("#cancel-single-delete")
+          .addEventListener("click", function () {
+            confirmPopup.remove();
+          });
+
+        // 삭제 버튼 클릭 시 배열에서 하나만 지우고 렌더링 및 저장 후 모달 창 제거
+        confirmPopup
+          .querySelector("#confirm-single-delete")
+          .addEventListener("click", function () {
+            // 전역변수 `todos`를 직접 filter하여 선택한 카드 한 개만 안전하게 도려냄
+            if (typeof todos !== "undefined") {
+              todos = todos.filter(function (t) {
+                return t.id !== todoId;
+              });
+            }
+
+            // 화면 갱신 수행 (내부에서 로컬스토리지 저장도 자동 반영)
+            if (typeof renderTodos === "function") {
+              renderTodos();
+            } else {
+              card.remove();
+            }
+
+            confirmPopup.remove();
+            console.log("개별 카드 삭제 완료!", todoId);
+          });
+      }
+    },
+    true,
+  );
 })();
