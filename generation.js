@@ -58,6 +58,21 @@ if (nickname) {
     console.log("로컬스토리지에 저장 성공! ->", updateName);
   });
 }
+// 새로고침할 때 인사말 이모지를 무작위로 변경
+document.addEventListener("DOMContentLoaded", function () {
+  const greetingEmoji = document.querySelector("#greeting-emoji");
+
+  // 핑크색 디자인과 어울리는 이모지 3개
+  const greetingEmojis = ["👋", "🫶", "🙌"];
+
+  // 0부터 이모지 배열 길이 사이의 무작위 번호 생성
+  const randomIndex = Math.floor(Math.random() * greetingEmojis.length);
+
+  // 선택된 이모지를 화면에 표시
+  if (greetingEmoji) {
+    greetingEmoji.textContent = greetingEmojis[randomIndex];
+  }
+});
 
 // 실시간 날짜 업데이트
 function updateDateTime() {
@@ -140,7 +155,7 @@ const confirmCancelBtn = document.getElementById("confirm-cancel-btn");
 const confirmActionBtn = document.getElementById("confirm-action-btn");
 
 // 전체 할 일 데이터를 저장하는 배열
-let todos = JSON.parse(localStorage.getItem("todos")) || []; // 로컬스토리지에서 기존 할 일 데이터 불러오기
+let todos = JSON.parse(localStorage.getItem("flowdash-todos")) || []; // 로컬스토리지에서 기존 할 일 데이터 불러오기
 
 let currentEditId = null;
 
@@ -516,25 +531,29 @@ function renderTodos() {
 
     // 전체 기간이 아니면 표시
     if (currentPeriodFilter !== "all") {
-      filterTexts.push(`기간: ${periodSelectedLabel.textContent.trim()}`);
+      filterTexts.push(
+        `기간: <span class="filter-value">${periodSelectedLabel.textContent.trim()}</span>`,
+      );
     }
 
     // 전체 우선순위가 아니면 표시
     if (currentPriorityFilter !== "all") {
-      filterTexts.push(`우선순위: ${prioritySelectedLabel.textContent.trim()}`);
+      filterTexts.push(
+        `우선순위: <span class="filter-value">${prioritySelectedLabel.textContent.trim()}</span>`,
+      );
     }
 
     // 적용된 조건이 있으면 박스로 표시
     if (filterTexts.length > 0) {
-      filterStatusText.textContent = filterTexts.join(" · ");
+      filterStatusText.innerHTML = filterTexts.join(" · ");
       filterStatusText.style.display = "block";
     } else {
-      filterStatusText.textContent = "";
+      filterStatusText.innerHTML = "";
       filterStatusText.style.display = "none";
     }
   }
 
-  localStorage.setItem("todos", JSON.stringify(todos)); // 렌더 발생마다 로컬스토리지 갱신
+  localStorage.setItem("flowdash-todos", JSON.stringify(todos)); // 렌더 발생마다 로컬스토리지 갱신
 }
 
 // 할 일 데이터 1개를 카드 HTML로 만들어주는 함수
@@ -570,7 +589,7 @@ function createTodoCard(todo) {
   </span>
 
   ${
-    todo.doingAt
+    todo.status === "doing" && todo.doingAt
       ? `
         <span class="date-item doing-time">
           <i class="fa-solid fa-play"></i>
@@ -747,7 +766,7 @@ if (kanbanBoard) {
   const htmlElement = document.documentElement;
 
   // 브라우저 캐시(localStorage) 혹은 시스템 설정 확인 후 초기 테마 세팅
-  const savedTheme = localStorage.getItem("theme");
+  const savedTheme = localStorage.getItem("flowdash-theme");
   const systemPrefersDark = window.matchMedia(
     "(prefers-color-scheme: dark)",
   ).matches;
@@ -756,7 +775,7 @@ if (kanbanBoard) {
   // 테마 변경 반영 및 저장 함수
   function applyTheme(theme) {
     htmlElement.setAttribute("data-theme", theme);
-    localStorage.setItem("theme", theme);
+    localStorage.setItem("flowdash-theme", theme);
   }
 
   // 초기 로드 시 테마 적용

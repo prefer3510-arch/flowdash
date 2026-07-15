@@ -568,11 +568,22 @@ html[data-theme="dark"] .icon-sun {
   padding: 14px;
   font-size: 14px;
   color: var(--text-main);
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .form-control-textarea {
   height: 100px;
   resize: none;
+}
+
+.form-control-input:focus,
+.form-control-textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px rgba(255, 74, 125, 0.18);
+  outline: none;
 }
 
 .priority-selector {
@@ -680,6 +691,7 @@ html[data-theme="dark"] .icon-sun {
   font-size: 14px;
   color: var(--text-sub);
   margin-top: 12px;
+  margin-bottom: 18px;
 }
 
 .btn-secondary {
@@ -768,6 +780,9 @@ html[data-theme="dark"] .icon-sun {
 
 /* 기간·우선순위 필터 상태 */
 #filter-status-text {
+  color: #666;
+}
+#filter-status-text .filter-value {
   color: #ff6b9a;
   font-weight: 600;
 }
