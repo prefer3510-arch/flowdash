@@ -10,8 +10,7 @@
   .dashboard-container .main-header {
     flex-direction: column;
     align-items: flex-start;
-    position: relative;
-    gap: 8px;
+    gap: 12px; /* 줄바꿈 시 버튼과의 간격 확보 */
   }
 
   .main-header .greeting-text {
@@ -27,10 +26,8 @@
   }
 
   .main-header .theme-btn {
-    position: absolute;
-    right: 0;
-    top: 0;
     margin: 0;
+    align-self: flex-start; /* 버튼을 왼쪽에 자연스럽게 배치 */
   }
 
   /* 업무 통계 카드 (가로 2열 그리드) */
