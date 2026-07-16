@@ -724,9 +724,6 @@ html[data-theme="dark"] .icon-sun {
   margin-bottom: 2px;
   padding: 0 4px;
 }
-.sort-status-text-block {
-  margin-right: 16px;
-}
 
 #search-keyword-display,
 #filter-status-text {
@@ -735,15 +732,12 @@ html[data-theme="dark"] .icon-sun {
   margin-left: 20px;
 }
 
-#clear-all-btn {
-  margin-left: auto;
-}
-
 /* 정렬 상태 가이드 텍스트 */
 .sort-status-text-block {
+  margin-right: 16px;
   font-size: 16px;
   font-weight: 500;
-  color: var(--text-sub);
+  color: #666;
 }
 
 .sort-status-text-block span {
@@ -754,11 +748,6 @@ html[data-theme="dark"] .icon-sun {
 /* 전체 삭제 버튼 위치 보정 */
 #clear-all-btn {
   margin-left: auto;
-}
-
-/* 정렬 상태 전체 문장 */
-.sort-status-text-block {
-  color: #666;
 }
 
 /* 오름차순, 내림차순 값 */
