@@ -40,7 +40,7 @@ if (nickname) {
   });
 
   // 기본 복붙 차단하기
-  nickname.addEventListener("paste", function (evnet) {
+  nickname.addEventListener("paste", function (event) {
     event.preventDefault();
   });
 
@@ -200,8 +200,6 @@ if (closeModalBtn) {
 }
 
 // 저장하기 버튼을 눌렀을 때 처리
-
-// 저장하기 버튼을 눌렀을 때 처리
 todoForm.addEventListener("submit", function (event) {
   event.preventDefault();
 
@@ -239,6 +237,8 @@ todoForm.addEventListener("submit", function (event) {
       todos[todoIndex].content = contentValue;
       todos[todoIndex].priority = priorityValue;
 
+      todos[todoIndex].updatedAt = now;
+
       // 다른 상태에서 진행 중으로 변경하면 시간 저장
       if (statusValue === "doing" && previousStatus !== "doing") {
         todos[todoIndex].doingAt = now;
@@ -262,6 +262,8 @@ todoForm.addEventListener("submit", function (event) {
       priority: priorityValue,
       status: statusValue,
       createdAt: now,
+
+      updatedAt: now,
 
       // 처음부터 진행 중으로 등록했을 때 시간 저장
       doingAt: statusValue === "doing" ? now : null,
@@ -651,16 +653,6 @@ if (searchInput) {
 
 // 처음 화면 표시
 renderTodos();
-
-// 버튼에 이벤트 연결
-
-if (openModalBtn) {
-  openModalBtn.addEventListener("click", openModal);
-}
-
-if (closeModalBtn) {
-  closeModalBtn.addEventListener("click", closeModal);
-}
 
 function closeConfirmModal() {
   confirmModal.classList.add("hidden");
